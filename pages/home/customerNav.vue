@@ -4,7 +4,7 @@
 			<text style="color: #0CAAF0;font-size: 8px;margin-right: 5px;">▶ </text> 客资管理
 		</view>
 		<view class="box_flex">
-			<view class="imgText" @click="spcie()">
+			<view class="imgText" @click="toSea">
 				<img src="../../commonimg/information.png" mode=""></img>
 				<text>客资公海</text>
 			</view>
@@ -49,9 +49,9 @@
 			}
 		},
 		methods:{
-		  spcie(){
+		  toSea(){
 			  uni.navigateTo({
-   			  	url:'guestInformation'
+   			  	url:'sea'
 			  })
 		  }
 		}

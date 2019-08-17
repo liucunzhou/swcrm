@@ -11,7 +11,7 @@
 				<img v-if="isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
 				<img v-if="!isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
 			</view>
-			<navigator url="Customers">
+			<navigator url="customerNav">
 					<view class="tobar_textR">
 						 <img v-if="isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
 						 <img v-if="!isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
@@ -168,13 +168,6 @@
 			isColumnFn(){
 				this.translate=-100
 			},
-			//通知跳转
-			// informFn(){
-			// 	uni.navigateTo({
-			// 		url:'pages/tabBar/home/inform'
-			// 	});
-			// },
-			//新增客户跳转
 			newly(){
 				uni.navigateTo({
 					url:'newly'

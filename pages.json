@@ -56,15 +56,15 @@
 			}
 		},
 		{
-			"path": "pages/home/Customers",
+			"path": "pages/home/customerNav",
 			"style": {
 				 "navigationBarTitleText": "客资管理"
 			}
 		},
 		{
-			"path": "pages/home/guestInformation",
+			"path": "pages/home/sea",
 			"style": {
-				 "navigationBarTitleText": ""
+				 "navigationBarTitleText": "客资公海"
 			}
 		},
 		{

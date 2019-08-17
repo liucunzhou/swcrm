@@ -9,26 +9,28 @@
 			 	<input type="text" placeholder-style="font-size:13px" value="" placeholder="搜索" />
 			</view>
 		</view>
-	    <view class="msg">
+	    <view class="msg" v-for="customer in customers" v-bind:key="customer.id">
+
 			<navigator url="dateil">
 				<view class="msg_header">
-					   			<view class="header_left">
-					   			  <text class="names">姓名： </text><text class="namemain">张小姐</text>
-					   			</view>	
-					   		</view>
-				<view class="msg_text">
-					   		   <text class="names">预算：</text> <text class="namemain">8-1w元/桌</text>
+					<view class="header_left">
+					  <text class="names">姓名： </text><text class="namemain">{{customer.realname}}</text>
+					</view>	
 				</view>
 				<view class="msg_text">
-					   		   <text class="names">桌数：</text> <text class="namemain">12/桌</text>
+					<text class="names">预算：</text> <text class="namemain">{{customer.budget}}</text>
 				</view>
 				<view class="msg_text">
-					   		   <text class="names">酒店：</text> <text class="namemain">瑞金</text>
-					   		</view>
+					<text class="names">桌数：</text> <text class="namemain">{{customer.banquet_size}}</text>
+				</view>
 				<view class="msg_text">
-					   		   <text class="names">区域：</text> <text class="namemain">黄埔</text>
+					<text class="names">酒店：</text> <text class="namemain">{{customer.hotel_text}}</text>
+				</view>
+				<view class="msg_text">
+					<text class="names">区域：</text> <text class="namemain">{{customer.zone}}</text>
 				</view>	
 			</navigator>
+	
 		</view>
 	</view>
 </template>
@@ -37,17 +39,43 @@
 		export default {
 		data() {
 			return {
+				customers: []
 			}
 		},
 		created() {
 			//动态设置头部title
 			uni.setNavigationBarTitle({
-				title:"动态标题"
+				title:"客资公海"
 			})
 		},
+		onLoad() {
+			this.getSea();
+		},
 		methods:{
-			nameFn(){
-				console.log("ssss")
+			getSea(){
+				
+				let url = 'http://crm.reactphp.club/api/customer/sea';
+				uni.request({
+					url:url,
+					method:'POST',
+					data: {},
+					dataType: 'json',
+					header:{
+						'content-type':'application/x-www-form-urlencoded',
+			
+					},
+					success: (res) => {
+						let result = res.data;
+						console.log(result);
+						if(result.code=='0') {
+							this.customers = result.data;
+						} else {
+							uni.showToast({
+								title:result.msg
+							})
+						}
+					}
+				})
 			}
 		}
 	}
