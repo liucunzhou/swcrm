@@ -1,49 +1,70 @@
 <template>
 	<view class="pages">
-		<view class="textbox">
-			<text>跟进记录：</text>
-			<textarea @blur="" auto-height placeholder="请输入跟进记录" />
-		</view>
-		<view class="followTime">
-			<text>实际跟进记录：2019-08-07 12:00 </text>
-		</view>
-		<view class="followName">
-			<view class="followmsg">
-		    	<text>客户姓名：</text>
-				<text>客户</text>
-			</view>
-			<view class="followtatus" @click="isLaberbox=true">
-				<text>成交</text>
-				<img  style="text-align: right;" src="../../../commonimg/fanhui.png"></img>
-			</view>
-		</view>
-		<view class="followName">
-		  <picker mode="date"  :value="date"  @change="bindTimeChange">
-				<view class="followmsg">
-					<text style=" color: #0A98D5;">下次跟进时间</text>
-					<text>{{date}}</text>
-				</view>
-				<view class="followtatus" style="text-align: right;">
-					<img src="../../../commonimg/fanhui.png"></img>
-				</view>
-			 </picker>
-		</view>
-		<view class="laberbox" v-if="isLaberbox" @click="boxFn()">
-			 <view class="laberbox_box">
-                  <radio-group @change="radioChange">
-					<label class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in items" :key="item.value">
-						<view>
-							<radio :value="item.value" :checked="index === current" />
-						</view>
-						<view>{{item.name}}</view>
-					</label>
-               </radio-group>
+		<view class="page_box">
+			 <view class="textbox">
+			 	<textarea @blur=""  placeholder-style="font-size:12px"  class="textbox_pla"  placeholder="请输入跟进记录" />
+			 </view>
+			 <view class="followTime">
+			 	<text>实际跟进记录：2019-08-07 12:00 </text>
+			 </view>
+			 <view class="followName">
+			 	<view class="followmsg">
+			     	<text>客户姓名：name</text>
+			 	</view>
+			 	<view class="followtatus" @click="isLaberbox=true">
+			 		<text>成交</text>
+			 		<!-- <img  style="text-align: right;" src="../../../commonimg/fanhui.png"></img> -->
+			 	</view>
+			 </view>
+			 <view class="followName">
+			   <picker mode="date"  :value="date"  @change="bindTimeChange">
+			 		<view class="followmsg" style="width: 94%;">
+			 			<text style="width: 100%; color: #000000;"><text >下次跟进时间：</text> <text style="float: right;">{{date}}</text></text>	
+			 		</view>
+			 		<view class="followtatus" style="text-align: right;width: 5%;">
+			 			<img src="../../../commonimg/fanhui.png"></img>
+			 		</view>
+			 	 </picker>
+			 </view>
+			 <view class="laberbox" v-if="isLaberbox" @click="boxFn()">
+			 	 <view class="laberbox_box">
+			           <radio-group @change="radioChange">
+			 			<label style="transform:scale(0.9);font-size: 16px;" class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in items" :key="item.value">
+			 				<view>
+			 					<radio :value="item.value" :checked="index === current" />
+			 				</view>
+			 				<view>{{item.name}}</view>
+			 			</label>
+			        </radio-group>
+			 	 </view>
+			 </view>
+			 <view class="order">
+			 	<text class="Customer_text">是否到店</text>
+			      <view class="notorder" @click="isOreder=false">
+			      	<text  :class="isOreder?'order_box':'activeorder_box'" ></text>
+			 		<text  :class="isOreder?'order_text':'activeorder_text'">未到店</text>
+			      </view>		    
+			       <view class="notorder" @click="isOreder=true">
+			      	<text :class="!isOreder?'order_box':'activeorder_box'" ></text>
+			      	<text :class="!isOreder?'order_text':'activeorder_text'">到店</text>
+			      </view>
+			 </view>
+			 <view class="order">
+			 	<text class="Customer_text">客户到店</text>
+			      <view class="notorder" @click="isOreder=false">
+			      	<text  :class="isOreder?'order_box':'activeorder_box'" ></text>
+			 		<text  :class="isOreder?'order_text':'activeorder_text'">未订单</text>
+			      </view>		    
+			       <view class="notorder" @click="PurchaseOrder() ">
+			      	<text :class="!isOreder?'order_box':'activeorder_box'" ></text>
+			      	<text :class="!isOreder?'order_text':'activeorder_text'">订单</text>
+			      </view>
+			 </view>
+			  
+			 <view class="btn">
+			 	<button type="primary">保存</button>
 			 </view>
 		</view>
-		<view class="btn">
-			<button type="primary">保存</button>
-		</view>
-		
 	</view>
 </template>
 
@@ -51,19 +72,21 @@
 	export default {
 		data() {
 			return {
+				isOreder:true,
+				isNotoder:true,
 				date:"2019-08-07",
 				 items: [{
                     value: 'USA',
-                    name: '美国'
+                    name: '有意向'
                 },
                 {
                     value: 'CHN',
-                    name: '中国',
+                    name: '失效',
                     checked: 'true'
                 },
                 {
                     value: 'BRA',
-                    name: '巴西'
+                    name: '跟进'
                 },
      
             ],
@@ -76,7 +99,6 @@
 				this.date=e.detail.value
 			},
 			radioChange(e){
-				console.log(e)
 				 window.event.stopPropagation()
 				 uni.navigateTo({
 				 	url:"../../tabBar/home/createOrder"
@@ -84,6 +106,13 @@
 			},
 			boxFn(e){
 				this.isLaberbox=false
+			},
+			// 点击订单
+			PurchaseOrder(){
+				this.isOreder=true
+				 uni.navigateTo({
+					url:"../../tabBar/home/createOrder"
+				})
 			}
 		}
 	}
@@ -94,6 +123,12 @@
 		width: 100vw;
 		/* height: 100vh; */
 		background: #f4f4f4;
+		
+	}
+	.page_box{
+		padding: 0 10px;
+		box-sizing: border-box;
+		background: #FFFFFF;
 	}
 	.textbox{
 		width: 100%;
@@ -101,6 +136,9 @@
 		padding: 5px 10px;
 		box-sizing: border-box;
 		background: #ffff;
+	}
+	.textarea{
+		font-size: 12px;
 	}
 	.followTime{
 		width: 100%;
@@ -110,11 +148,11 @@
 	}
 	.followTime text{
 		display: inline-block;
-		padding: 4px 5px;
+		padding: 4px 10px;
 		background: #F4f4f4;
 		color: #0A98D5;
 		border-radius:20px ;
-		font-size: 14px;
+		font-size: 12px;
 	}
 	.followName{
 		width: 100%;
@@ -127,27 +165,29 @@
 		box-sizing: border-box;
 	}
 	.followmsg{
-		width: 75%;
+		width: 50%;
 		display: inline-block;
 		float: left;
+		line-height:55px;
 	}
 	.followmsg text{
-		display: block;
+		display:inline-block;
 	}
 	.followtatus{
 		float: right;
 		display: inline-block;
-		width: 24%;
+		width: 49%;
 		line-height: 55px;
 		text-align: center;
-		
 	}
 	.followtatus text{
-		border-left:1px solid #ccc ;
-		padding-left: 20px;
-		padding-right: 20px;
 		box-sizing: border-box;
-		
+		border-left:1px solid #ccc ;
+		padding-left: 50px;
+		padding-right: 70px;
+		box-sizing: border-box;
+		width: 200px;
+		color: #0A98D5;
 	}
 	.followtatus img{
 		vertical-align: middle;
@@ -166,15 +206,84 @@
 		align-items: center;
 	}
 	.laberbox_box{
-		width: 300px;
+		width: 250px;
 		height: auto;
+		padding-top: 10px;
 		padding-bottom: 20px;
 		background: #fff;
+		border-radius: 6px;
 	}
+	
 	.btn{
 		width: 100%;
 		position: fixed;
 		bottom: 0;
 		left: 0;
+	}
+	.btn uni-button{
+		border-radius: 0px;
+	}
+	.orderbox{
+		background: #FFFFFF;
+		width: 100%;
+		height: 60px;
+		border: 1px solid #F2F2F2;
+		display: flex;
+	}
+	.orderbox view{
+		width: 50%;
+		height: 60px;
+		line-height: 60px;
+		text-align: center;
+		
+	}
+	.activeorder{
+		border-bottom: 1px solid #0066CC;
+	}
+	.order{
+		width: 100%;
+		height: auto;
+		background: #FFFFFF;
+		padding: 10px 0 10px 10px;
+		box-sizing: border-box;
+		display: flex;
+		justify-content: left;
+	}
+	.Customer_text{
+		margin-right: 110px;
+	}
+	.notorder{
+		padding: 0px 5px;
+		height: auto;
+		background: #FFFFFF;
+		display: inline-block;
+		display: flex;
+		justify-content:left;
+		align-items: center;
+		margin-left: 20px;
+	}
+	.order_box{
+		width: 8px;
+		height: 8px;
+		background: #F4F4F4;
+		border-radius: 50%;
+		display: inline-block;
+		line-height: 20px;
+		margin-right: 10px;
+	}
+	.activeorder_box{
+		background: #0CAAF0;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		display: inline-block;
+		line-height: 20px;
+		margin-right: 10px;
+	}
+	.order_text{
+	   color: #000000;
+	}
+	.activeorder_text{
+		color: #0CAAF0;
 	}
 </style>

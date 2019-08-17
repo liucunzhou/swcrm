@@ -4,9 +4,8 @@
 			<view class="ordertype">
 				<view class="ordertype_text">订单类型:</view>
 				<view class="ordertype_value"> 
-				 <text>{{typeData}}</text>	
 				  <picker mode="selector" @change="typeFn" :range="typeArray">
-					 <img src="../../../commonimg/fanhui.png"></img>
+					 <img src="../../../commonimg/fanhui.png"></img><text>{{typeData}}</text>
 				  </picker>
 				</view>
 			</view>
@@ -41,9 +40,8 @@
 			<view class="ordertype">
 				<view class="ordertype_text">宴会厅:</view>
 				<view class="ordertype_value"> 
-				 <text>{{typeData}}</text>	
 				 <picker mode="selector" @change="typeFn" :range="typeArray">
-					 <img src="../../../commonimg/fanhui.png"></img>
+					 <img src="../../../commonimg/fanhui.png"></img> <text>{{typeData}}</text>
 				 </picker>
 				</view>
 			</view>
@@ -127,21 +125,41 @@
 		padding: 10px 10px;
 		box-sizing: border-box;
 		overflow: auto;
+		background: #ffff;
 	}
 	.msg{
 		width: 100%;
 		height: auto;
-		border:1px solid #ccc;
 		border-radius: 5px;
 		padding: 0px 0px;
 		box-sizing: border-box;
+		/* background: #f3f3f3; */
 	}
 	.ordertype{
+		background: #fff;
 		width: 100%;
 		height: auto;
 		padding: 3px 0px;
 		display: flex;
 		justify-content: center;
+		border-bottom: 1px solid #F2F2F2;
+		box-shadow: 1px 1px 1px #F8F8F8;
+		margin-bottom: 10px;
+		padding-left: 20px;
+		box-sizing: border-box;
+	}
+	.ordertype text{
+		 display: flex;
+		 justify-content: right;
+		 float: right;
+		 display: inline-block;
+		 margin-right: 10px;
+	}
+	.ordertype input{
+	    	float: right;
+		 display: flex;
+		 justify-content: right;
+		 text-align: right;
 	}
      .ordertype_text{
 		 display: inline-block;
@@ -151,22 +169,29 @@
 	  .ordertype_value{
 		 display: inline-block;
 		 width: 79%;
-		 /* height: 30px; */
 		 padding: 5px 5px;
 		 box-sizing: border-box;
-		 border:1px #CCCCCC solid ;
-	      display: flex;
-		  justify-content: space-between;
+	    /* display: flex;
+	     justify-content:right; */
+	 }
+	 .ordertype_value input{
+		 text-align: right;
+		 width: 100%;
+		 padding-right: 10px;
+		 box-sizing: border-box;
+		 color: #9E9E9E;
 	 }
 	 .ordertype_value text{
-	
+	        float: right;
+			color: #9E9E9E;
 	 }
 	 .ordertype_value img{
 		 width: 15px;
 		 height: 15px;
-		 vertical-align: middle;
-
+		 vertical-align: top;
 		 margin-top: 5px;
+		 text-align: right;
+		 float: right;
 	 }
 	 .Submit{
 		 position: fixed;
@@ -180,11 +205,20 @@
 	 }
  	 .Submit text{
 		 padding: 3px 3px;
-		 border:1px solid #ccc;
+		 border:1px solid #F2F2F2;
 		 margin: 0 10px;
+		 display: inline-block;
+		 width: 100px;
+		 background: #0CAAF0;
+		 border-radius: 20px;
 	 }
 	 .Submit text:first-child{
 		 background: #00B6F6;
 		 color: #fff;
+	 }
+	 .Submit text:nth-child(2){
+	      color: #000;
+		  border: 1px #F8F8F8 solid;
+		  background: #F8f8f8;
 	 }
 </style>

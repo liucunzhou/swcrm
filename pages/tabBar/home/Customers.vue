@@ -1,6 +1,8 @@
 <template>
 	<view class="pages">
-		<view style="">销售管理</view>
+		<view style="margin-left: 10px;margin-bottom: 10px;font-size: 16px;font-weight: 700;">
+			<text style="color: #0CAAF0;font-size: 8px;margin-right: 5px;">▶ </text> 客资管理
+		</view>
 		<view class="box_flex">
 			<view class="imgText" @click="spcie()">
 				<img src="../../../commonimg/information.png" mode=""></img>
@@ -45,6 +47,7 @@
 		height: 100vh;
 		padding: 10px 10px;
 		box-sizing: border-box;
+		background: #fff;
 	}
 	.box_flex{
 		display: flex;
