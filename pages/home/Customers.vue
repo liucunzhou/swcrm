@@ -20,6 +20,23 @@
 				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>失效客资</text>
 			</view>
+			<view class="imgText">
+				<img src="../../commonimg/lose.png" mode=""></img>
+				<text>有效客资</text>
+			</view>
+			<view class="imgText">
+				<img src="../../commonimg/lose.png" mode=""></img>
+				<text>未跟进客资</text>
+			</view>
+			<view class="imgText">
+				<img src="../../commonimg/lose.png" mode=""></img>
+				<text>进店客资</text>
+			</view>
+			<view class="imgText">
+				<img src="../../commonimg/lose.png" mode=""></img>
+				<text>跟进中客资</text>
+			</view>
+			
 		</view>
 	</view>
 </template>
@@ -52,9 +69,10 @@
 	.box_flex{
 		display: flex;
 		justify-content: left;
+		flex-wrap: wrap;
 	}
 	.imgText {
-		width: 90px;
+		width: 25%;
 	    height: 80px;
 		display: flex;
 		flex-direction: column;

@@ -55,6 +55,11 @@
 						<img class="downfanhui"  src="../../commonimg/fanhui.png"></img>
 					   </navigator>
 					</view>
+					<view class="downmsg"> 
+						<img class="downmsgicon" src="../../commonimg/setting.png"></img>
+						<text>退出</text>
+						<img class="downfanhui"  src="../../commonimg/fanhui.png"></img>
+					</view>
 				</view>
 			</view>
 			<!-- 右边侧栏 -->
