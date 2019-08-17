@@ -3,19 +3,19 @@
 		
 		<view class="tobar">
 			<view class="tobar_textL" >
-				<img v-if="isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
-				<img v-if="!isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
-				<text :class="isactiveL?'activetext':'activetext'">待办</text>
+				<img v-if="isactiveL" @click="backlogFn" src="../../../commonimg/small.png"></img>
+				<img v-if="!isactiveL" @click="backlogFn" src="../../../commonimg/activesmall.png"></img>
+				<text :class="isactiveL?'':'activetext'">待办</text>
 			</view>
 			<view class="circle" @click="isBottom=true">
-				<img v-if="isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
-				<img v-if="!isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
+				<img v-if="isCircle" @click="circlefn" src="../../../commonimg/jiahao.png"></img>
+				<img v-if="!isCircle" @click="circlefn" src="../../../commonimg/activejahao.png"></img>
 			</view>
-			<navigator url="Customers">
+			<navigator url="../../tabBar/home/Customers">
 					<view class="tobar_textR">
-						 <img v-if="isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
-						 <img v-if="!isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
-						<text :class="isactiveR?'activetext':'activetext'">客资</text>
+						 <img v-if="isactiveR" @click="guestFn" src="../../../commonimg/kezi.png"></img>
+						 <img v-if="!isactiveR" @click="guestFn" src="../../../commonimg/activekezi.png"></img>
+						<text :class="isactiveR?'':'activetext'">客资</text>
 					</view>
 			</navigator>
 		
@@ -23,8 +23,8 @@
 		<!-- 头部 -->
 		<view class="haers">
 			<view class="haers_img" @click="columnFn">  
-			    <img  class="baidian" src="../../commonimg/dianidan.png"></img>
-			    <img   class="touImg" src="../../commonimg/headerimg.png"></img>
+			    <img  class="baidian" src="../../../commonimg/dianidan.png"></img>
+			    <img   class="touImg" src="../../../commonimg/activekezi.png"></img>
 				<text   class="pointImg" ></text>
 			 </view>
 		</view>
@@ -33,26 +33,22 @@
 			<view class="column">
 				<view class="column_up">
 					<view class="column_center">
-						<img src="../../commonimg/headerimg.png"></img>
-						<view class="name">
-							<text>name</text>
-							<text>name</text>
-						</view>
+						<img src="../../../commonimg/activejahao.png"></img>
+						<view>name</view>
+						<view>name</view>
 					</view>
 				</view>
 				<view class="column_down">
 					<view class="downmsg" > 
-					   <navigator url="inform">
-							<img class="downmsgicon" src="../../commonimg/informmsg.png"></img>
+					   <navigator url="../../tabBar/home/inform">
+							<img src="../../../commonimg/informmsg.png"></img>
 							<text>通知中心</text>
-							<img class="downfanhui"  src="../../commonimg/fanhui.png"></img>
 						</navigator>
 					</view>
 					<view class="downmsg"> 
-					  <navigator url="setTing">
-						<img class="downmsgicon" src="../../commonimg/setting.png"></img>
+					  <navigator url="../../tabBar/home/setTing">
+						<img src="../../../commonimg/setting.png"></img>
 						<text>设置</text>
-						<img class="downfanhui"  src="../../commonimg/fanhui.png"></img>
 					   </navigator>
 					</view>
 				</view>
@@ -64,31 +60,31 @@
 		<view class="backlog"> 
 			<view class="backlog_main">
 				<view class="backlog_msg" > 
-				   <navigator url="msgList">
+				   <navigator url="../../tabBar/home/msgList">
 	  				    <view class="backlognumber">2</view>
-						<img class="backlog_msg_img" src="../../commonimg/orders.png"></img>
-						<text>今日需要跟进的客户</text>
-						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
+						<img class="backlog_msg_img" src="../../../commonimg/relation.png"></img>
+						<text>今天需要联系的客户</text>
+						<img class="fanhui" src="../../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
 			</view>
 			<view class="backlog_main">
 				<view class="backlog_msg" > 
-				   <navigator url="msgList">
+				   <navigator url="../../tabBar/home/msgList">
 					    <view class="backlognumber">2</view>
-						<img class="backlog_msg_img" src="../../commonimg/relation.png"></img>
+						<img class="backlog_msg_img" src="../../../commonimg/orders.png"></img>
 						<text>派单给我的客户</text>
-						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
+						<img class="fanhui" src="../../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
 			</view>
 			<view class="backlog_main">
 				<view class="backlog_msg" > 
-				   <navigator url="msgList">
+				   <navigator url="../../tabBar/home/msgList">
 					    <view class="backlognumber">2</view>
-						<img class="backlog_msg_img" src="../../commonimg/apply.png"></img>
+						<img class="backlog_msg_img" src="../../../commonimg/apply.png"></img>
 						<text>申请通过的客户</text>
-						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
+						<img class="fanhui" src="../../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
 			</view>
@@ -98,16 +94,16 @@
 		<view class="bottombox" v-if="isBottom">
 			<view class="boxtext">
 				<view class="boxtext_main" @click="newly()">
-					<img src="../../commonimg/newkehu.png"></img>
+					<img src="../../../commonimg/newkehu.png"></img>
 					<text> 新增客户</text>
 				</view>
 				<view class="boxtext_main" @click="find()">
-					<img src="../../commonimg/findimg.png"></img>
+					<img src="../../../commonimg/findimg.png"></img>
 					<text> 查找客户</text>
 				</view>
 			</view>
 			<view class="bottomclose" @click="isBottom=false">
-				<img src="../../commonimg/closeimg.png"></img>
+				<img src="../../../commonimg/closeimg.png"></img>
 			</view>
 		</view>
 	</view>
@@ -124,25 +120,7 @@
 				isBottom:false,//底部弹框
 			}
 		},
-		onLoad() {
-			console.log('....');
-			this.checkLogin();
-		},
 		methods:{
-			checkLogin(){
-				try {
-					const token = uni.getStorageSync('token');
-					if (token) {
-						console.log(token);
-					} else {
-						uni.navigateTo({
-							url:'/pages/public/login'
-						})
-					}
-				} catch (e) {
-					// error
-				}
-			},
 			// 待办
 			backlogFn(){
 				this.isactiveL=!this.isactiveL
@@ -172,13 +150,13 @@
 			//新增客户跳转
 			newly(){
 				uni.navigateTo({
-					url:'newly'
+					url:'../../tabBar/home/newly'
 				});	
 			},
 			// 查找客户
 			find(){
 			   	uni.navigateTo({
-			   	url:'findCustomer'
+			   	url:'../../tabBar/home/findCustomer'
 			   });	
 			}
 		}
@@ -204,8 +182,8 @@
 		align-items: center;
 		padding: 10px  20px;
 		box-sizing: border-box;
-		border-top:1px solid #F2F2F2 ;
-		border-bottom: 1px solid #F2F2F2 ;
+		border-top:1px solid #8888 ;
+		border-bottom: 1px solid #8888 ;
 		background: #FFFFFF;
 		
 	}
@@ -213,7 +191,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding-left: 35px;
+		padding-left: 20px;
 		color:  #a6a6a6;
 	}
 	.tobar_textR text{
@@ -229,7 +207,7 @@
 		flex-direction: column;
 		align-items: center;
 		color:  #a6a6a6;
-		padding-right: 35px;
+		padding-right: 20px;
 	}
 	.tobar_textL text{
 		font-size: 13px;
@@ -241,16 +219,16 @@
 	}
 	.circle {
 		position: absolute;
-		width: 60px;
-		height: 60px;
+		width: 65px;
+		height: 65px;
 		background: #FFFFFF;
 		border-radius: 50%;
-		border:1px solid #F2F2F2;
+		border:1px solid #CCCCCC;
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%,-55%);
 		text-align: center;
-		line-height: 60px;
+		line-height: 70px;
 		font-size: 40px;
 		background: #FFFFFF;
 		padding: 5px 5px;
@@ -332,35 +310,26 @@
 	.column_up{
 		width: 100%;
 		height: 150px;
-	    background: #444a64;
-         padding: 40px 20px;
-		 box-sizing: border-box;
-		 margin-bottom: 10px;
+	background: #444a64;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	}
 	.column_center{
-	    display: flex;
-		justify-content:left
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 	.column_center img{
 		width: 60px;
 		height: 60px;
 		border-radius: 50%;
-		vertical-align: middle;
-		padding-right: 20px;
 	}
-	.column_center .name{
-		width: 100px;
-		height: auto;
+	.column_center view{
+		height: 20px; 
 		font-size: 15px;
-		display: flex;
-		flex-direction: column;
-		align-items: left;
-		justify-content: center;
-		color:#fff;
 	}
-	 .name text{
-		line-height:;
-	 }
+	
 	.column_down{
 		display: flex;
 		flex-direction: column;
@@ -368,22 +337,15 @@
 	}
 		
 	.downmsg{
-	    margin-bottom: 15px;
-		clear: both;
+	    margin-bottom: 10px;
 	}
-	.downmsg .downmsgicon{
-		width: 24px;
-		height: 24px;
-		vertical-align: bottom;
+	.downmsg img{
+		width: 30px;
+		height: 30px;
+		vertical-align: middle;
 		margin-right: 20px;
 	}
-	.downfanhui{
-		float: right;
-		width: 15px;
-		height: 15px;
-		margin-top: 6px;
-		vertical-align: middle;
-	}
+	
 	/* 待办事项 */
 	.backlog{
 		width: 100%;
@@ -405,44 +367,37 @@
 	.backlog_msg{
 		position: relative;
 		width: 100%;
-		font-size:16px;
+	    margin-bottom: 10px;
+		font-size:17px;
 		clear: both;
-		border-bottom:1px solid #f2f2f2 ;
-		height: 30px;
-         padding: 15px 0px;
+		border-bottom:1px solid #ccc ;
+		height: 50px;
 	}
 	.backlog_msg_img{
-		width:30px;
-		height:30px;
-		vertical-align: bottom;
-		margin-right: 15px;
-		margin-left: 10px;
-	}
-	.backlog_msg text{
-	   color: #1e1e1e;
-		line-height: 30px;
-		
+		width:40x;
+		height:40px;
+		vertical-align: middle;
+		margin-right: 20px;
 	}
 	.fanhui{
 		float: right;
-		width: 15px;
-		height: 15px;
-		vertical-align: bottom;
+		width: 30px;
+		vertical-align: middle;
+		height: 30px;
 		padding-right: 10px;
-		margin-top: 7px;
 	}
 	.backlognumber{
-		width: 12px;
-		height: 12px;
+		width: 15px;
+		height: 15px;
 		background: red;
 		position: absolute;
-		top: 10px;
 		left:30px;
+		top: -3px;
 		text-align: center;
-		font-size: 1px;
-		line-height: 12px;
-        border-radius: 50%;
-	    color: #FFFFFF;
+		font-size: 8px;
+		line-height: 15px;
+       border-radius: 50%;
+	   color: #FFFFFF;
 	}
 	.bottombox{
 		position: fixed;
@@ -477,13 +432,9 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		color: #FFFFFF;
 	}
 	.boxtext_main img{
 		width: 50px;
 		height: 50px;
-	}
-	.boxtext_main text{
-		margin-top: 6px;
 	}
 </style>

@@ -11,18 +11,18 @@
 			<view class="input-content">
 				<view class="input-item">
 					<input 
-						type="number" 
-						:value="mobile" 
+						type="text" 
+						:value="nickname" 
 						placeholder="请输入手机号码"
 						maxlength="11"
-						data-key="mobile"
+						data-key="nickname"
 						@input="inputChange"
 						placeholder-style="color: #9e9e9e;"
 					/>
 				</view>
 				<view class="input-item">
 					<input 
-						type="mobile" 
+						type="password" 
 						value="" 
 						placeholder="请输入密码"
 						placeholder-class="input-empty"
@@ -48,7 +48,7 @@
 	export default{
 		data(){
 			return {
-				mobile: '',
+				nickname: '',
 				password: '',
 				logining: false
 			}
@@ -70,32 +70,47 @@
 				})
 			},
 			async toLogin(){
-				uni.navigateTo({
-					url:'/pages/home/home'
-				})
-				return
-				this.logining = true;
-				const {mobile, password} = this;
-				 数据验证模块
-				if(!this.$api.match({
-					mobile,
-					password
-				})){
-					this.logining = false;
-					return;
-				}
+				this.logining = false;
+				const {nickname, password} = this;
+	
 				const sendData = {
-					mobile,
+					nickname,
 					password
 				};
-				const result = await this.$api.json('userInfo');
-				if(result.status === 1){
-					this.login(result.data);
-                    uni.navigateBack();  
-				}else{
-					this.$api.msg(result.msg);
-					this.logining = false;
-				}
+	
+				let url = 'http://crm.reactphp.club/api/passport/dologin';
+				uni.request({
+					url:url,
+					method:'POST',
+					data: sendData,
+					dataType: 'json',
+					header:{
+						'content-type':'application/x-www-form-urlencoded',
+			
+					},
+					success: (res) => {
+						let result = res.data;
+						if(result.code=='200') {
+							try {
+							    uni.setStorageSync('token', result.result.token);
+								uni.navigateTo({
+									url: '/pages/home/home',
+									success: res => {},
+									fail: () => {},
+									complete: () => {}
+								});
+							} catch (e) {
+							    uni.showToast({
+							    	title:'登陆失败'
+							    })
+							}
+						} else {
+							uni.showToast({
+								title:result.msg
+							})
+						}
+					}
+				})
 			}
 		},
 
