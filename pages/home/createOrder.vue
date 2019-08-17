@@ -5,7 +5,7 @@
 				<view class="ordertype_text">订单类型:</view>
 				<view class="ordertype_value"> 
 				  <picker mode="selector" @change="typeFn" :range="typeArray">
-					 <img src="../../../commonimg/fanhui.png"></img><text>{{typeData}}</text>
+					 <img src="../../commonimg/fanhui.png"></img><text>{{typeData}}</text>
 				  </picker>
 				</view>
 			</view>
@@ -41,7 +41,7 @@
 				<view class="ordertype_text">宴会厅:</view>
 				<view class="ordertype_value"> 
 				 <picker mode="selector" @change="typeFn" :range="typeArray">
-					 <img src="../../../commonimg/fanhui.png"></img> <text>{{typeData}}</text>
+					 <img src="../../commonimg/fanhui.png"></img> <text>{{typeData}}</text>
 				 </picker>
 				</view>
 			</view>

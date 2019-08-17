@@ -3,18 +3,18 @@
 		
 		<view class="tobar">
 			<view class="tobar_textL" >
-				<img v-if="isactiveL" @click="backlogFn" src="../../../commonimg/activesmall.png"></img>
-				<img v-if="!isactiveL" @click="backlogFn" src="../../../commonimg/activesmall.png"></img>
+				<img v-if="isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
+				<img v-if="!isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
 				<text :class="isactiveL?'activetext':'activetext'">待办</text>
 			</view>
 			<view class="circle" @click="isBottom=true">
-				<img v-if="isCircle" @click="circlefn" src="../../../commonimg/activejahao.png"></img>
-				<img v-if="!isCircle" @click="circlefn" src="../../../commonimg/activejahao.png"></img>
+				<img v-if="isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
+				<img v-if="!isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
 			</view>
-			<navigator url="../../tabBar/home/Customers">
+			<navigator url="Customers">
 					<view class="tobar_textR">
-						 <img v-if="isactiveR" @click="guestFn" src="../../../commonimg/activekezi.png"></img>
-						 <img v-if="!isactiveR" @click="guestFn" src="../../../commonimg/activekezi.png"></img>
+						 <img v-if="isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
+						 <img v-if="!isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
 						<text :class="isactiveR?'activetext':'activetext'">客资</text>
 					</view>
 			</navigator>
@@ -23,8 +23,8 @@
 		<!-- 头部 -->
 		<view class="haers">
 			<view class="haers_img" @click="columnFn">  
-			    <img  class="baidian" src="../../../commonimg/dianidan.png"></img>
-			    <img   class="touImg" src="../../../commonimg/headerimg.png"></img>
+			    <img  class="baidian" src="../../commonimg/dianidan.png"></img>
+			    <img   class="touImg" src="../../commonimg/headerimg.png"></img>
 				<text   class="pointImg" ></text>
 			 </view>
 		</view>
@@ -33,7 +33,7 @@
 			<view class="column">
 				<view class="column_up">
 					<view class="column_center">
-						<img src="../../../commonimg/headerimg.png"></img>
+						<img src="../../commonimg/headerimg.png"></img>
 						<view class="name">
 							<text>name</text>
 							<text>name</text>
@@ -42,17 +42,17 @@
 				</view>
 				<view class="column_down">
 					<view class="downmsg" > 
-					   <navigator url="../../tabBar/home/inform">
-							<img class="downmsgicon" src="../../../commonimg/informmsg.png"></img>
+					   <navigator url="inform">
+							<img class="downmsgicon" src="../../commonimg/informmsg.png"></img>
 							<text>通知中心</text>
-							<img class="downfanhui"  src="../../../commonimg/fanhui.png"></img>
+							<img class="downfanhui"  src="../../commonimg/fanhui.png"></img>
 						</navigator>
 					</view>
 					<view class="downmsg"> 
-					  <navigator url="../../tabBar/home/setTing">
-						<img class="downmsgicon" src="../../../commonimg/setting.png"></img>
+					  <navigator url="setTing">
+						<img class="downmsgicon" src="../../commonimg/setting.png"></img>
 						<text>设置</text>
-						<img class="downfanhui"  src="../../../commonimg/fanhui.png"></img>
+						<img class="downfanhui"  src="../../commonimg/fanhui.png"></img>
 					   </navigator>
 					</view>
 				</view>
@@ -64,31 +64,31 @@
 		<view class="backlog"> 
 			<view class="backlog_main">
 				<view class="backlog_msg" > 
-				   <navigator url="../../tabBar/home/msgList">
+				   <navigator url="msgList">
 	  				    <view class="backlognumber">2</view>
-						<img class="backlog_msg_img" src="../../../commonimg/orders.png"></img>
+						<img class="backlog_msg_img" src="../../commonimg/orders.png"></img>
 						<text>今日需要跟进的客户</text>
-						<img class="fanhui" src="../../../commonimg/fanhui.png"></img>
+						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
 			</view>
 			<view class="backlog_main">
 				<view class="backlog_msg" > 
-				   <navigator url="../../tabBar/home/msgList">
+				   <navigator url="msgList">
 					    <view class="backlognumber">2</view>
-						<img class="backlog_msg_img" src="../../../commonimg/relation.png"></img>
+						<img class="backlog_msg_img" src="../../commonimg/relation.png"></img>
 						<text>派单给我的客户</text>
-						<img class="fanhui" src="../../../commonimg/fanhui.png"></img>
+						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
 			</view>
 			<view class="backlog_main">
 				<view class="backlog_msg" > 
-				   <navigator url="../../tabBar/home/msgList">
+				   <navigator url="msgList">
 					    <view class="backlognumber">2</view>
-						<img class="backlog_msg_img" src="../../../commonimg/apply.png"></img>
+						<img class="backlog_msg_img" src="../../commonimg/apply.png"></img>
 						<text>申请通过的客户</text>
-						<img class="fanhui" src="../../../commonimg/fanhui.png"></img>
+						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
 			</view>
@@ -98,16 +98,16 @@
 		<view class="bottombox" v-if="isBottom">
 			<view class="boxtext">
 				<view class="boxtext_main" @click="newly()">
-					<img src="../../../commonimg/newkehu.png"></img>
+					<img src="../../commonimg/newkehu.png"></img>
 					<text> 新增客户</text>
 				</view>
 				<view class="boxtext_main" @click="find()">
-					<img src="../../../commonimg/findimg.png"></img>
+					<img src="../../commonimg/findimg.png"></img>
 					<text> 查找客户</text>
 				</view>
 			</view>
 			<view class="bottomclose" @click="isBottom=false">
-				<img src="../../../commonimg/closeimg.png"></img>
+				<img src="../../commonimg/closeimg.png"></img>
 			</view>
 		</view>
 	</view>
@@ -172,13 +172,13 @@
 			//新增客户跳转
 			newly(){
 				uni.navigateTo({
-					url:'../../tabBar/home/newly'
+					url:'newly'
 				});	
 			},
 			// 查找客户
 			find(){
 			   	uni.navigateTo({
-			   	url:'../../tabBar/home/findCustomer'
+			   	url:'findCustomer'
 			   });	
 			}
 		}

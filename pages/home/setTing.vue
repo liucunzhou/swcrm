@@ -1,7 +1,7 @@
 <template>
 	<view class="column_down">
 		<view class="downmsg" > 
-		   <navigator url="../../tabBar/home/password">
+		   <navigator url="password">
 				<text>修改密码</text>
 			</navigator>
 		</view>

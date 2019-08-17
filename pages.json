@@ -2,85 +2,85 @@
 	"pages": [
 		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		 {
-			"path": "pages/tabBar/home/home",
+			"path": "pages/home/home",
 			"style": {
 				 "navigationStyle":"custom"
 			}
 		},
 		{
-			"path": "pages/tabBar/public/login",
+			"path": "pages/public/login",
 			"style": {
 				 "navigationStyle":"custom"
 			}
 		},
 		{
-			"path": "pages/tabBar/public/signin",
+			"path": "pages/public/signin",
 			"style": {
 				 "navigationStyle":"custom"
 			}
 		},
 		 {
-			"path": "pages/tabBar/home/inform",
+			"path": "pages/home/inform",
 			"style": {
 				 "navigationBarTitleText": "通知信息"
 			}
 		},
 		 {
-			"path": "pages/tabBar/home/setTing",
+			"path": "pages/home/setTing",
 			"style": {
 				 "navigationBarTitleText": "设置"
 			}
 		},
 		 {
-			"path": "pages/tabBar/home/password",
+			"path": "pages/home/password",
 			"style": {
 				 "navigationBarTitleText": "修改密码"
 			}
 		},
 		{
-			"path": "pages/tabBar/home/msgList",
+			"path": "pages/home/msgList",
 			"style": {
 				 "navigationBarTitleText": ""
 			}
 		},
 		{
-			"path": "pages/tabBar/home/dateil",
+			"path": "pages/home/dateil",
 			"style": {
 				 "navigationBarTitleText": "详情"
 			}
 		},
 		{
-			"path": "pages/tabBar/home/followUp",
+			"path": "pages/home/followUp",
 			"style": {
 				 "navigationBarTitleText": "写跟进"
 			}
 		},
 		{
-			"path": "pages/tabBar/home/Customers",
+			"path": "pages/home/Customers",
 			"style": {
 				 "navigationBarTitleText": "客资管理"
 			}
 		},
 		{
-			"path": "pages/tabBar/home/guestInformation",
+			"path": "pages/home/guestInformation",
 			"style": {
 				 "navigationBarTitleText": ""
 			}
 		},
 		{
-			"path": "pages/tabBar/home/createOrder",
+			"path": "pages/home/createOrder",
 			"style": {
 				 "navigationBarTitleText": "生成订单"
 			}
 		},
 		{
-			"path": "pages/tabBar/home/newly",
+			"path": "pages/home/newly",
 			"style": {
 				 "navigationBarTitleText": "新增客户"
 			}
 		}, 
 		{
-			"path": "pages/tabBar/home/findCustomer",
+			"path": "pages/home/findCustomer",
 			"style": {
 				 "navigationBarTitleText": "查找客户"
 			}

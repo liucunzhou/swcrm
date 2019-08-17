@@ -1,5 +1,5 @@
 <template>
-	<vie class="pages">
+	<view class="pages">
 	    <view class="msg">
 			<text>通知信息</text>
 			<text> 20:80</text>
@@ -12,7 +12,7 @@
 			<text>通知信息</text>
 			<text> 20:80</text>
 		</view>
-	</vie>
+	</view>
 </template>
 
 <script>

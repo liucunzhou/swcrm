@@ -13,7 +13,7 @@
 			 	</view>
 			 	<view class="followtatus" @click="isLaberbox=true">
 			 		<text>成交</text>
-			 		<!-- <img  style="text-align: right;" src="../../../commonimg/fanhui.png"></img> -->
+			 		<!-- <img  style="text-align: right;" src="../../commonimg/fanhui.png"></img> -->
 			 	</view>
 			 </view>
 			 <view class="followName">
@@ -22,7 +22,7 @@
 			 			<text style="width: 100%; color: #000000;"><text >下次跟进时间：</text> <text style="float: right;">{{date}}</text></text>	
 			 		</view>
 			 		<view class="followtatus" style="text-align: right;width: 5%;">
-			 			<img src="../../../commonimg/fanhui.png"></img>
+			 			<img src="../../commonimg/fanhui.png"></img>
 			 		</view>
 			 	 </picker>
 			 </view>
@@ -101,7 +101,7 @@
 			radioChange(e){
 				 window.event.stopPropagation()
 				 uni.navigateTo({
-				 	url:"../../tabBar/home/createOrder"
+				 	url:"createOrder"
 				 })
 			},
 			boxFn(e){
@@ -111,7 +111,7 @@
 			PurchaseOrder(){
 				this.isOreder=true
 				 uni.navigateTo({
-					url:"../../tabBar/home/createOrder"
+					url:"createOrder"
 				})
 			}
 		}

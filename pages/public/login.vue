@@ -66,12 +66,12 @@
 			},
 			toRegist(){
 				uni.navigateTo({
-					url:'/pages/tabBar/public/signin'
+					url:'/pages/public/signin'
 				})
 			},
 			async toLogin(){
 				uni.navigateTo({
-					url:'/pages/tabBar/home/home'
+					url:'/pages/home/home'
 				})
 				return
 				this.logining = true;

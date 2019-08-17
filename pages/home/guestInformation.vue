@@ -5,12 +5,12 @@
 				筛选
 			</view>
 			<view class="seek">
-		  	<img src="../../../commonimg/findminimg.png"></img>
+		  	<img src="../../commonimg/findminimg.png"></img>
 			 	<input type="text" placeholder-style="font-size:13px" value="" placeholder="搜索" />
 			</view>
 		</view>
 	    <view class="msg">
-			<navigator url="../../tabBar/home/dateil">
+			<navigator url="dateil">
 				<view class="msg_header">
 					   			<view class="header_left">
 					   			  <text class="names">姓名： </text><text class="namemain">张小姐</text>

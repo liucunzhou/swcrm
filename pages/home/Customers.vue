@@ -5,19 +5,19 @@
 		</view>
 		<view class="box_flex">
 			<view class="imgText" @click="spcie()">
-				<img src="../../../commonimg/information.png" mode=""></img>
+				<img src="../../commonimg/information.png" mode=""></img>
 				<text>客资公海</text>
 			</view>
 			<view class="imgText">
-				<img src="../../../commonimg/myinformation.png" mode=""></img>
+				<img src="../../commonimg/myinformation.png" mode=""></img>
 				<text>我的客资</text>
 			</view>
 			<view class="imgText">
-				<img src="../../../commonimg/myorder.png" mode=""></img>
+				<img src="../../commonimg/myorder.png" mode=""></img>
 				<text>我的订单</text>
 			</view>
 			<view class="imgText">
-				<img src="../../../commonimg/lose.png" mode=""></img>
+				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>失效客资</text>
 			</view>
 		</view>
@@ -34,7 +34,7 @@
 		methods:{
 		  spcie(){
 			  uni.navigateTo({
-   			  	url:'../../tabBar/home/guestInformation'
+   			  	url:'guestInformation'
 			  })
 		  }
 		}

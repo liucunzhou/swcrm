@@ -1,7 +1,11 @@
 <template>
 	<view class="pages">
-	    <view class="msg">
-			<navigator url="../../tabBar/home/dateil">
+		<view class="findbox">
+			<img src="../../commonimg/findminimg.png"></img>
+			<input placeholder-style="font-size:13px;color:#9e9e9e" type="text" value=""  placeholder="例:18737061903"/>
+		</view>
+		<view class="msg">
+			<navigator url="dateil">
 				<view class="msg_header">
 					<view class="header_left">
 					  <text class="names">姓名： </text><text class="namemain">张小姐</text>
@@ -25,39 +29,44 @@
 </template>
 
 <script>
-			export default {
-		data() {
-			return {
-			}
-		},
-		created() {
-			//动态设置头部title
-			uni.setNavigationBarTitle({
-				title:"动态标题"
-			})
-		},
-		methods:{
-			
-		}
-	}
-	
 </script>
 
 <style>
 	.pages{
-		width: 100%;
-		height: 100%;
-		padding: 10px 15px;
-		box-sizing: border-box;
-		overflow: auto;
-		background: #FFFFFF;
-	}
-	.msg{
-		width: 100%;
-		height: auto;
-		border-radius: 5px;
+		width: 100vw;
+		height: 100vh;
 		background: #fff;
-		padding: 0px 20px;
+	}
+	.findbox{
+		width: 90%;
+		height: 30px;
+		border:1px solid #ccc ;
+		margin: 0 auto;
+		border-radius:20px ;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0px 10px;
+		box-sizing: border-box;
+		margin-bottom: 20px;
+	}
+	.findbox img{
+		width: 20px;
+		height: 20px;
+	}
+	.findbox input{
+		width: 90%;
+		display: inline-block;
+	}
+	
+	
+	.msg{
+		width: 90%;
+		height: auto;
+		margin: 0 auto;
+		border-radius: 5px;
+		background: #ffff;
+		padding: 0px 30px;
 		box-sizing: border-box;
 		box-shadow: 1px 1px 10px #F4F4F4;
 	}
@@ -67,7 +76,6 @@
 		box-sizing: border-box;
 		border-bottom:solid #F2F2F2 1px;
 		margin-bottom: 5px; 
-		
 	}
 	.msg_text{
 		width: 100%;
@@ -81,6 +89,6 @@
 	.namemain{
 		color: #989898;
 		letter-spacing: 3px;
-
+	
 	}
 </style>

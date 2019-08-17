@@ -2,12 +2,12 @@
 	<view class="pages">
 		<!-- <view class="phone_box">
 			<view class="phone_box_follow">
-				<navigator url="../../tabBar/home/followUp">
-				  <img src="../../../commonimg/follow.png"></img>
+				<navigator url="/followUp">
+				  <img src="../../commonimg/follow.png"></img>
 				</navigator>
 			</view>
 			<view class="phone_box_phone"  @click="isLaberbox=true">
-				<img src="../../../commonimg/phone.png"></img>
+				<img src="../../commonimg/phone.png"></img>
 			</view>
 		</view> -->
 	   <view class="header_name">
@@ -71,22 +71,22 @@
 	   </view>
 	   
 	   <view class="bottommeiu">
-		     <navigator url="../../tabBar/home/followUp">
+		     <navigator url="followUp">
 			  <view class="meiutext">
-					  <img src="../../../commonimg/follow.png" ></img>
+					  <img src="../../commonimg/follow.png" ></img>
 					  <text>写跟进</text>
 			  </view>
 		    </navigator>
 		  <view class="line"></view>
 		  <view class="meiuphone" @click="isLaberbox=true">
-					   <img src="../../../commonimg/phone.png" ></img>
+					   <img src="../../commonimg/phone.png" ></img>
 					   <text>电话</text>
 		  </view>
 	   </view>
 	   <view class="laberbox" v-if="isLaberbox" @click="boxFn()">
 	   	 <view class="laberbox_box">
-			 <view class="boxtext" @click.top="bianPhone"> <text> 1379456465</text>    <img class="box_phone" src="../../../commonimg/phone.png" ></img> </view>
-			 <view class="boxtext" @click.top="bianPhone"> <text> 1379456465</text>    <img class="box_phone" src="../../../commonimg/phone.png" ></img></view>
+			 <view class="boxtext" @click.top="bianPhone"> <text> 1379456465</text>    <img class="box_phone" src="../../commonimg/phone.png" ></img> </view>
+			 <view class="boxtext" @click.top="bianPhone"> <text> 1379456465</text>    <img class="box_phone" src="../../commonimg/phone.png" ></img></view>
 	   	 </view>
 	   </view>
 	</view>
