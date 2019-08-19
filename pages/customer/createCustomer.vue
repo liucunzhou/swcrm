@@ -1,92 +1,101 @@
 <template>
 	<view class="pages">
-	    <view class="msg">
+		<view class="msg">
 			<view class="ordertype">
-				<view class="ordertype_text">订单类型:</view>
-				<view class="ordertype_value"> 
-				  <picker mode="selector" @change="typeFn" :range="typeArray">
-					 <img src="../../commonimg/fanhui.png"></img><text>{{typeData}}</text>
-				  </picker>
-				</view>
-			</view>
-			<view class="ordertype">
-				<view class="ordertype_text">签约日期:</view>
-				<view class="ordertype_value"> 
-                    <picker mode="date" :value="date" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
-                        <view class="picker">
-                          当前选择: {{date}}
-                        </view>
-                    </picker>                     
-				</view>
-			</view>
-			<view class="ordertype">
-				<view class="ordertype_text">举办日期:</view>
-				<view class="ordertype_value"> 
-					<picker mode="date" :value="date" start="2015-09-01" end="2017-09-01" @change="bindDateChange">
-					    <view class="picker">
-					      当前选择: {{date}}
-					    </view>
+				<view class="ordertype_text">信息类型:</view>
+				<view class="ordertype_value">
+					<picker mode="selector" @change="newsTypeFn" :range="newsTypes">
+						<img src="../../commonimg/fanhui.png"></img><text>{{newsTypeText}}</text>
 					</picker>
 				</view>
 			</view>
 			<view class="ordertype">
+				<view class="ordertype_text">平台来源:</view>
+				<view class="ordertype_value">
+					<picker @change="bindSourceChange" :value="source_index" :range="sources" range-key="title">
+						<view class="uni-input">{{sources[source_index]['title']}}</view>
+					</picker>
+				</view>
+			</view>
+			<view class="ordertype">
+				<view class="ordertype_text">推荐来源:</view>
+				<view class="ordertype_value">
+					<input type="text" :value="recommender" placeholder="请填写推荐来源" placeholder-style="font-size:12rpx;"/>
+				</view>
+			</view>
+			<view class="ordertype">
 				<view class="ordertype_text">新人名字:</view>
-				<view class="ordertype_value"> 
-				 <!-- <text>2019-02-02</text>	 -->
-				   <input type="text" value="name" />   
+				<view class="ordertype_value">
+					<!-- <text>2019-02-02</text>	 -->
+					<input type="text" :value="realname" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">联系电话:</view>
-				<view class="ordertype_value"> 
-				 <!-- <text>2019-02-02</text>	 -->
-				   <input type="text" value="18737061903" />   
+				<view class="ordertype_value">
+					<!-- <text>2019-02-02</text>	 -->
+					<input type="text" :value="mobile" placeholder="联系电话" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
-				<view class="ordertype_text">宴会厅:</view>
-				<view class="ordertype_value"> 
-				 <picker mode="selector" @change="typeFn" :range="typeArray">
-					 <img src="../../commonimg/fanhui.png"></img> <text>{{typeData}}</text>
-				 </picker>
+				<view class="ordertype_text">选择城市:</view>
+				<view class="ordertype_value">
+					<picker @change="bindCityChange" :value="city_index" :range="cities" range-key="shortname">
+						<view class="uni-input">{{cities[city_index]['shortname']}}</view>
+					</picker>
 				</view>
 			</view>
 			<view class="ordertype">
-				<view class="ordertype_text">价格:</view>
-				<view class="ordertype_value"> 
-				 <!-- <text>2019-02-02</text>	 -->
-				   <input type="text" value="100000" />   
+				<view class="ordertype_text">所在区域:</view>
+				<view class="ordertype_value">
+					<picker @change="bindAreaChange" :value="area_index" :range="areas" range-key="shortname">
+						<view class="uni-input">{{areas[area_index]['shortname']}}</view>
+					</picker>
 				</view>
 			</view>
+			<view class="ordertype">
+				<view class="ordertype_text">所选区域:</view>
+				<view class="ordertype_value">
+					<input type="text" :value="zone" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
+				</view>
+			</view>
+			<view class="ordertype">
+				<view class="ordertype_text">选择酒店:</view>
+				<view class="ordertype_value">
+					<input type="text" :value="hotel_text" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
+				</view>
+			</view>
+
 			<view class="ordertype">
 				<view class="ordertype_text">桌数:</view>
-				<view class="ordertype_value"> 
-				 <!-- <text>2019-02-02</text>	 -->
-				   <input type="text" value="18737061903" />   
-				</view>
-			</view>
-			<view class="ordertype">
-				<view class="ordertype_text">桌标:</view>
 				<view class="ordertype_value">
-					<v-select :options="['Canada', 'United States']"></v-select>
+					<input type="text" :value="banquet_size" placeholder="请填写桌数" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
-				<view class="ordertype_text">婚宴提成:</view>
-				<view class="ordertype_value"> 
-				 <!-- <text>2019-02-02</text>	 -->
-				   <input type="text" value="18737061903" />   
+				<view class="ordertype_text">预算:</view>
+				<view class="ordertype_value">
+					<input type="text" :value="budget" placeholder="请填写预算" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
-				<view class="ordertype_text">婚庆提成:</view>
-				<view class="ordertype_value"> 
-				 <!-- <text>2019-02-02</text>	 -->
-				   <input type="text" value="18737061903" />   
+				<view class="ordertype_text">举办日期:</view>
+				<view class="ordertype_value">
+					<picker mode="date" :value="wedding_date" start="2015-09-01" end="2119-09-01" @change="bindDateChange">
+						<view class="picker">
+							{{wedding_date}}
+						</view>
+					</picker>
+				</view>
+			</view>
+			<view class="ordertype">
+				<view class="ordertype_text">备注:</view>
+				<view class="ordertype_value">
+					<input type="text" :value="remark" placeholder="请填写备注" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="Submit">
 			<text>立即提交</text>
 			<text>重置</text>
@@ -97,10 +106,31 @@
 <script>
 	export default {
 		data() {
+			let newsTypes = ['婚宴信息','婚庆信息','一站式'];
+			let today = (new Date()).toLocaleDateString();
+			today = today.replace(/\//g,'-');
+			let sources = [{'title':'无'}];
+			let cities = [{'shortname':'无'}];
+			let areas = [{'shortname':'无'}];
 			return {
-				date: '2019-08-18',
-				typeData:"婚宴",
-				typeArray:['中国', '美国', '巴西', '日本']
+				recommender: '',
+				realname:'',
+				mobile:'',
+				banquet_size: '',
+				budget: '',
+				newsType: 0,
+				newsTypeText: '婚宴信息',
+				newsTypes: newsTypes,
+				source_index: 0,
+				sources: sources,
+				wedding_date: today,
+				hotel_text: "",
+				city_index: 0,
+				cities: cities,
+				area_index: 0,
+				areas: areas,
+				zone: '',
+				remark: ''
 			}
 		},
 		created() {
@@ -109,21 +139,67 @@
 			// 	title:"动态标题"
 			// })
 		},
-		methods:{
-			nameFn(){
-				console.log("ssss")
+		onLoad() {
+			this.getBaseData();
+		},
+		methods: {
+			getBaseData() {
+				let _this = this;
+				let url = 'http://crm.reactphp.club/api/customer/getBaseData';
+				let token = this.$getToken();
+				let params = {
+					token: token
+				};
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let result = res.data;
+						if (result.code == '0') {
+							_this.newsTypes = result.data.news_types;
+							_this.sources = result.data.sources;
+							_this.cities = result.data.cities;
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+					}
+				})
 			},
-			//订单类型
-			typeFn(e){
-				let index=e.detail.value;
-				this.typeData=this.typeArray[index]
+			// 信息类型
+			newsTypeFn(e) {
+				let index = e.detail.value;
+				this.newsType = index;
+				this.newsTypeText = this.newsTypes[index];
+			},
+			// 绑定日期
+			bindDateChange(e) {
+				let wedding_date = e.detail.value;
+				this.wedding_date = wedding_date;
+			},
+			bindCityChange(e) {
+				console.log(e);
+			
+			},
+			bindSourceChange(e) {
+				console.log('value is', e.detail.value);
+				let source_index = e.value;
+				this.source_index = source_index;
+				console.log('source_index is:', this.source_index);
+				console.log(this.sources[this.source_index]);
 			}
 		}
 	}
 </script>
 
 <style>
-	.pages{
+	.pages {
 		width: 100%;
 		height: 100%;
 		padding: 10px 10px;
@@ -131,7 +207,8 @@
 		overflow: auto;
 		background: #ffff;
 	}
-	.msg{
+
+	.msg {
 		width: 100%;
 		height: auto;
 		border-radius: 5px;
@@ -139,7 +216,8 @@
 		box-sizing: border-box;
 		/* background: #f3f3f3; */
 	}
-	.ordertype{
+
+	.ordertype {
 		background: #fff;
 		width: 100%;
 		height: auto;
@@ -152,77 +230,91 @@
 		padding-left: 20px;
 		box-sizing: border-box;
 	}
-	.ordertype text{
-		 display: flex;
-		 justify-content: right;
-		 float: right;
-		 display: inline-block;
-		 margin-right: 10px;
+
+	.ordertype text {
+		display: flex;
+		justify-content: right;
+		float: right;
+		display: inline-block;
+		margin-right: 10px;
 	}
-	.ordertype input{
-	    	float: right;
-		 display: flex;
-		 justify-content: right;
-		 text-align: right;
+
+	.ordertype input {
+		float: right;
+		display: flex;
+		justify-content: right;
+		text-align: right;
 	}
-     .ordertype_text{
-		 display: inline-block;
-		 width: 20%;
-		 line-height: 30px;
-	 }
-	  .ordertype_value{
-		 display: inline-block;
-		 width: 79%;
-		 padding: 5px 5px;
-		 box-sizing: border-box;
-	    /* display: flex;
-	     justify-content:right; */
-	 }
-	 .ordertype_value input{
-		 text-align: right;
-		 width: 100%;
-		 padding-right: 10px;
-		 box-sizing: border-box;
-		 color: #9E9E9E;
-	 }
-	 .ordertype_value text{
-	        float: right;
-			color: #9E9E9E;
-	 }
-	 .ordertype_value img{
-		 width: 15px;
-		 height: 15px;
-		 vertical-align: top;
-		 margin-top: 5px;
-		 text-align: right;
-		 float: right;
-	 }
-	 .Submit{
-		 position: fixed;
-		 width: 100%;
-		 bottom: 0px;
-		 padding: 10px 10px;
-		 text-align: center;
-		 display: flex;
-		 box-sizing: border-box;
-		 justify-content: space-around;
-	 }
- 	 .Submit text{
-		 padding: 3px 3px;
-		 border:1px solid #F2F2F2;
-		 margin: 0 10px;
-		 display: inline-block;
-		 width: 100px;
-		 background: #0CAAF0;
-		 border-radius: 20px;
-	 }
-	 .Submit text:first-child{
-		 background: #00B6F6;
-		 color: #fff;
-	 }
-	 .Submit text:nth-child(2){
-	      color: #000;
-		  border: 1px #F8F8F8 solid;
-		  background: #F8f8f8;
-	 }
+
+	.ordertype_text {
+		display: inline-block;
+		width: 20%;
+		line-height: 30px;
+	}
+
+	.ordertype_value {
+		display: inline-block;
+		width: 79%;
+		padding: 5px 5px;
+		box-sizing: border-box;
+		text-align: right;
+	}
+
+	.ordertype_value input {
+		text-align: right;
+		width: 100%;
+		padding-right: 10px;
+		box-sizing: border-box;
+		color: #9E9E9E;
+	}
+
+	.ordertype_value text {
+		float: right;
+		color: #9E9E9E;
+	}
+
+	.ordertype_value img {
+		width: 15px;
+		height: 15px;
+		vertical-align: top;
+		margin-top: 5px;
+		text-align: right;
+		float: right;
+	}
+
+	.Submit {
+		position: fixed;
+		width: 100%;
+		bottom: 0px;
+		padding: 10px 10px;
+		text-align: center;
+		display: flex;
+		box-sizing: border-box;
+		justify-content: space-around;
+	}
+
+	.Submit text {
+		padding: 3px 3px;
+		border: 1px solid #F2F2F2;
+		margin: 0 10px;
+		display: inline-block;
+		width: 100px;
+		background: #0CAAF0;
+		border-radius: 20px;
+	}
+
+	.Submit text:first-child {
+		background: #00B6F6;
+		color: #fff;
+	}
+
+	.Submit text:nth-child(2) {
+		color: #000;
+		border: 1px #F8F8F8 solid;
+		background: #F8f8f8;
+	}
+	
+	.uni-input{
+		padding: 0 24rpx;
+	}
 </style>

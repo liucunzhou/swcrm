@@ -5,7 +5,6 @@ import pageHead from './components/page-head.vue'
 import pageFoot from './components/page-foot.vue'
 import uLink from '@/components/uLink.vue'
 import store from './store'
-// import VueSelect from './node_modules/vue-select/src/index.js'
 
 Vue.config.productionTip = false
 
@@ -20,7 +19,7 @@ Vue.prototype.$getToken = function() {
 	try {
 		token = uni.getStorageSync('token');
 		if (token) {
-			console.log(token);
+
 		} else {
 			uni.navigateTo({
 				url:'/pages/public/login'
