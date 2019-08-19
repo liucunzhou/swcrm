@@ -5,6 +5,7 @@ import pageHead from './components/page-head.vue'
 import pageFoot from './components/page-foot.vue'
 import uLink from '@/components/uLink.vue'
 import store from './store'
+import VueSelect from './node_modules/vue-select/src/index.js'
 
 Vue.config.productionTip = false
 
@@ -18,6 +19,7 @@ Vue.prototype.$backgroundAudioData = {
 Vue.component('page-head', pageHead)
 Vue.component('page-foot', pageFoot)
 Vue.component('uLink', uLink)
+Vue.component('v-select', VueSelect)
 
 App.mpType = 'app'
 
