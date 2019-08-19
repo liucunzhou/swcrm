@@ -86,7 +86,6 @@
 					dataType: 'json',
 					header:{
 						'content-type':'application/x-www-form-urlencoded',
-			
 					},
 					success: (res) => {
 						let result = res.data;

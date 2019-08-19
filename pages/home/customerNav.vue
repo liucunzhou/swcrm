@@ -8,31 +8,31 @@
 				<img src="../../commonimg/information.png" mode=""></img>
 				<text>客资公海</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(-1, 0, '我的客资')">
 				<img src="../../commonimg/myinformation.png" mode=""></img>
 				<text>我的客资</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(2, 0, '订单客户')">
 				<img src="../../commonimg/myorder.png" mode=""></img>
-				<text>我的订单</text>
+				<text>订单客户</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(3, 0, '失效客资')">
 				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>失效客资</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(5, 0, '有效客资')">
 				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>有效客资</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(0, 0, '未跟进客资')">
 				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>未跟进客资</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(-1, 1, '进店客资')">
 				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>进店客资</text>
 			</view>
-			<view class="imgText">
+			<view class="imgText" @click="toMine(1, 0, '跟进中客资')">
 				<img src="../../commonimg/lose.png" mode=""></img>
 				<text>跟进中客资</text>
 			</view>
@@ -52,6 +52,11 @@
 		  toSea(){
 			  uni.navigateTo({
    			  	url:'sea'
+			  })
+		  },
+		  toMine(status, is_into_store, page_title){
+			  uni.navigateTo({
+			  	url: 'mine?status=' + status + '&is_into_store=' + is_into_store + '&page_title=' + page_title
 			  })
 		  }
 		}

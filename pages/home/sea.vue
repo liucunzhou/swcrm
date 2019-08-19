@@ -10,8 +10,7 @@
 			</view>
 		</view>
 	    <view class="msg" v-for="customer in customers" v-bind:key="customer.id">
-
-			<navigator url="dateil">
+			<view @click="navToCustomer(customer.id)">
 				<view class="msg_header">
 					<view class="header_left">
 					  <text class="names">姓名： </text><text class="namemain">{{customer.realname}}</text>
@@ -29,7 +28,7 @@
 				<view class="msg_text">
 					<text class="names">区域：</text> <text class="namemain">{{customer.zone}}</text>
 				</view>	
-			</navigator>
+			</view>
 	
 		</view>
 	</view>
@@ -53,28 +52,35 @@
 		},
 		methods:{
 			getSea(){
-				
+				let _this = this;
 				let url = 'http://crm.reactphp.club/api/customer/sea';
+				let token = _this.$getToken();
 				uni.request({
 					url:url,
 					method:'POST',
-					data: {},
+					data: {token:token},
 					dataType: 'json',
 					header:{
 						'content-type':'application/x-www-form-urlencoded',
-			
 					},
 					success: (res) => {
 						let result = res.data;
 						console.log(result);
 						if(result.code=='0') {
-							this.customers = result.data;
+							_this.customers = result.data;
 						} else {
 							uni.showToast({
 								title:result.msg
 							})
 						}
 					}
+				})
+			},
+				
+			navToCustomer(memberId) {
+		
+				uni.navigateTo({
+					url: `visitLogs?member_id=${memberId}`
 				})
 			}
 		}

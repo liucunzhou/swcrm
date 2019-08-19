@@ -14,6 +14,23 @@ Vue.prototype.$backgroundAudioData = {
 	playTime: 0,
 	formatedPlayTime: '00:00:00'
 }
+Vue.prototype.$getToken = function() {
+	let token = '';
+	try {
+		token = uni.getStorageSync('token');
+		if (token) {
+			console.log(token);
+		} else {
+			uni.navigateTo({
+				url:'/pages/public/login'
+			});
+		}
+	} catch (e) {
+		// error
+	}
+	
+	return token;
+}
 
 Vue.component('page-head', pageHead)
 Vue.component('page-foot', pageFoot)

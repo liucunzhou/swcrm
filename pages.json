@@ -1,26 +1,19 @@
 {
 	"pages": [
-		// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		 {
 			"path": "pages/home/home",
 			"style": {
-				 "navigationStyle":"custom"
+				 "navigationBarTitleText": "红丝云"
 			}
 		},
 		{
 			"path": "pages/public/login",
 			"style": {
-				 "navigationStyle":"custom"
-			}
-		},
-		{
-			"path": "pages/public/signin",
-			"style": {
-				 "navigationStyle":"custom"
+				 "navigationBarTitleText": "用户登录"
 			}
 		},
 		 {
-			"path": "pages/home/inform",
+			"path": "pages/home/notices",
 			"style": {
 				 "navigationBarTitleText": "通知信息"
 			}
@@ -28,7 +21,7 @@
 		 {
 			"path": "pages/home/setTing",
 			"style": {
-				 "navigationBarTitleText": "设置"
+				 "navigationBarTitleText": "系统设置"
 			}
 		},
 		 {
@@ -44,15 +37,21 @@
 			}
 		},
 		{
-			"path": "pages/home/dateil",
+			"path": "pages/home/visitCustomer",
 			"style": {
-				 "navigationBarTitleText": "详情"
+				 "navigationBarTitleText": "回访客户"
 			}
 		},
 		{
-			"path": "pages/home/followUp",
+			"path": "pages/home/visitLogs",
 			"style": {
-				 "navigationBarTitleText": "写跟进"
+				 "navigationBarTitleText": "回访记录"
+			}
+		},
+		{
+			"path": "pages/home/doVisitCustomer",
+			"style": {
+				 "navigationBarTitleText": "跟进客户"
 			}
 		},
 		{
@@ -68,13 +67,19 @@
 			}
 		},
 		{
+			"path": "pages/home/mine",
+			"style": {
+				 "navigationBarTitleText": "我的客资"
+			}
+		},
+		{
 			"path": "pages/home/createOrder",
 			"style": {
 				 "navigationBarTitleText": "生成订单"
 			}
 		},
 		{
-			"path": "pages/home/newly",
+			"path": "pages/home/addCustomer",
 			"style": {
 				 "navigationBarTitleText": "新增客户"
 			}

@@ -72,7 +72,7 @@
 				   <navigator url="msgList">
 	  				    <view class="backlognumber">2</view>
 						<img class="backlog_msg_img" src="../../commonimg/orders.png"></img>
-						<text>今日需要跟进的客户</text>
+						<text>今日跟进</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
@@ -82,7 +82,7 @@
 				   <navigator url="msgList">
 					    <view class="backlognumber">2</view>
 						<img class="backlog_msg_img" src="../../commonimg/relation.png"></img>
-						<text>派单给我的客户</text>
+						<text>我的客资</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
@@ -92,7 +92,7 @@
 				   <navigator url="msgList">
 					    <view class="backlognumber">2</view>
 						<img class="backlog_msg_img" src="../../commonimg/apply.png"></img>
-						<text>申请通过的客户</text>
+						<text>我的申请</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
@@ -102,7 +102,7 @@
 		<!-- 底部弹框 -->
 		<view class="bottombox" v-if="isBottom">
 			<view class="boxtext">
-				<view class="boxtext_main" @click="newly()">
+				<view class="boxtext_main" @click="addCustomer()">
 					<img src="../../commonimg/newkehu.png"></img>
 					<text> 新增客户</text>
 				</view>
@@ -142,7 +142,7 @@
 					} else {
 						uni.navigateTo({
 							url:'/pages/public/login'
-						})
+						});
 					}
 				} catch (e) {
 					// error
@@ -168,9 +168,9 @@
 			isColumnFn(){
 				this.translate=-100
 			},
-			newly(){
+			addCustomer(){
 				uni.navigateTo({
-					url:'newly'
+					url:'addCustomer'
 				});	
 			},
 			// 查找客户
