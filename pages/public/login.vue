@@ -37,7 +37,7 @@
 			</view>
 		
 			<view class="forget-section">
-			     <text>忘记密码?</text>	 <text @click="toRegist"><text>还没有账号? </text>  马上注册</text>
+			     <text>忘记密码?</text>
 			</view>
 		</view>
 		<button class="confirm-btn" @click="toLogin" :disabled="logining">登录</button>
@@ -93,7 +93,7 @@
 							try {
 							    uni.setStorageSync('token', result.result.token);
 								uni.navigateTo({
-									url: '/pages/home/home',
+									url: '/pages/home/index',
 									success: res => {},
 									fail: () => {},
 									complete: () => {}
