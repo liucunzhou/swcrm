@@ -385,7 +385,8 @@
 		height: 60px;
 		border-radius: 50%;
 		vertical-align: middle;
-		padding-right: 20px;
+		margin-right: 20px;
+		/* box-sizing: border-box; */
 	}
 
 	.column_center .name {

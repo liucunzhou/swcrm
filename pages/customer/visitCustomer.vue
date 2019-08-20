@@ -102,11 +102,11 @@
 			<view class="laberbox_box">
 				<view class="boxtext" @click="bianPhone"> 
 				   <text> 1379456465</text>
-				   <img class="box_phone" src="../../commonimg/phone.png"></img>
+				   <!-- <img class="box_phone" src="../../commonimg/phone.png"></img> -->
 				</view>
 				<view class="boxtext" @click="bianPhone"> 
 				   <text> 1379456465</text>
-				   <img class="box_phone" src="../../commonimg/phone.png"></img>
+				   <!-- <img class="box_phone" src="../../commonimg/phone.png"></img> -->
 				</view>
 			</view>
 		</view>
@@ -404,24 +404,28 @@
 	}
 
 	.laberbox_box {
-		width: 300px;
+		width: 200px;
 		height: auto;
 		padding-bottom: 20px;
 		background: #fff;
 		padding: 10px 10px;
 		box-sizing: border-box;
+		border-radius: 20px;
+		overflow: scroll;	
 	}
 
-	.box_phone {
-		width: 20px;
-		height: 20px;
-		vertical-align: middle;
 
-	}
 
 	.boxtext {
+		color: #0CAAF0;
 		display: flex;
-		justify-content: space-between;
-		border-bottom: 1px solid #ccc;
+		justify-content: center;
+		border-bottom: 1px solid #F2F2F2;
+		line-height: 45px;
+		font-size: 15px;
 	}
+	.boxtext:last-child{
+		border: none;
+	}
+    
 </style>

@@ -106,6 +106,7 @@
 				isAllList:false,//是否显示全部客户弹框
 				isTopmuie:false,//筛选弹框
 				topmuieFixed_left:[
+					
 					"跟进状态",
 					"客户来源",
 					"负责人",

@@ -238,7 +238,7 @@
 		width: 100%;
 		height: auto;
 		border-radius: 5px;
-		padding: 0px 0px;
+		padding-bottom: 40px;
 		box-sizing: border-box;
 		/* background: #f3f3f3; */
 	}
