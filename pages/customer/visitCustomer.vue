@@ -138,11 +138,8 @@
 		</view>
 		<view class="laberbox" v-if="isLaberbox" @click="boxFn()">
 			<view class="laberbox_box">
-				<view class="boxtext" @click="bianPhone" data-key="customer.mobile">
+				<view class="boxtext" @click="bianPhone">
 					<text> {{customer.mobile}}</text>
-				</view>
-				<view class="boxtext" @click="bianPhone" data-key="customer.mobile1">
-					<text> {{customer.mobile1}}</text>
 				</view>
 			</view>
 		</view>
@@ -280,10 +277,12 @@
 				this.isLaberbox = false
 			},
 			bianPhone(e) {
-				let phoneNumber = e.currentTarget.dataset.key;
+			
+				let mobile = this.customer.mobile;
+				console.log(mobile);
 				window.event.stopPropagation()
 				uni.makePhoneCall({
-					phoneNumber: phoneNumber
+					phoneNumber: mobile
 				});
 			},
 			inputChange(e){
