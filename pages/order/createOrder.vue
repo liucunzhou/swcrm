@@ -4,8 +4,8 @@
 			<view class="ordertype">
 				<view class="ordertype_text">订单类型:</view>
 				<view class="ordertype_value">
-					<picker mode="selector" @change="newsTypeChange" :range="newsTypes" :value="newsType">
-						<img src="../../commonimg/fanhui.png"></img><text>{{newsTypes[newsType]}}</text>
+					<picker mode="selector" @change="newsTypeChange" :range="news_type" :value="newsType">
+						<img src="../../commonimg/fanhui.png"></img><text>{{news_type[newsType]}}</text>
 					</picker>
 				</view>
 			</view>
@@ -201,10 +201,10 @@
 <script>
 	export default {
 		data() {
-			let newsTypes = ['婚宴信息', '婚庆信息', '一站式'];
+			let news_type = ['婚宴信息', '婚庆信息', '一站式'];
 			return {
 				member_id: 0,
-				newsTypes: newsTypes,
+				news_type: news_type,
 				newsType: 0,
 				sign_date: "",
 				recommender:"",
