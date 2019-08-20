@@ -101,8 +101,37 @@
 			"style": {
 				 "navigationBarTitleText": "查找客资"
 			}
+		},
+		{
+			"path": "pages/order/createOrder",
+			"style": {
+				 "navigationBarTitleText": "创建订单"
+			}
+		},
+		{
+			"path": "pages/order/editOrder",
+			"style": {
+				 "navigationBarTitleText": "查看订单"
+			}
+		},
+		{
+			"path": "pages/order/entire",
+			"style": {
+				 "navigationBarTitleText": "一站式订单"
+			}
+		},
+		{
+			"path": "pages/order/wedding",
+			"style": {
+				 "navigationBarTitleText": "婚庆订单"
+			}
+		},
+		{
+			"path": "pages/order/banquet",
+			"style": {
+				 "navigationBarTitleText": "婚宴订单"
+			}
 		}
-	
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -78,7 +78,7 @@
 					password
 				};
 	
-				let url = 'http://crm.reactphp.club/api/passport/dologin';
+				let url = this.$apis.passport.login;
 				uni.request({
 					url:url,
 					method:'POST',

@@ -41,15 +41,15 @@
 			<text style="color: #0CAAF0;font-size: 8px;margin-right: 5px;">▶ </text> 订单管理
 		</view>
 		<view class="box_flex">
-			<view class="imgText" @click="goToSea()">
+			<view class="imgText" @click="goToOrder(2)">
 				<img src="../../commonimg/information.png" mode=""></img>
 				<text>一站式</text>
 			</view>
-			<view class="imgText" @click="goToMine()">
+			<view class="imgText" @click="goToOrder(0)">
 				<img src="../../commonimg/myinformation.png" mode=""></img>
 				<text>婚宴订单</text>
 			</view>
-			<view class="imgText" @click="goToMine()">
+			<view class="imgText" @click="goToOrder(1)">
 				<img src="../../commonimg/myorder.png" mode=""></img>
 				<text>婚庆订单</text>
 			</view>
@@ -74,6 +74,21 @@
 				uni.navigateTo({
 					url: '../customer/mine?status=' + status + '&is_into_store=' + is_into_store + '&page_title=' + page_title
 				})
+			},
+			goToOrder(orderType) {
+				if(orderType==0) { // 婚宴
+					uni.navigateTo({
+						url: '../order/banquet'
+					});
+				} else if(orderType == 1) { // 婚庆
+					uni.navigateTo({
+						url: '../order/wedding'
+					});
+				} else { // 一站式
+					uni.navigateTo({
+						url: '../order/entire'
+					});
+				}
 			}
 		}
 	}

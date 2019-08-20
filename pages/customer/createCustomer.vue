@@ -20,21 +20,19 @@
 			<view class="ordertype">
 				<view class="ordertype_text">推荐来源:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="recommender" data-key="recommender" placeholder="请填写推荐来源" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="recommender" data-key="recommender" @input="inputChange" placeholder="请填写推荐来源" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">新人名字:</view>
 				<view class="ordertype_value">
-					<!-- <text>2019-02-02</text>	 -->
-					<input type="text" :value="realname" data-key="realname" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="realname" data-key="realname" @input="inputChange" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">联系电话:</view>
 				<view class="ordertype_value">
-					<!-- <text>2019-02-02</text>	 -->
-					<input type="text" :value="mobile" data-key="mobile" placeholder="联系电话" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="mobile" data-key="mobile" @input="inputChange" placeholder="联系电话" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
@@ -56,26 +54,26 @@
 			<view class="ordertype">
 				<view class="ordertype_text">所选区域:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="zone" data-key="zone" placeholder="选择区域" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="zone" data-key="zone" @input="inputChange" placeholder="选择区域" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">选择酒店:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="hotel_text" data-key="hotel_text" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="hotel_text" data-key="hotel_text"  @input="inputChange" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 
 			<view class="ordertype">
 				<view class="ordertype_text">桌数:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="banquet_size"  data-key="banquet_size" placeholder="请填写桌数" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="banquet_size"  data-key="banquet_size"  @input="inputChange" placeholder="请填写桌数" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">预算:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="budget" data-key="budget" placeholder="请填写预算" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="budget" data-key="budget"  @input="inputChange" placeholder="请填写预算" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
@@ -91,13 +89,13 @@
 			<view class="ordertype">
 				<view class="ordertype_text">备注:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="remark" data-key="remark" placeholder="请填写备注" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="remark" data-key="remark" @input="inputChange" placeholder="请填写备注" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 		</view>
 
 		<view class="Submit">
-			<text>立即提交</text>
+			<text @click="submit">立即提交</text>
 			<text>重置</text>
 		</view>
 	</view>
@@ -112,6 +110,7 @@
 			let sources = [{'title':'无'}];
 			let cities = [{'shortname':'无'}];
 			let areas = [{'shortname':'无'}];
+
 			return {
 				recommender: '',
 				realname:'',
@@ -134,10 +133,7 @@
 			}
 		},
 		created() {
-			// //动态设置头部title
-			// uni.setNavigationBarTitle({
-			// 	title:"动态标题"
-			// })
+
 		},
 		onLoad() {
 			this.getBaseData();
@@ -145,7 +141,7 @@
 		methods: {
 			getBaseData() {
 				let _this = this;
-				let url = 'http://crm.reactphp.club/api/customer/getBaseData';
+				let url = _this.$apis.customer.getBaseData;
 				let token = this.$getToken();
 				let params = {
 					token: token
@@ -166,6 +162,7 @@
 							_this.cities = result.data.cities;
 							_this.city_index = result.data.city_index;
 							_this.areas = result.data.areas;
+							
 						} else {
 							uni.showToast({
 								title: result.msg
@@ -196,10 +193,37 @@
 				
 			},
 			bindCityChange(e) {
-				console.log(e);
+				let _this = this;
 				let city_index = e.detail.value;
-				this['city_index'] = city_index;
+				_this['city_index'] = city_index;
+				let city = this.cities[city_index];
 				
+				let url = _this.$apis.region.getAreaList;
+				let token = this.$getToken();
+				let params = {
+					token: token,
+					id: city.id,
+				};
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let result = res.data;
+						if (result.code == '0') {
+							_this.areas = result.data;
+							_this.area_index = 0;
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+					}
+				})
 			},
 			bindAreaChange(e) {
 				let area_index = e.detail.value;
@@ -220,6 +244,58 @@
 				}
 				this['zone'] = zoneStr;
 			},
+			submit(){
+				let _this = this;
+				let url = _this.$apis.customer.createCustomer;
+				let source_index = _this.source_index;
+				let mobile = _this.mobile;
+				if(mobile=='' || isNaN(mobile)) {
+					console.log(mobile);
+					uni.showToast({
+						title:"请输入正确的手机号",
+						icon: "none"
+					});
+					
+					return false;
+				}
+				let city_index = _this.city_index;
+				
+				let params = {
+					token: _this.$getToken(),
+					news_type: _this.newsType,
+					source_id: _this.sources[source_index]['id'],
+					realname: _this.realname,
+					mobile: _this.mobile,
+					city_id: _this.cities[city_index]['id'],
+					zone: _this.zone,
+					hotel_text: _this.hotel_text,
+					banquet_size: _this.banquet_size,
+					budget: _this.budget,
+					wedding_date: _this.wedding_date,
+					remark: _this.remark
+				};
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let result = res.data;
+						if (result.code == '0') {
+							uni.navigateTo({
+								url: 'mine?page_title=我的客资'
+							})
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+					}
+				})
+			}
 		}
 	}
 </script>

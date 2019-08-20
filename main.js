@@ -6,6 +6,7 @@ import pageFoot from './components/page-foot.vue'
 import uLink from '@/components/uLink.vue'
 import store from './store'
 import dingtalk from './dingtalk.open.js'
+import hosts from './hosts.js'
 
 let platform = dingtalk.env.platform;
 if(platform != 'notInDingTalk') {
@@ -43,6 +44,7 @@ Vue.prototype.$getToken = function() {
 	
 	return token;
 }
+Vue.prototype.$apis = hosts;
 
 Vue.component('page-head', pageHead)
 Vue.component('page-foot', pageFoot)

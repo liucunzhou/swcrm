@@ -68,7 +68,7 @@
 			<view class="backlog_main">
 				<view class="backlog_msg">
 					<navigator url="../customer/today">
-						<view class="backlognumber">2</view>
+						<!-- <view class="backlognumber">2</view> -->
 						<img class="backlog_msg_img" src="../../commonimg/orders.png"></img>
 						<text>今日跟进</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
@@ -78,7 +78,7 @@
 			<view class="backlog_main">
 				<view class="backlog_msg">
 					<navigator url="../customer/mine?page_title='我的客资'">
-						<view class="backlognumber">2</view>
+						<!-- <view class="backlognumber">2</view> -->
 						<img class="backlog_msg_img" src="../../commonimg/relation.png"></img>
 						<text>我的客资</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
@@ -88,7 +88,7 @@
 			<view class="backlog_main">
 				<view class="backlog_msg">
 					<navigator url="../customer/apply">
-						<view class="backlognumber">2</view>
+						<!-- <view class="backlognumber">2</view> -->
 						<img class="backlog_msg_img" src="../../commonimg/apply.png"></img>
 						<text>客资申请</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>

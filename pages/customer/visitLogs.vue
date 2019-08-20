@@ -86,12 +86,12 @@
 		},
 		methods: {
 			getCustomerVisits(member_id) {
-				let url = 'http://crm.reactphp.club/api/visit/logs';
+				let _this = this;
+				let url = _this.$apis.customer.logs;
 				let params = {
 					member_id: member_id,
 					token: this.$getToken()
 				};
-				let _this = this;
 				uni.request({
 					url: url,
 					method: 'POST',

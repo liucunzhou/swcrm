@@ -4,7 +4,7 @@
 			<view class="ordertype">
 				<view class="ordertype_text">订单类型:</view>
 				<view class="ordertype_value">
-					<picker mode="selector" @change="newsTypeChange" :range="newsTypes" :value="newsType">
+					<picker mode="selector" @change="typeFn" :range="newsTypes" :value="newsType">
 						<img src="../../commonimg/fanhui.png"></img><text>{{newsTypes[newsType]}}</text>
 					</picker>
 				</view>
@@ -190,11 +190,6 @@
 				</view>
 			</view>
 		</view>
-
-		<view class="Submit">
-			<text @click="createOrder">立即提交</text>
-			<text>重置</text>
-		</view>
 	</view>
 </template>
 
@@ -203,7 +198,7 @@
 		data() {
 			let newsTypes = ['婚宴信息', '婚庆信息', '一站式'];
 			return {
-				member_id: 0,
+				typeData: "婚宴",
 				newsTypes: newsTypes,
 				newsType: 0,
 				sign_date: "",
@@ -237,32 +232,35 @@
 				manager_recommend_commission:""
 			}
 		},
-		
 		onLoad(params) {
-			this.member_id = params.member_id;
-			this.getMember();
+			console.log('params is', params);
+			this.getOrder(params.id);
 		},
 		methods: {
-			getMember() {
+			getOrder(id) {
 				let _this = this;
-				let url = _this.$apis.customer.getCustomer;
-				let params = {};
-				params['token'] = _this.$getToken();
-				params['id'] = _this.member_id;
+				let token = _this.$getToken();
+				let data = {
+					token: token,
+					id: id
+				};
+				let url = _this.$apis.order.getOrder;
 				uni.request({
 					url: url,
 					method: 'POST',
-					data: params,
+					data: data,
 					dataType: 'json',
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
 					},
 					success: (res) => {
 						let result = res.data;
-						console.log(result);
-						if (result.code == '200') {
-							_this.realname = result.data.realname;
-							_this.mobile = result.data.mobile;
+						
+						if (result.code == '0') {
+							let order = result.data;
+							for(let i in order) {
+								_this[i] = order[i];
+							}
 						} else {
 							uni.showToast({
 								title: result.msg
@@ -270,42 +268,6 @@
 						}
 					}
 				})
-			},
-			//订单类型
-			newsTypeChange(e) {
-				this.newsType = e.detail.value;
-			},
-			createOrder(e) {
-				let params = {};
-				for(let i in this.$data) {
-					params[i] = this.$data[i];
-				}
-				params['token'] = this.$getToken();
-				console.log(params);
-				let url = this.$apis.order.createOrder;
-				uni.request({
-					url: url,
-					method: 'POST',
-					data: params,
-					dataType: 'json',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-					},
-					success: (res) => {
-						let result = res.data;
-						console.log(result);
-						if (result.code == '200') {
-							uni.showToast({
-								title: result.msg
-							})
-						} else {
-							uni.showToast({
-								title: result.msg,
-								icon: 'none'
-							})
-						}
-					}
-				});
 			}
 		}
 	}

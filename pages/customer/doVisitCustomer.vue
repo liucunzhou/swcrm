@@ -2,68 +2,42 @@
 	<view class="pages">
 		<view class="page_box">
 			<view class="textbox">
-			 	<textarea @blur=""  placeholder-style="font-size:12px"  class="textbox_pla"  placeholder="请输入跟进记录" />
-			 </view>
-			 <view class="followTime">
-			 	<text>实际跟进记录：2019-08-07 12:00 </text>
-			 </view>
+				<textarea @input="inputChange" data-key="remark" placeholder-style="font-size:12px" class="textbox_pla" placeholder="请输入跟进记录" />
+				</view>
 			 <view class="followName">
 			 	<view class="followmsg">
-			     	<text>客户姓名：name</text>
+			     	<text>客户姓名：{{realname}}</text>
 			 	</view>
-			 	<view class="followtatus" @click="isLaberbox=true">
-			 		<text>成交</text>
-			 		<!-- <img  style="text-align: right;" src="../../commonimg/fanhui.png"></img> -->
-			 	</view>
+				<picker mode="selector" @change="statusChange" :value="status" :range="statuses" range-key="title">
+					<view class="uni-input followtatus">{{statuses[status]['title']}}</view>
+				</picker>
 			 </view>
 			 
 			 <view class="followName">
-			   <picker mode="date"  :value="date"  @change="bindTimeChange">
+			   <picker mode="date"  :value="next_visit_time"  @change="bindTimeChange">
 			 		<view class="followmsg" style="width: 94%;">
-			 			<text style="width: 100%; color: #000000;"><text >下次跟进时间：</text> <text style="float: right;">{{date}}</text></text>	
+			 			<text style="width: 100%; color: #000000;"><text >下次跟进时间：</text> <text style="float: right;">{{next_visit_time}}</text></text>	
 			 		</view>
 			 		<view class="followtatus" style="text-align: right;width: 5%;">
 			 			<img src="../../commonimg/fanhui.png"></img>
 			 		</view>
 			 	 </picker>
 			 </view>
-			 <view class="laberbox" v-if="isLaberbox" @click="boxFn()">
-			 	 <view class="laberbox_box">
-			           <radio-group @change="radioChange">
-			 			<label style="transform:scale(0.9);font-size: 16px;" class="uni-list-cell uni-list-cell-pd" v-for="(item, index) in items" :key="item.value">
-			 				<view>
-			 					<radio :value="item.value" :checked="index === current" />
-			 				</view>
-			 				<view>{{item.name}}</view>
-			 			</label>
-			        </radio-group>
-			 	 </view>
-			 </view>
+			
 			 <view class="order">
 			 	<text class="Customer_text">是否到店</text>
-			      <view class="notorder" @click="isOreder=false">
-			      	<text  :class="isOreder?'order_box':'activeorder_box'" ></text>
-			 		<text  :class="isOreder?'order_text':'activeorder_text'">未到店</text>
+			      <view class="notorder" @click="is_into_store=false">
+			      	<text  :class="is_into_store?'order_box':'activeorder_box'" ></text>
+			 		<text  :class="is_into_store?'order_text':'activeorder_text'">未到店</text>
 			      </view>		    
-			       <view class="notorder" @click="isOreder=true">
-			      	<text :class="!isOreder?'order_box':'activeorder_box'" ></text>
-			      	<text :class="!isOreder?'order_text':'activeorder_text'">到店</text>
-			      </view>
-			 </view>
-			 <view class="order">
-			 	<text class="Customer_text">客户到店</text>
-			      <view class="notorder" @click="isOreder=false">
-			      	<text  :class="isOreder?'order_box':'activeorder_box'" ></text>
-			 		<text  :class="isOreder?'order_text':'activeorder_text'">未订单</text>
-			      </view>		    
-			       <view class="notorder" @click="PurchaseOrder() ">
-			      	<text :class="!isOreder?'order_box':'activeorder_box'" ></text>
-			      	<text :class="!isOreder?'order_text':'activeorder_text'">订单</text>
+			       <view class="notorder" @click="is_into_store=true">
+			      	<text :class="!is_into_store?'order_box':'activeorder_box'" ></text>
+			      	<text :class="!is_into_store?'order_text':'activeorder_text'">到店</text>
 			      </view>
 			 </view>
 			  
 			 <view class="btn">
-			 	<button type="primary">保存</button>
+			 	<button type="primary" :disabled="submit" @click="doVisitCustomer">保存</button>
 			 </view>
 		</view>
 	</view>
@@ -72,49 +46,99 @@
 <script>
 	export default {
 		data() {
+			let statuses = [
+				{id: 0, title: "未跟进", is_valid: 1},
+				{id: 1, title: "跟进中", is_valid: 1},
+				{id: 2, title: "成单客户", is_valid: 1},
+				{id: 3, title: "失效客户", is_valid: 1},
+				{id: 4, title: "无效客户", is_valid: 1},
+				{id: 5, title: "有效客户", is_valid: 1},
+				{id: 6, title: "意向客户", is_valid: 1},
+			];
+			let status = 0;
+			let realname = '';
+			let submit = true;
 			return {
-				customer: {},
-				isOreder:true,
-				isNotoder:true,
-				date:"2019-08-07",
-				 items: [{
-                    value: 'USA',
-                    name: '有意向'
-                },
-                {
-                    value: 'CHN',
-                    name: '失效',
-                    checked: 'true'
-                },
-                {
-                    value: 'BRA',
-                    name: '跟进'
-                },
-     
-            ],
-            current: 0,
-			isLaberbox:false,
+				is_into_store:false,
+				next_visit_time:"2019-08-07",
+				current: 0,
+				isLaberbox:false,
+				realname: realname,
+				remark: '',
+				status: status,
+				statuses: statuses,
+				submit: submit,
+				member_id: 0
 			}
 		},
+		onLoad(options) {
+			this.realname = options.realname;
+			this.member_id = options.member_id;
+		},
 		methods:{
-			bindTimeChange(e){
-				this.date=e.detail.value
+			inputChange(e){
+				const key = e.currentTarget.dataset.key;
+				let value = e.detail.value;
+				this[key] = value;
+				let status = this.status;
+				let statuses = this.statuses;
+				let cstatus = statuses[status];
+				if(cstatus.id != 3 && cstatus.id != 4 && this.nextVisitTime != '' && this.remark != '') {
+					this.submit = false;
+				}
 			},
-			radioChange(e){
-				 window.event.stopPropagation()
-				 uni.navigateTo({
-				 	url:"createOrder"
-				 })
+			statusChange(e) {
+				let status = e.detail.value;
+				this.status = status;
+				let cstatus = this.statuses[status];
+				if(cstatus.id != 3 && cstatus.id != 4 && this.nextVisitTime != '' && this.remark != '') {
+					this.submit = false;
+				}
 			},
-			boxFn(e){
-				this.isLaberbox=false
+			bindTimeChange(e) {
+				this.next_visit_time = e.detail.value
+				let status = this.status;
+				let statuses = this.statuses;
+				let cstatus = statuses[status];
+				if(cstatus.id != 3 && cstatus.id != 4 && this.nextVisitTime != '' && this.remark != '') {
+					this.submit = false;
+				}
 			},
-			// 点击订单
-			PurchaseOrder(){
-				this.isOreder=true
-				 uni.navigateTo({
-					url:"createOrder"
-				})
+			doVisitCustomer(e) {
+				let _this = this;
+				let status = this.status;
+				let cstatus = this.statuses[status].id;
+				let token = this.$getToken();
+				let url = _this.$apis.visit.doVisitCustomer;
+				let params = {
+					token: token,
+					member_id: _this.member_id,
+					active_status: cstatus,
+					next_visit_time: _this.next_visit_time,
+					content: _this.remark,
+					is_into_store: _this.is_into_store ? 1 : 0
+				};
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let response = res.data;
+						if (response.code == '200') {
+							uni.showToast({
+								title:response.msg
+							})
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+					}
+				});
 			}
 		}
 	}
@@ -123,9 +147,7 @@
 <style>
 	.pages{
 		width: 100vw;
-		/* height: 100vh; */
 		background: #f4f4f4;
-		
 	}
 	.page_box{
 		padding: 0 10px;
@@ -236,7 +258,8 @@
 		width: 50%;
 		display: inline-block;
 		float: left;
-		line-height:55px;
+		line-height:44px;
+		height: 44px;
 	}
 	.followmsg text{
 		display:inline-block;
@@ -245,8 +268,13 @@
 		float: right;
 		display: inline-block;
 		width: 49%;
-		line-height: 55px;
+		height: 44px;
+		line-height: 44px;
 		text-align: center;
+	}
+	.followtatus.uni-input {
+		padding: 0;
+		border-left:1px solid #ccc ;
 	}
 	.followtatus text{
 		box-sizing: border-box;

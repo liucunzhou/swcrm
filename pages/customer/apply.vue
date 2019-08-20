@@ -66,7 +66,7 @@
 		methods: {
 			getCustomerList(params) {
 				let _this = this;
-				let url = 'http://crm.reactphp.club/api/customer/apply';
+				let url = _this.$apis.customer.apply;
 				params['token'] = this.$getToken();
 				uni.request({
 					url: url,
@@ -107,7 +107,7 @@
 	.pages {
 		width: 100%;
 		height: 100%;
-		padding: 60px 30px 30px 30px;
+		padding: 60px 12px 30px 12px;
 		box-sizing: border-box;
 		overflow: auto;
 		position: relative;
