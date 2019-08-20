@@ -1,4 +1,4 @@
-const host = 'http://h5.hongsizg.com';
+const host = 'http://crm.hongsizg.com';
 
 const apis = {
 	passport: {
