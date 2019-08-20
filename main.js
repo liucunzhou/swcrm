@@ -5,6 +5,19 @@ import pageHead from './components/page-head.vue'
 import pageFoot from './components/page-foot.vue'
 import uLink from '@/components/uLink.vue'
 import store from './store'
+import dingtalk from './dingtalk.open.js'
+
+let platform = dingtalk.env.platform;
+if(platform != 'notInDingTalk') {
+	dingtalk.ready(function() {
+		dd.biz.navigation.hideBar({
+		    hidden: true,
+		    onSuccess : function(result) {
+		    },
+		    onFail : function(err) {}
+		})
+	});
+}
 
 Vue.config.productionTip = false
 Vue.prototype.$store = store
