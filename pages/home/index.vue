@@ -33,8 +33,8 @@
 					<view class="column_center">
 						<img src="../../commonimg/headerimg.png"></img>
 						<view class="name">
-							<text>name</text>
-							<text>name</text>
+							<text>{{user.nicekname}}</text>
+							<text>{{user.realname}}</text>
 						</view>
 					</view>
 				</view>
@@ -53,7 +53,7 @@
 							<img class="downfanhui" src="../../commonimg/fanhui.png"></img>
 						</navigator>
 					</view>
-					<view class="downmsg">
+					<view class="downmsg" @click="logout">
 						<img class="downmsgicon" src="../../commonimg/closeimg.png"></img>
 						<text>退出</text>
 						<img class="downfanhui" src="../../commonimg/fanhui.png"></img>
@@ -120,7 +120,12 @@
 <script>
 	export default {
 		data() {
+			let user = {
+				'nicekname': '',
+				'avatar': ''
+			};
 			return {
+				user: user,
 				isactiveL: true, //待办
 				isCircle: true, //圈弹框
 				isactiveR: true, //客资
@@ -136,6 +141,8 @@
 			checkLogin() {
 				try {
 					const token = uni.getStorageSync('token');
+					this.user = uni.getStorageSync("user");
+
 					if (token) {
 						console.log(token);
 					} else {
@@ -177,6 +184,20 @@
 				uni.navigateTo({
 					url: '../customer/findCustomer'
 				});
+			},
+			// 退出
+			logout() {
+				try{
+					uni.removeStorageSync('token');	
+					uni.navigateTo({
+						url: '../public/login'
+					})
+				}catch(e){
+					//TODO handle the exception
+					uni.showToast({
+						title:"退出异常，请重试"
+					})
+				}
 			}
 		}
 	}

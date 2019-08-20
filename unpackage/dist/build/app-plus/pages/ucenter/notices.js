@@ -1,0 +1,2 @@
+setCssToHead([".",[1],"pages { width: 100%; height: 100%; }\n.",[1],"msg { width: 100%; height: 70px; padding: 10px 10px; -webkit-box-sizing: border-box; box-sizing: border-box; border-bottom: 1px solid #ccc; }\n.",[1],"msg wx-text { display: block; }\n",],undefined,{path:"./pages/ucenter/notices.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/ucenter/notices.wxml') } }));

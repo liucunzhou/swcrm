@@ -12,7 +12,7 @@
 			<view class="ordertype">
 				<view class="ordertype_text">平台来源:</view>
 				<view class="ordertype_value">
-					<picker @change="bindSourceChange" :value="source_index" :range="sources" range-key="title">
+					<picker @change="bindSourceChange" data-key="source_index" :value="source_index" :range="sources" range-key="title">
 						<view class="uni-input">{{sources[source_index]['title']}}</view>
 					</picker>
 				</view>
@@ -20,27 +20,27 @@
 			<view class="ordertype">
 				<view class="ordertype_text">推荐来源:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="recommender" placeholder="请填写推荐来源" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="recommender" data-key="recommender" placeholder="请填写推荐来源" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">新人名字:</view>
 				<view class="ordertype_value">
 					<!-- <text>2019-02-02</text>	 -->
-					<input type="text" :value="realname" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="realname" data-key="realname" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">联系电话:</view>
 				<view class="ordertype_value">
 					<!-- <text>2019-02-02</text>	 -->
-					<input type="text" :value="mobile" placeholder="联系电话" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="mobile" data-key="mobile" placeholder="联系电话" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">选择城市:</view>
 				<view class="ordertype_value">
-					<picker @change="bindCityChange" :value="city_index" :range="cities" range-key="shortname">
+					<picker @change="bindCityChange" data-key="city_index" :value="city_index" :range="cities" range-key="shortname">
 						<view class="uni-input">{{cities[city_index]['shortname']}}</view>
 					</picker>
 				</view>
@@ -56,26 +56,26 @@
 			<view class="ordertype">
 				<view class="ordertype_text">所选区域:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="zone" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="zone" data-key="zone" placeholder="选择区域" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">选择酒店:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="hotel_text" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="hotel_text" data-key="hotel_text" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 
 			<view class="ordertype">
 				<view class="ordertype_text">桌数:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="banquet_size" placeholder="请填写桌数" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="banquet_size"  data-key="banquet_size" placeholder="请填写桌数" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">预算:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="budget" placeholder="请填写预算" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="budget" data-key="budget" placeholder="请填写预算" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 			<view class="ordertype">
@@ -91,7 +91,7 @@
 			<view class="ordertype">
 				<view class="ordertype_text">备注:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="remark" placeholder="请填写备注" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="remark" data-key="remark" placeholder="请填写备注" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
 		</view>
@@ -164,6 +164,8 @@
 							_this.newsTypes = result.data.news_types;
 							_this.sources = result.data.sources;
 							_this.cities = result.data.cities;
+							_this.city_index = result.data.city_index;
+							_this.areas = result.data.areas;
 						} else {
 							uni.showToast({
 								title: result.msg
@@ -171,6 +173,10 @@
 						}
 					}
 				})
+			},
+			inputChange(e){
+				const key = e.currentTarget.dataset.key;
+				this[key] = e.detail.value;
 			},
 			// 信息类型
 			newsTypeFn(e) {
@@ -183,17 +189,37 @@
 				let wedding_date = e.detail.value;
 				this.wedding_date = wedding_date;
 			},
-			bindCityChange(e) {
-				console.log(e);
-			
-			},
 			bindSourceChange(e) {
 				console.log('value is', e.detail.value);
-				let source_index = e.value;
-				this.source_index = source_index;
-				console.log('source_index is:', this.source_index);
-				console.log(this.sources[this.source_index]);
-			}
+				let source_index = e.detail.value;
+				this['source_index'] = source_index;
+				
+			},
+			bindCityChange(e) {
+				console.log(e);
+				let city_index = e.detail.value;
+				this['city_index'] = city_index;
+				
+			},
+			bindAreaChange(e) {
+				let area_index = e.detail.value;
+				this['area_index'] = area_index;
+				
+				console.log(this['areas']);
+				let text = this['areas'][area_index]['shortname'];
+					
+				let zoneStr = this['zone'];
+				if (zoneStr == '') {
+					zoneStr = text;
+				} else {
+					let zoneArr = zoneStr.split(',');
+					if (zoneArr.indexOf(text) == -1) {
+						zoneArr.push(text);
+					}
+					zoneStr = zoneArr.join();
+				}
+				this['zone'] = zoneStr;
+			},
 		}
 	}
 </script>

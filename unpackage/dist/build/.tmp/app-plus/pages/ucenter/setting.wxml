@@ -1,0 +1,1 @@
+<view class="column_down"><view class="downmsg"><navigator url="password"><text>修改密码</text></navigator></view><view class="downmsg"><text>修改昵称</text><input value="name" data-event-opts="{{[['blur',[['nameFn',['$event']]]]]}}" bindblur="__e"/></view></view>

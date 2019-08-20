@@ -105,12 +105,12 @@
         "template" : "index.html",
         "router" : {
             "mode" : "history",
-            "base" : "/"
+            "base" : "/h5"
         },
         "sdkConfigs" : {
             "maps" : {}
         },
-        "domain" : "h5.reactphp.club",
+        "domain" : "h5.yusivip.com",
         "title" : "CRM",
         "devServer" : {
             "port" : 80,
