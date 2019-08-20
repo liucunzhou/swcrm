@@ -39,19 +39,31 @@
 		{
 			"path": "pages/customer/sea",
 			"style": {
-				 "navigationBarTitleText": "红丝云登录"
+				 // "navigationBarTitleText": "红丝云登录"
+				 "navigationStyle":"custom",
+				 "app-plus": {  
+                    "titleNView": false  
+                }
 			}
 		},
 		{
 			"path": "pages/customer/mine",
 			"style": {
-				 "navigationBarTitleText": "我的客资"
+				 // "navigationBarTitleText": "我的客资"
+				 "navigationStyle":"custom",
+				  "app-plus": {  
+				     "titleNView": false  
+				 }
 			}
 		},
 		{
 			"path": "pages/customer/today",
 			"style": {
-				 "navigationBarTitleText": "今日跟进"
+				 // "navigationBarTitleText": "今日跟进"
+				 "navigationStyle":"custom",
+				  "app-plus": {  
+				     "titleNView": false  
+				 }
 			}
 		},
 		{
@@ -90,6 +102,7 @@
 				 "navigationBarTitleText": "查找客资"
 			}
 		}
+	
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

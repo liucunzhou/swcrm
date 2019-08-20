@@ -485,15 +485,17 @@
 	}
 
 	.bottomclose {
+		width: 60px;
+		height: 60px;
 		position: absolute;
 		bottom: 0;
 		left: 50%;
-		margin-left: -15px;
+		margin-left: -30px;
 	}
 
 	.bottomclose img {
-		width: 30px;
-		height: 30px;
+		width: 60px;
+		height: 60px;
 	}
 
 	.boxtext {

@@ -100,9 +100,14 @@
 		</view>
 		<view class="laberbox" v-if="isLaberbox" @click="boxFn()">
 			<view class="laberbox_box">
-				<view class="boxtext" @click="bianPhone"> <text> 1379456465</text><img class="box_phone" src="../../commonimg/phone.png"></img>
+				<view class="boxtext" @click="bianPhone"> 
+				   <text> 1379456465</text>
+				   <img class="box_phone" src="../../commonimg/phone.png"></img>
 				</view>
-				<view class="boxtext" @click="bianPhone"> <text> 1379456465</text><img class="box_phone" src="../../commonimg/phone.png"></img></view>
+				<view class="boxtext" @click="bianPhone"> 
+				   <text> 1379456465</text>
+				   <img class="box_phone" src="../../commonimg/phone.png"></img>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -389,7 +394,7 @@
 	.laberbox {
 		width: 100vw;
 		height: 100vh;
-		position: absolute;
+		position: fixed;
 		left: 0px;
 		top: 0px;
 		background: rgba(0, 0, 0, .3);

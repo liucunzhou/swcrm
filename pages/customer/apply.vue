@@ -1,12 +1,28 @@
 <template>
 	<view class="pages">
 		<view class="topmuie">
-			<view class="screen">
+			<view class="screen" @click="isScreen=true">
 				筛选
 			</view>
 			<view class="seek">
 				<img src="../../commonimg/findminimg.png"></img>
 				<input type="text" placeholder-style="font-size:13px" value="" placeholder="搜索" />
+			</view>
+		</view>
+		<view class="screenbox" @click="isScreen=flase" v-if="isScreen">
+			<view class="screen_mian">
+				<view :class="['screen_text',ScreenIndex===0?'screen_texts':'']" @click.stop="screenFn(0)">
+					<text>已通过</text>
+					<text><text v-if="ScreenIndex===0">✓</text></text> 
+				</view>
+				<view :class="['screen_text',ScreenIndex===1?'screen_texts':'']" @click.stop="screenFn(1)">
+					<text>待通过</text>
+					<text><text v-if="ScreenIndex===1">✓</text></text> 
+				</view>
+				<view :class="['screen_text',ScreenIndex===2?'screen_texts':'']" @click.stop="screenFn(2)">
+					<text>未通过</text>
+					<text><text v-if="ScreenIndex===2">✓</text></text> 
+				</view>
 			</view>
 		</view>
 		<view class="msg" v-for="customer in customers" v-bind:key="customer.id">
@@ -38,7 +54,9 @@
 	export default {
 		data() {
 			return {
-				customers: []
+				customers: [],
+				isScreen:false,
+				ScreenIndex:0,
 			}
 		},
 		created() {},
@@ -77,6 +95,9 @@
 				uni.navigateTo({
 					url: `visitLogs?member_id=${memberId}`
 				})
+			},
+			screenFn(index){
+				this.ScreenIndex=index
 			}
 		}
 	}
@@ -105,6 +126,42 @@
 		background: #fff;
 	}
 
+    .screenbox{
+		width: 100vw;
+		height: 100vh;
+		background: rgba(0,0,0,.3);
+		position: fixed;
+		top: 70px;
+		left: 0px;
+	}
+	.screen_mian{
+		width: 100vw;
+		height: auto;
+		background: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items:left;
+		padding: 0 30px;
+		box-sizing: border-box;
+	}
+	.screen_text{
+		border-bottom: 1px solid #F2F2F2;
+		width: 100%;
+		height: auto;
+		color: both;
+		overflow: auto;
+	}
+	.screen_text text:first-child{
+		line-height: 30px;
+		float: left;
+	}
+	.screen_text text:last-child{
+		line-height: 30px;
+		float: right;
+	}
+	.screen_texts text{
+		color: #0CAAF0;
+	}
 	.screen {
 		width: 50%;
 		height: 40px;
