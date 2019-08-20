@@ -110,7 +110,7 @@
         "sdkConfigs" : {
             "maps" : {}
         },
-        "domain" : "h5.reactphp.club",
+        "domain" : "h5.yusivip.com",
         "title" : "CRM",
         "devServer" : {
             "port" : 80,

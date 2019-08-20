@@ -1,0 +1,71 @@
+
+.pages{
+	width: 100vw;
+	height: 100vh;
+	background: #fff;
+}
+.findbox{
+	width: 90%;
+	height: 30px;
+	border:1px solid #ccc ;
+	margin: 0 auto;
+	border-radius:20px ;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	    -ms-flex-pack: justify;
+	        justify-content: space-between;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	padding: 0px 10px;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	margin-bottom: 20px;
+}
+.findbox ._img{
+	width: 20px;
+	height: 20px;
+}
+.findbox input{
+	width: 90%;
+	display: inline-block;
+}
+.msg{
+	width: 90%;
+	height: auto;
+	margin: 0 auto;
+	border-radius: 5px;
+	background: #ffff;
+	padding: 0px 30px;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	-webkit-box-shadow: 1px 1px 10px #F4F4F4;
+	        box-shadow: 1px 1px 10px #F4F4F4;
+}
+.msg_header{
+	width: 100%;
+	padding: 15px 0px;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+	border-bottom:solid #F2F2F2 1px;
+	margin-bottom: 5px;
+}
+.msg_text{
+	width: 100%;
+	padding: 8px 0;
+}
+.names{
+	color: #1E1E1E;
+	letter-spacing: 4px;
+	margin-right: 10px;
+}
+.namemain{
+	color: #989898;
+	letter-spacing: 3px;
+}
+

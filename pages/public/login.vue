@@ -35,7 +35,7 @@
 					/>
 				</view>
 			</view>
-		
+			
 			<view class="forget-section">
 			     <text>忘记密码?</text>
 			</view>
@@ -92,6 +92,7 @@
 						if(result.code=='200') {
 							try {
 							    uni.setStorageSync('token', result.result.token);
+								uni.setStorageSync('user', result.result.user);
 								uni.navigateTo({
 									url: '/pages/home/index',
 									success: res => {},
