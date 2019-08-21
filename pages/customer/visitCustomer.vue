@@ -399,7 +399,7 @@
 	.pages {
 		width: 100%;
 		box-sizing: border-box;
-		margin-bottom: 60px;
+		padding-bottom: 80px;
 		background: #FFFFFF;
 	}
 
