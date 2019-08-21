@@ -47,7 +47,7 @@
 						</navigator>
 					</view>
 					<view class="downmsg">
-						<navigator url="setTing">
+						<navigator url="../ucenter/setting">
 							<img class="downmsgicon" src="../../commonimg/setting.png"></img>
 							<text>设置</text>
 							<img class="downfanhui" src="../../commonimg/fanhui.png"></img>

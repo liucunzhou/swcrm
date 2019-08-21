@@ -93,12 +93,9 @@
 							try {
 							    uni.setStorageSync('token', result.result.token);
 								uni.setStorageSync('user', result.result.user);
-								uni.navigateTo({
+								uni.reLaunch({
 									url: '/pages/home/index',
-									success: res => {},
-									fail: () => {},
-									complete: () => {}
-								});
+								})
 							} catch (e) {
 							    uni.showToast({
 							    	title:'登陆失败'

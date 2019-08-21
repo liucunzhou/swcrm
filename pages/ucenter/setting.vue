@@ -7,7 +7,7 @@
 		</view>
 		<view class="downmsg"> 
 			<text>修改昵称</text>
-			<input value="name" @blur="nameFn"></input>
+			<input :value="realname" @blur="changeRealName"></input>
 		</view>
 	</view>
 </template>
@@ -15,12 +15,71 @@
 <script>
 	export default {
 		data() {
+			
+			let user;
+			try{
+				user = uni.getStorageSync("user");
+			}catch(e){
+				//TODO handle the exception
+			}
+	
+			let realname = user.realname;
 			return {
+				realname: realname
 			}
 		},
 		methods:{
-			nameFn(){
-				console.log("ssss")
+			changeRealName(e){
+				let realname = e.detail.value;
+				if(realname == '') {
+					uni.showToast({
+						title: '系统名称不能为空',
+						icon: 'none'
+					})
+				}
+				
+				let token = this.$getToken();
+				let params = {
+					token: token,
+					realname: realname
+				};
+				
+				let url = this.$apis.user.editUser;
+				uni.request({
+					url:url,
+					method:'POST',
+					data: params,
+					dataType: 'json',
+					header:{
+						'content-type':'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let result = res.data;
+						if(result.code=='200') {
+							let user;
+							try{
+								user = uni.getStorageSync("user");
+							}catch(e){
+								//TODO handle the exception
+							}
+							
+							user.realname = realname;
+							try{
+								uni.setStorageSync("user", user);
+							}catch(e){
+								//TODO handle the exception
+							}
+						
+							uni.showToast({
+								title:result.msg
+							});
+						} else {
+							uni.showToast({
+								title:result.msg
+							});
+						}
+					}
+				})
 			}
 		}
 	}

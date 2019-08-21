@@ -2,7 +2,11 @@ const host = 'http://crm.hongsizg.com';
 
 const apis = {
 	passport: {
-		login: `${host}/api/passport/dologin`
+		login: `${host}/api/passport/dologin`,
+	},
+	user: {
+		repassword: `${host}/api/user/repassword`,
+		editUser: `${host}/api/user/editUser`
 	},
 	customer: {
 		sea: `${host}/api/customer/sea`,
