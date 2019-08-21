@@ -142,7 +142,7 @@
 						let response = res.data;
 						if (response.code == '200') {
 							uni.navigateTo({
-								url: 'mine?status=0&is_into_store=0&page_title=我的客资'
+								url: 'mine?page_title=我的客资'
 							})
 						} else {
 							uni.showToast({
