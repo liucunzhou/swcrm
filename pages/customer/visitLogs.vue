@@ -61,7 +61,7 @@
 		</view>
 
 		<view class="bottommeiu">
-			<view class="meiutext">
+			<view class="meiutext" @click="applyVisit">
 				<img src="../../commonimg/follow.png"></img>
 				<text>申请回访</text>
 			</view>
@@ -85,6 +85,7 @@
 	export default {
 		data() {
 			return {
+				member_id: 0,
 				customer: {},
 				logs: {},
 				group: {},
@@ -94,12 +95,13 @@
 		},
 		onLoad(options) {
 			console.log(options.member_id);
+			this.member_id = options.member_id;
 			this.getCustomerVisits(options.member_id);
 		},
 		methods: {
 			getCustomerVisits(member_id) {
 				let _this = this;
-				let url = _this.$apis.customer.logs;
+				let url = _this.$apis.visit.logs;
 				let params = {
 					member_id: member_id,
 					token: this.$getToken()
@@ -124,6 +126,35 @@
 								groupLength++
 							}
 							_this.groupLength = groupLength;
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+					}
+				})
+			},
+			applyVisit() {
+				let _this = this;
+				let url = _this.$apis.customer.doApply;
+				let params = {
+					ids: _this.member_id,
+					token: this.$getToken()
+				};
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let response = res.data;
+						if (response.code == '200') {
+							uni.navigateTo({
+								url:'apply'
+							})
 						} else {
 							uni.showToast({
 								title: result.msg

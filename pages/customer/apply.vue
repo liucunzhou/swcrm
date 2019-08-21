@@ -9,19 +9,19 @@
 				<input type="text" placeholder-style="font-size:13px" value="" placeholder="搜索" />
 			</view>
 		</view>
-		<view class="screenbox" @click="isScreen=flase" v-if="isScreen">
+		<view class="screenbox" @click="isScreen=false" v-if="isScreen">
 			<view class="screen_mian">
-				<view :class="['screen_text',ScreenIndex===0?'screen_texts':'']" @click.stop="screenFn(0)">
+				<view @click="goToApply(1)">
 					<text>已通过</text>
-					<text><text v-if="ScreenIndex===0">✓</text></text> 
+					<text><text v-if="status==1">✓</text></text> 
 				</view>
-				<view :class="['screen_text',ScreenIndex===1?'screen_texts':'']" @click.stop="screenFn(1)">
+				<view @click="goToApply(0)">
 					<text>待通过</text>
-					<text><text v-if="ScreenIndex===1">✓</text></text> 
+					<text><text v-if="status==0">✓</text></text> 
 				</view>
-				<view :class="['screen_text',ScreenIndex===2?'screen_texts':'']" @click.stop="screenFn(2)">
+				<view @click="goToApply(2)">
 					<text>未通过</text>
-					<text><text v-if="ScreenIndex===2">✓</text></text> 
+					<text><text v-if="status==2">✓</text></text> 
 				</view>
 			</view>
 		</view>
@@ -68,12 +68,19 @@
 			return {
 				customers: [],
 				isScreen:false,
-				ScreenIndex:0,
+				status:0,
 			}
 		},
 		created() {},
 		onLoad(params) {
 			this.getCustomerList(params);
+			if(params.status != undefined) {
+				this.status = params.status;
+			} else {
+				params.status = 0;
+				this.status = 0;
+			}
+			console.log(this.status);
 		},
 		methods: {
 			getCustomerList(params) {
@@ -103,13 +110,17 @@
 			},
 
 			navToCustomer(memberId) {
-
 				uni.navigateTo({
 					url: `visitLogs?member_id=${memberId}`
 				})
 			},
 			screenFn(index){
 				this.ScreenIndex=index
+			},
+			goToApply(status) {
+				uni.navigateTo({
+					url: `apply?status=${status}`
+				})
 			}
 		}
 	}

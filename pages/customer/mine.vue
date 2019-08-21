@@ -11,6 +11,7 @@
 				</text>
 			</view>
 		</view>
+		
 		<!-- 全部客户弹框 -->
 		<view class="allcusList" @click="closeAllcusListFn" v-if="isAllList">
 			<view class="allcusList_box">
@@ -87,7 +88,6 @@
 					<text class="names">区域：</text> <text class="namemain">{{customer.zone}}</text>
 				</view>
 			</view>
-
 		</view>
 	</view>
 </template>
@@ -104,7 +104,7 @@
 			})
 		});
 	}
-	
+
 	export default {
 		data() {
 			return {
@@ -233,9 +233,7 @@
 			},
 			//全部客户切换
 			allcusListFn(index) {
-
 				this.allcusListIndex = index;
-
 			},
 			//显示全部客户弹框
 			showAllcusListFn() {
