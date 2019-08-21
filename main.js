@@ -5,9 +5,9 @@ import pageHead from './components/page-head.vue'
 import pageFoot from './components/page-foot.vue'
 import uLink from '@/components/uLink.vue'
 import store from './store'
-import dingtalk from './dingtalk.open.js'
 import hosts from './hosts.js'
 
+import dingtalk from './dingtalk.open.js'
 let platform = dingtalk.env.platform;
 if(platform != 'notInDingTalk') {
 	dingtalk.ready(function() {
