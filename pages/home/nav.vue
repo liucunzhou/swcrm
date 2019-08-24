@@ -60,14 +60,15 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	
+
 	export default {
 		data() {
 			return {
 
 			}
 		},
-		onLoad() {
+		onLoad() {},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -90,11 +91,11 @@
 				})
 			},
 			goToOrder(orderType) {
-				if(orderType==0) { // 婚宴
+				if (orderType == 0) { // 婚宴
 					uni.navigateTo({
 						url: '../order/banquet'
 					});
-				} else if(orderType == 1) { // 婚庆
+				} else if (orderType == 1) { // 婚庆
 					uni.navigateTo({
 						url: '../order/wedding'
 					});

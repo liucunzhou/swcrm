@@ -136,6 +136,12 @@
 			}
 		},
 		created() {
+			
+		},
+		onLoad() {
+			this.getBaseData();
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -145,9 +151,6 @@
 					})
 				});
 			}
-		},
-		onLoad() {
-			this.getBaseData();
 		},
 		methods: {
 			getBaseData() {

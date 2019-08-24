@@ -66,6 +66,16 @@
 
 		},
 		onLoad(params) {
+			this.getCustomerList(params);
+			if (params.status != undefined) {
+				this.status = params.status;
+			} else {
+				params.status = 0;
+				this.status = 0;
+			}
+			console.log(this.status);
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -75,15 +85,6 @@
 					})
 				});
 			}
-
-			this.getCustomerList(params);
-			if (params.status != undefined) {
-				this.status = params.status;
-			} else {
-				params.status = 0;
-				this.status = 0;
-			}
-			console.log(this.status);
 		},
 		methods: {
 			getCustomerList(params) {

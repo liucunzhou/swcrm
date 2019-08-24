@@ -241,6 +241,10 @@
 			}
 		},
 		onLoad(params) {
+			this.member_id = params.member_id;
+			this.getMember();
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -250,9 +254,6 @@
 					})
 				});
 			}
-			
-			this.member_id = params.member_id;
-			this.getMember();
 		},
 		methods: {
 			getMember() {

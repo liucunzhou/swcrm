@@ -137,6 +137,10 @@
 			}
 		},
 		onLoad(params) {
+			this.getCustomerList(params);
+			this.getBaseData()
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -146,9 +150,6 @@
 					})
 				});
 			}
-			
-			this.getCustomerList(params);
-			this.getBaseData()
 		},
 		methods: {
 			getCustomerList(params) {

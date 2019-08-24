@@ -75,6 +75,10 @@
 			}
 		},
 		onLoad(options) {
+			this.realname = options.realname;
+			this.member_id = options.member_id;
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -84,9 +88,6 @@
 					})
 				});
 			}
-			
-			this.realname = options.realname;
-			this.member_id = options.member_id;
 		},
 		methods:{
 			inputChange(e){

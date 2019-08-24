@@ -184,6 +184,10 @@
 			}
 		},
 		onLoad(options) {
+			this.getCustomerVisits(options.member_id);
+			this.getBaseData();
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -193,9 +197,6 @@
 					})
 				});
 			}
-			
-			this.getCustomerVisits(options.member_id);
-			this.getBaseData();
 		},
 		methods: {
 			getCustomerVisits(member_id) {

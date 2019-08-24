@@ -137,6 +137,13 @@
 			}
 		},
 		onLoad() {
+			this.getOrderList();
+		},
+		created() {
+			//请求筛选信息
+			this.getBaseData()
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -146,13 +153,6 @@
 					})
 				});
 			}
-			
-			this.getOrderList();
-		},
-		created() {
-			
-			//请求筛选信息
-			this.getBaseData()
 		},
 		methods: {
 			getOrderList() {

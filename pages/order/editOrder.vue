@@ -236,7 +236,10 @@
 			}
 		},
 		onLoad(params) {
-			
+			console.log('params is', params);
+			this.getOrder(params.id);
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -246,9 +249,6 @@
 					})
 				});
 			}
-			
-			console.log('params is', params);
-			this.getOrder(params.id);
 		},
 		methods: {
 			getOrder(id) {

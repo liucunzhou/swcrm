@@ -13,11 +13,11 @@
 				<input type="text" :value="customer.banquet_size" placeholder="例:3-10桌" />
 			</view>
 			<view class="center_time">
-				<text>预&nbsp&nbsp&nbsp&nbsp&nbsp算：</text>
+				<text>预&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;算：</text>
 				<input type="text" :value="customer.budget" placeholder="例:3-10万" />
 			</view>
 			<view class="center_time">
-				<text>婚&nbsp&nbsp&nbsp&nbsp&nbsp期：</text>
+				<text>婚&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期：</text>
 				<input type="text" :value="customer.wedding_date" placeholder="例:2019-12-12/2019-12-12" />
 			</view>
 			<view class="center_time">
@@ -40,7 +40,7 @@
 
 			<!-- 跟进记录-->
 			<view class="followMsg" v-for="item in group" v-bind:key="item.id">
-				<view class="follow_date" style="letter-spacing: 2px;">回&nbsp访&nbsp者&nbsp：{{item.user_id}}</view>
+				<view class="follow_date" style="letter-spacing: 2px;">回&nbsp;访&nbsp;者&nbsp;：{{item.user_id}}</view>
 				<view class="follow_date" style="letter-spacing: 2px;">获取时间：{{item.allocate_create_time}}</view>
 				<view class="follow_date" style="letter-spacing: 2px;">下次回访：{{item.next_visit_time}}</view>
 				<view class="follow_date" style="letter-spacing: 2px;">回访次数：{{item.visit_times}}</view>
@@ -85,6 +85,10 @@
 			}
 		},
 		onLoad(options) {
+			this.member_id = options.member_id;
+			this.getCustomerVisits(options.member_id);
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -94,9 +98,6 @@
 					})
 				});
 			}
-			
-			this.member_id = options.member_id;
-			this.getCustomerVisits(options.member_id);
 		},
 		methods: {
 			getCustomerVisits(member_id) {

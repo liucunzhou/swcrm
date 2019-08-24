@@ -137,6 +137,11 @@
 			}
 		},
 		onLoad() {
+			this.checkLogin();
+		},
+		created() {
+		},
+		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -146,10 +151,6 @@
 					})
 				});
 			}
-			
-			this.checkLogin();
-		},
-		created() {
 		},
 		methods: {
 			checkLogin() {
