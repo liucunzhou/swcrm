@@ -154,12 +154,19 @@
 		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
+					uni.showToast({
+						title:'in ready'
+					})
 					dingtalk.biz.navigation.hideBar({
 						hidden: true,
 						onSuccess: function(result) {},
 						onFail: function(err) {}
 					})
 				});
+			} else {
+				uni.showToast({
+					title: 'not in ready'
+				})
 			}
 		},
 		methods: {
