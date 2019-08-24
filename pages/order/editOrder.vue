@@ -196,15 +196,6 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	if (platform != 'notInDingTalk') {
-		dingtalk.ready(function() {
-			dingtalk.biz.navigation.hideBar({
-				hidden: true,
-				onSuccess: function(result) {},
-				onFail: function(err) {}
-			})
-		});
-	}
 	
 	export default {
 		data() {
@@ -245,6 +236,17 @@
 			}
 		},
 		onLoad(params) {
+			
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
+			}
+			
 			console.log('params is', params);
 			this.getOrder(params.id);
 		},

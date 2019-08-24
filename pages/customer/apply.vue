@@ -13,15 +13,15 @@
 			<view class="screen_mian">
 				<view @click="goToApply(1)">
 					<text>已通过</text>
-					<text><text v-if="status==1">✓</text></text> 
+					<text><text v-if="status==1">✓</text></text>
 				</view>
 				<view @click="goToApply(0)">
 					<text>待通过</text>
-					<text><text v-if="status==0">✓</text></text> 
+					<text><text v-if="status==0">✓</text></text>
 				</view>
 				<view @click="goToApply(2)">
 					<text>未通过</text>
-					<text><text v-if="status==2">✓</text></text> 
+					<text><text v-if="status==2">✓</text></text>
 				</view>
 			</view>
 		</view>
@@ -53,28 +53,31 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	if (platform != 'notInDingTalk') {
-		dingtalk.ready(function() {
-			dingtalk.biz.navigation.hideBar({
-				hidden: true,
-				onSuccess: function(result) {},
-				onFail: function(err) {}
-			})
-		});
-	}
-	
+
 	export default {
 		data() {
 			return {
 				customers: [],
-				isScreen:false,
-				status:0,
+				isScreen: false,
+				status: 0,
 			}
 		},
-		created() {},
+		created() {
+
+		},
 		onLoad(params) {
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
+			}
+
 			this.getCustomerList(params);
-			if(params.status != undefined) {
+			if (params.status != undefined) {
 				this.status = params.status;
 			} else {
 				params.status = 0;
@@ -114,8 +117,8 @@
 					url: `visitLogs?member_id=${memberId}`
 				})
 			},
-			screenFn(index){
-				this.ScreenIndex=index
+			screenFn(index) {
+				this.ScreenIndex = index
 			},
 			goToApply(status) {
 				uni.navigateTo({
@@ -149,42 +152,48 @@
 		background: #fff;
 	}
 
-    .screenbox{
+	.screenbox {
 		width: 100vw;
 		height: 100vh;
-		background: rgba(0,0,0,.3);
+		background: rgba(0, 0, 0, .3);
 		position: fixed;
 		top: 70px;
 		left: 0px;
 	}
-	.screen_mian{
+
+	.screen_mian {
 		width: 100vw;
 		height: auto;
 		background: #fff;
 		display: flex;
 		flex-direction: column;
-		align-items:left;
+		align-items: left;
 		padding: 0 30px;
 		box-sizing: border-box;
 	}
-	.screen_text{
+
+	.screen_text {
 		border-bottom: 1px solid #F2F2F2;
 		width: 100%;
 		height: auto;
 		color: both;
 		overflow: auto;
 	}
-	.screen_text text:first-child{
+
+	.screen_text text:first-child {
 		line-height: 30px;
 		float: left;
 	}
-	.screen_text text:last-child{
+
+	.screen_text text:last-child {
 		line-height: 30px;
 		float: right;
 	}
-	.screen_texts text{
+
+	.screen_texts text {
 		color: #0CAAF0;
 	}
+
 	.screen {
 		width: 50%;
 		height: 40px;

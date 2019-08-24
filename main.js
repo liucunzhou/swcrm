@@ -7,19 +7,6 @@ import uLink from '@/components/uLink.vue'
 import store from './store'
 import hosts from './hosts.js'
 
-import dingtalk from './dingtalk.open.js'
-let platform = dingtalk.env.platform;
-if(platform != 'notInDingTalk') {
-	dingtalk.ready(function() {
-		dingtalk.biz.navigation.hideBar({
-		    hidden: true,
-		    onSuccess : function(result) {
-		    },
-		    onFail : function(err) {}
-		})
-	});
-}
-
 Vue.config.productionTip = false
 Vue.prototype.$store = store
 Vue.prototype.$backgroundAudioData = {

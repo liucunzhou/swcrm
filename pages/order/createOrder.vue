@@ -201,15 +201,6 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	if (platform != 'notInDingTalk') {
-		dingtalk.ready(function() {
-			dingtalk.biz.navigation.hideBar({
-				hidden: true,
-				onSuccess: function(result) {},
-				onFail: function(err) {}
-			})
-		});
-	}
 	
 	export default {
 		data() {
@@ -249,8 +240,17 @@
 				manager_recommend_commission:""
 			}
 		},
-		
 		onLoad(params) {
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
+			}
+			
 			this.member_id = params.member_id;
 			this.getMember();
 		},

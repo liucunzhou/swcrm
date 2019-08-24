@@ -60,20 +60,22 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	if (platform != 'notInDingTalk') {
-		dingtalk.ready(function() {
-			dingtalk.biz.navigation.hideBar({
-				hidden: true,
-				onSuccess: function(result) {},
-				onFail: function(err) {}
-			})
-		});
-	}
 	
 	export default {
 		data() {
 			return {
 
+			}
+		},
+		onLoad() {
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
 			}
 		},
 		methods: {

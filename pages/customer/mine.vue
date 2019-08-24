@@ -95,15 +95,6 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	if (platform != 'notInDingTalk') {
-		dingtalk.ready(function() {
-			dingtalk.biz.navigation.hideBar({
-				hidden: true,
-				onSuccess: function(result) {},
-				onFail: function(err) {}
-			})
-		});
-	}
 
 	export default {
 		data() {
@@ -145,15 +136,25 @@
 				getBaseDatas: {}, //筛选数据
 			}
 		},
-		created() {
-			//请求筛选信息
-			this.getBaseData()
-		},
 		onLoad(params) {
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
+			}
+			
 			uni.setNavigationBarTitle({
 				title: params.page_title
 			})
 			this.getCustomerList(params);
+		},
+		created() {
+			//请求筛选信息
+			this.getBaseData();
 		},
 		methods: {
 			getCustomerList(params) {

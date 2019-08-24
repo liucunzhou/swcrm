@@ -96,15 +96,6 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	if (platform != 'notInDingTalk') {
-		dingtalk.ready(function() {
-			dingtalk.biz.navigation.hideBar({
-				hidden: true,
-				onSuccess: function(result) {},
-				onFail: function(err) {}
-			})
-		});
-	}
 	
 	export default {
 		data() {
@@ -147,16 +138,21 @@
 				getBaseDatas: {}, //筛选数据
 			}
 		},
-		created() {
-			//动态设置头部title
-			// uni.setNavigationBarTitle({
-			// 	title:"客资公海"
-			// })
-			//请求筛选信息
-			this.getBaseData()
-		},
 		onLoad() {
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
+			}
+			
 			this.getSea();
+		},
+		created() {
+			this.getBaseData()
 		},
 		methods: {
 			getSea() {
