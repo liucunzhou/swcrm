@@ -12,17 +12,10 @@
 			<view class="ordertype">
 				<view class="ordertype_text">平台来源:</view>
 				<view class="ordertype_value">
-					<picker @change="bindSourceChange" data-key="source_index" :value="source_index" :range="sources" range-key="title">
-						<view class="uni-input">{{sources[source_index]['title']}}</view>
-					</picker>
+					<input type="text" :value="source_text" data-key="source_text" @input="inputChange" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
 				</view>
 			</view>
-			<view class="ordertype">
-				<view class="ordertype_text">推荐来源:</view>
-				<view class="ordertype_value">
-					<input type="text" :value="recommender" data-key="recommender" @input="inputChange" placeholder="请填写推荐来源" placeholder-style="font-size:12rpx;"/>
-				</view>
-			</view>
+
 			<view class="ordertype">
 				<view class="ordertype_text">新人名字:</view>
 				<view class="ordertype_value">
@@ -123,7 +116,7 @@
 				newsType: 0,
 				newsTypeText: '婚宴信息',
 				newsTypes: newsTypes,
-				source_index: 0,
+				source_text: '',
 				sources: sources,
 				wedding_date: today,
 				hotel_text: "",
@@ -277,7 +270,7 @@
 				let params = {
 					token: _this.$getToken(),
 					news_type: _this.newsType,
-					source_id: _this.sources[source_index]['id'],
+					source_text: _this.source_text,
 					realname: _this.realname,
 					mobile: _this.mobile,
 					city_id: _this.cities[city_index]['id'],

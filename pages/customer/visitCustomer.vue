@@ -123,12 +123,10 @@
 					<text>写跟进</text>
 				</view>
 			</view>
-			<view class="line"></view>
 			<view class="meiuphone" @click="isLaberbox=true">
 				<img src="../../commonimg/phone.png"></img>
 				<text>电话</text>
 			</view>
-			<view class="line"></view>
 			<view @click="createOrder">
 				<view class="meiutext">
 					<img src="../../commonimg/follow.png"></img>
@@ -136,6 +134,7 @@
 				</view>
 			</view>
 		</view>
+		
 		<view class="laberbox" v-if="isLaberbox" @click="boxFn()">
 			<view class="laberbox_box">
 				<view class="boxtext" @click="bianPhone">
@@ -555,13 +554,23 @@
 		background: #fff;
 
 	}
+	
+	.bottommeiu > view{
+		flex: 1;
+		border-right: 1px solid #DEDEDE;
+		text-align: center;
+		padding-top: 5px;
+	}
+	.bottommeiu > view:last-child{
+		border: none;
+		vertical-align: middle;
+	}
 
 	.meiutext {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		margin-top: 5px;
-		padding-left: 20px;
 		box-sizing: border-box;
 		font-size: 12px;
 	}
@@ -569,15 +578,12 @@
 	.meiutext img {
 		width: 25px;
 		height: 25px;
-
 	}
 
 	.meiuphone {
-		margin-top: 5px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding-right: 23px;
 		box-sizing: border-box;
 		font-size: 12px;
 	}

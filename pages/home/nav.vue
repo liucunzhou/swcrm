@@ -86,6 +86,7 @@
 				})
 			},
 			goToMine(status, is_into_store, page_title) {
+				console.log('page_title is:',page_title);
 				uni.navigateTo({
 					url: '../customer/mine?status=' + status + '&is_into_store=' + is_into_store + '&page_title=' + page_title
 				})

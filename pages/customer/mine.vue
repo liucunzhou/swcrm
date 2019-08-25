@@ -4,66 +4,60 @@
 			<view class="header_back" @click="goBack()">
 				<img @click="goBack()" src="../../commonimg/fanhui.png"></img>
 			</view>
-			<view class="header_all" @click="showAllcusListFn">
-				<text>{{allList[allcusListIndex]}}
-					<img class="header_allimg" v-if="isAllList" src="../../commonimg/fanhui.png"></img>
+			<view class="header_all" @click="showPageNavFn">
+				<text>{{pageNav[pageNavIndex]}}
+					<img class="header_allimg" v-if="isShowPageNav" src="../../commonimg/fanhui.png"></img>
 					<img class="header_allimgs" v-else src="../../commonimg/fanhui.png"></img>
 				</text>
 			</view>
-			<view class=""></view>
+			<view class="header_search" @click="isShowSearchCompontent=!isShowSearchCompontent">筛选</view>
 		</view>
-		
+
 		<view class="page-search">
-			<view class="allcusList" @click="closeAllcusListFn" v-if="isAllList">
+			<view class="allcusList" @click="closePageNavFn" v-if="isShowPageNav">
 				<view class="allcusList_box">
-					<view v-for="(item,index) in allList" :key="index" @click.stop="allcusListFn(index)" :class="['allcusList_main',allcusListIndex==index?'activeallcusList_main':'']">
-						<text>{{item}}</text><text v-if="allcusListIndex==index">✓</text>
+					<view v-for="(item,index) in pageNav" :key="index" @click.stop="PageNavFn(index)" :class="['allcusList_main',pageNavIndex==index?'activeallcusList_main':'']">
+						<text>{{item}}</text><text v-if="pageNavIndex==index">✓</text>
 					</view>
 				</view>
 			</view>
-		
+
 			<view class="topmuie">
-				<view class="screen" @click="isTopmuie=!isTopmuie">
-					<text>筛选
-						<img class="screen_allimgs" v-if="isTopmuie" src="@/commonimg/fanhui.png"></img>
-						<img class="screen_allimg" v-else src="@/commonimg/fanhui.png"></img>
-					</text>
-				</view>
 				<view class="seek">
-					<img src="../../commonimg/findminimg.png"></img>
-					<input type="text" placeholder-style="font-size:13px" value="" placeholder="搜索" />
+					<input type="text" placeholder-style="font-size:13px" :value="keywords" data-key="keywords" @input="inputChange" placeholder="请输入手机号进行查询" />
+					<img src="@/commonimg/findminimg.png" @click="search"></img>
 				</view>
 			</view>
-		
+
 			<!-- 筛选弹框 -->
-			<view class="topmuieFixed" @click="isTopmuie=false" v-if="isTopmuie">
+			<view class="topmuieFixed" v-if="isShowSearchCompontent">
 				<view class="topmuieFixed_main">
 					<view class="topmuieFixed_box">
-						<view class="topmuieFixed_left">
-							<text @click.stop="topmuieLeft(index)" :class="topmuieLeftIndex===index?'topmuieFixed_lefttext':''" v-for="(item,index) in topmuieFixed_left"
+						<view class="searchNavBar">
+							<text @click.stop="searchNav(index)" :class="searchNavIndex===index?'searchNavBartext':''" v-for="(item,index) in searchNavBar"
 							 :key="index">{{item}}</text>
 						</view>
 						<view class="topmuieFixed_right">
-							<template v-if="topmuieFixed_righttext!=''">
-								<text @click.stop="topmuieRight(index)" :class="topmuieRightIndex===index?'topmuieFixed_righttext':''" v-for="(item,index) in topmuieFixed_righttext"
+							<template v-if="searchItemsFields!=''">
+								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchItemsFields"
 								 :key="index">{{item.title}}</text>
 							</template>
-							<template v-if="topmuieLeftIndex===3||topmuieLeftIndex===4||topmuieLeftIndex===5||topmuieLeftIndex===6">
-								<text @click.stop="topmuieRight(index)" :class="topmuieRightIndex===index?'topmuieFixed_righttext':''" v-for="(item,index) in topmuieFixed_rightDate"
+							<template v-if="searchNavIndex===3||searchNavIndex===4||searchNavIndex===5||searchNavIndex===6">
+								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchDateTextItems"
 								 :key="index">{{item}}</text>
 							</template>
 						</view>
 					</view>
-					
-					<view class="clocedtime" v-if="topmuieRightIndex===8">
-						<picker mode="date" :value="startdate" @change="startDateChange">
-							<view class="uni-input"><text>开始时间:{{startdate}}</text></view>
+
+					<view class="clocedtime" v-if="searchNavIndex > 2 && searchSelectedItemIndex===searchDateTextItems.length - 1">
+						<picker mode="date" :value="startDate" @change="startDateChange">
+							<view class="uni-input"><text>开始时间:{{startDate}}</text></view>
 						</picker>
-						<picker mode="date" :value="enddate" @change="endDateChange">
-							<view class="uni-input"><text>结束时间:{{enddate}}</text></view>
+						<picker mode="date" :value="endDate" @change="endDateChange">
+							<view class="uni-input"><text>结束时间:{{endDate}}</text></view>
 						</picker>
 					</view>
-					
+
 					<view class="topmuieFixed_setting">
 						<text @click.stop="emptyFn">清空</text>
 						<text @click.stop="makeSure">确定</text>
@@ -71,7 +65,7 @@
 				</view>
 			</view>
 		</view>
-
+		
 		<view class="msg" v-for="(customer,index) in customers" v-bind:key="customer.id">
 			<text class="msgtopright">{{index+1}}</text>
 			<view @click="navToCustomer(customer.member_id)">
@@ -94,57 +88,82 @@
 				</view>
 			</view>
 		</view>
+
 	</view>
 </template>
 
 <script>
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
 
 	export default {
+		comments:{
+			uniLoadMore
+		},
 		data() {
+			let pageNav = [
+				"全部客户",
+				"我的客户",
+				"我的下属客户"
+			];
+			
+			let searchNavBar = [
+				"跟进状态",
+				"客户来源",
+				"负责人",
+				"下次跟进时间",
+				"创建时间",
+			];
+			
+			let searchDateTextItems = [
+				"不限",
+				"今天",
+				"明天",
+				"本周",
+				"本月",
+				"自定义",
+			];
+			
+			let searchDateFieldItems = [
+				"none",
+				"today",
+				"tomorrow",
+				"this_week",
+				"this_month",
+				"date_range",
+			];
+			
+			
 			return {
+				keywords: '',
 				customers: [],
-				allList: [
-					"全部客户",
-					"我的客户",
-					"我的下属客户"
-				],
-				allcusListIndex: 0,
-				isAllList: false, //是否显示全部客户弹框
-				isTopmuie: false, //筛选弹框
-				topmuieFixed_left: [
-					"跟进状态",
-					"客户来源",
-					"负责人",
-					"实际跟进时间",
-					"下次跟进时间",
-					"创建时间",
-					"更新于",
-				],
-				topmuieFixed_rightDate: [
-					"不限",
-					"无",
-					"今天",
-					"明天",
-					"本周",
-					"下周",
-					"本月",
-					"下月",
-					"自定义:2019/08/20-2019/08/20",
-				],
-				topmuieFixed_righttext: [], //筛选右边数据
-				topmuieLeftIndex: 0,
-				topmuieRightIndex: 0,
-				startdate: "", //开始时间
-				enddate: "", //结束时间
+				pageNav: pageNav,
+				pageNavIndex: 0,
+				isShowPageNav: false,
+				isShowSearchCompontent: false,
+				searchNavBar: searchNavBar,
+				searchDateTextItems: searchDateTextItems,
+				searchDateFieldItems: searchDateFieldItems,
+				searchItemsFields: [],
+				searchNavIndex: 0,
+				searchSelectedItemIndex: 0,
+				startDate: "", //开始时间
+				endDate: "", //结束时间
 				getBaseDatas: {}, //筛选数据
+				page_title: '我的客资',
+				params: {},
+				page: 0
 			}
 		},
 		onLoad(params) {
-			uni.setNavigationBarTitle({
-				title: params.page_title
-			})
+			this.params = params;
+			if(params.page_title != undefined){
+				this.page_title = params.page_title;
+				uni.setNavigationBarTitle({
+					title: params.page_title
+				})
+			}
 			this.getCustomerList(params);
 		},
 		created() {
@@ -154,22 +173,20 @@
 		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
-					uni.showToast({
-						title:'in ready'
-					})
 					dingtalk.biz.navigation.hideBar({
 						hidden: true,
 						onSuccess: function(result) {},
 						onFail: function(err) {}
 					})
 				});
-			} else {
-				uni.showToast({
-					title: 'not in ready'
-				})
 			}
 		},
+		onPullDownRefresh() {
+			this.params['page'] = this.page;
+			getCurrentPages(this.params);
+		},
 		methods: {
+			// 获取客资列表
 			getCustomerList(params) {
 				let _this = this;
 				let url = _this.$apis.customer.mine;
@@ -184,14 +201,16 @@
 					},
 					success: (res) => {
 						let result = res.data;
-						console.log(result);
 						if (result.code == '0') {
-							_this.customers = result.data;
+							// _this.customers = result.data;
+							_this.customers = _this.customers.concat(result.data);
 						} else {
 							uni.showToast({
 								title: result.msg
 							})
 						}
+						
+						_this.page = _this.page + 1;
 					}
 				})
 			},
@@ -201,6 +220,7 @@
 					url: `visitCustomer?member_id=${memberId}`
 				})
 			},
+
 			getBaseData() {
 				let _this = this;
 				let url = _this.$apis.customer.getBaseData;
@@ -220,14 +240,17 @@
 						let result = res.data;
 						if (result.code == '0') {
 							this.getBaseDatas = result.data;
-							this.topmuieFixed_righttext = this.getBaseDatas.statuses;
+
+							this.searchItemsFields = this.getBaseDatas.statuses;
+
 							// 信息类型
 							_this.newsTypes = result.data.news_types;
 							// 来源
 							_this.sources = result.data.sources;
-							_this.cities = result.data.cities;
+
 							// 跟进状态
 							_this.statuses = result.data.statuses;
+
 							// 负责人
 							_this.staffes = result.data.staffes;
 
@@ -245,382 +268,149 @@
 					delta: 0
 				});
 			},
+			
 			//全部客户切换
-			allcusListFn(index) {
-				this.allcusListIndex = index;
+			PageNavFn(index) {
+				this.pageNavIndex = index;
 			},
+			
 			//显示全部客户弹框
-			showAllcusListFn() {
-				this.isAllList = !this.isAllList;
+			showPageNavFn() {
+				this.isShowPageNav = !this.isShowPageNav;
 			},
 			//关闭全部客户弹框
-			closeAllcusListFn() {
-				this.isAllList = !this.isAllList
+			closePageNavFn() {
+				this.isShowPageNav = !this.isShowPageNav
 			},
-			//筛选左边点击
-			topmuieLeft(index) {
-				this.topmuieLeftIndex = index;
-				this.topmuieRightIndex = 0;
-				if (index == 0) {
-					this.topmuieFixed_righttext = this.getBaseDatas.statuses;
-				}
-				if (index == 1) {
-					this.topmuieFixed_righttext = this.getBaseDatas.sources;
-				}
-				if (index == 2) {
-					this.topmuieFixed_righttext = this.getBaseDatas.staffes;
-				}
-				if (index == 3) {
-					this.topmuieFixed_righttext = '';
-				}
-				if (index == 4) {
-					this.topmuieFixed_righttext = '';
-				}
 
-				if (index == 5) {
-					this.topmuieFixed_righttext = '';
-				}
-				if (index == 6) {
-					this.topmuieFixed_righttext = '';
+			//筛选左边点击
+			searchNav(index) {
+				this.searchNavIndex = index;
+				this.searchSelectedItemIndex = 0;
+
+				switch (index) {
+					case 0: // 跟进状态选择
+						this.searchItemsFields = this.getBaseDatas.statuses;
+						break;
+					case 1: // 客户来源选择
+						this.searchItemsFields = this.getBaseDatas.sources;
+						break;
+					case 2: // 负责人选择
+						this.searchItemsFields = this.getBaseDatas.staffes;
+						break;
+					case 3: // 下次跟进时间
+						this.searchItemsFields = '';
+						break;
+					case 4: // 创建时间
+						this.searchItemsFields = '';
+						break;
 				}
 			},
 			//筛选右边点击
-			topmuieRight(index) {
-				this.topmuieRightIndex = index;
-			},
-			// 清空
-			emptyFn() {
-				this.topmuieLeftIndex = '';
-				this.topmuieRightIndex = '';
+			searchNavItemClick(index) {
+				this.searchSelectedItemIndex = index;
 			},
 			//开始时间
 			startDateChange(e) {
-				this.startdate = e.detail.value
+				this.startDate = e.detail.value
 			},
 			//结束时间
 			endDateChange(e) {
-				this.enddate = e.detail.value
+				this.endDate = e.detail.value
+			},
+			// 清空
+			emptyFn() {
+				this.searchNavIndex = '';
+				this.searchSelectedItemIndex = '';
+			},
+			// 确认搜索
+			makeSure() {
+				console.log(this.searchNavIndex, this.searchSelectedItemIndex);
+				let field = '';
+				switch(this.searchNavIndex) {
+					case 0: // 跟进状态
+						field = 'status';
+						break;
+					
+					case 1: // 客资来源
+						field = 'source';
+						break;
+					
+					case 2: // 负责人
+						field = 'staff';
+						break;
+						
+					case 3: // 下次跟进时间
+						field = 'next_visit_time';
+						break;
+						
+					case 4: // 创建时间
+						field = 'create_time';
+						break;
+				}
+				
+				let value = 0;
+				if(this.searchNavIndex < 3) {
+					value = this.searchSelectedItemIndex;
+				} else {
+					let searchIndex = this.searchSelectedItemIndex;
+					if(searchIndex == this.searchDateTextItems.length - 1) {
+						value = this.startDate + '~' + this.endDate;
+					} else {
+						value = this.searchDateFieldItems[searchIndex];	
+					}
+				}
+				
+				// 开始搜索
+				uni.navigateTo({
+					url: 'mine?' + field + '=' + value + '&page_title=' + this.page_title
+				});
+				
+			},
+			inputChange(e){
+				const key = e.currentTarget.dataset.key;
+				this[key] = e.detail.value;
+			},
+			search() {
+				let _this = this;
+				let url = _this.$apis.customer.mine;
+				let params = {};
+				params['token'] = this.$getToken();
+				if(this.keywords == '') {
+					uni.showToast({
+						title: '请填写要搜索的手机号'
+					});
+					return false;
+				}
+				
+				params['keywords'] = this.keywords;
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let result = res.data;
+						if (result.code == '0') {
+							// _this.customers = result.data;
+							_this.customers = result.data;
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+						
+						_this.page = _this.page + 1;
+					}
+				})
 			}
-		}
+		},
 	}
 </script>
 
 <style>
-	.pages {
-
-		width: 100%;
-		height: 100%;
-		padding: 90px 12px 30px 12px;
-		box-sizing: border-box;
-		overflow: auto;
-		position: relative;
-		background: #0CAAF0;
-	}
-
-	.header_box {
-		position: fixed;
-		left: 0px;
-		top: 0px;
-		width: 100vw;
-		height: 42px;
-		padding: 10px 0px 0px 0px;
-		box-sizing: border-box;
-		z-index: 10;
-		background: #FFFFFF;
-		color: #00000;
-	}
-
-	.header_back {
-		width: 7%;
-		display: inline-block;
-	}
-
-	.header_back img {
-		width: 100%;
-		height: auto;
-		vertical-align: middle;
-		transform: rotate(180deg);
-	}
-
-	.header_all {
-		display: inline-block;
-		width: 89%;
-		height: 30px;
-		text-align: center;
-	}
-
-	.header_allimg {
-		margin-left: 10px;
-		width: 15px;
-		height: auto;
-		transform: rotate(270deg);
-		vertical-align: middle;
-	}
-
-	.header_allimgs {
-		margin-left: 10px;
-		width: 15px;
-		height: auto;
-		transform: rotate(90deg);
-		vertical-align: middle;
-	}
-
-	.allcusList {
-		width: 100%;
-		height: 100vh;
-		background: rgba(0, 0, 0, .2);
-		position: fixed;
-		top: 40px;
-		left: 0px;
-		z-index: 10;
-
-	}
-
-	.allcusList_box {
-		width: 100%;
-		height: auto;
-		background: #FFFFFF;
-	}
-
-	.allcusList_main {
-		padding: 0px 30px;
-		box-sizing: border-box;
-		width: 100%;
-		height: auto;
-		line-height: 35px;
-		border-bottom: 1px solid #F2F2F2;
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.allcusList_main:last-child {
-		border: none
-	}
-
-	.activeallcusList_main {
-		color: #0CAAF0;
-	}
-
-
-
-
-	.topmuie {
-		background: #FFFFFF;
-		width: 100%;
-		height: 80px;
-		padding-top: 40px;
-		box-sizing: border-box;
-		position: fixed;
-		top: 0px;
-		left: 0px;
-		border-bottom: 1px solid #F4F4F4;
-		z-index: 4;
-	}
-
-	/* 筛选弹框 */
-	.topmuieFixed {
-		width: 100%;
-		height: 100vh;
-		background: rgba(0, 0, 0, .3);
-		position: fixed;
-		top: 80px;
-		left: 0;
-		z-index: 4;
-	}
-
-	.topmuieFixed_main {
-		width: 100%;
-		height: auto;
-		background: #FFFFFF;
-	}
-
-	.topmuieFixed_box {
-		width: 100%;
-		height: auto;
-		clear: both;
-		overflow: hidden;
-	}
-
-	.topmuieFixed_left {
-		width: 50%;
-		height: 280px;
-		overflow: scroll;
-		float: left;
-		background: #F8F8F8;
-		display: flex;
-		flex-direction: column;
-		align-items: left;
-		box-sizing: border-box;
-	}
-
-	.topmuieFixed_left text {
-		line-height: 40px;
-		padding-left: 10px;
-	}
-
-	.topmuieFixed_lefttext {
-		line-height: 30px;
-		background: #FFFFFF;
-		color: #0CAAF0;
-	}
-
-	.topmuieFixed_right {
-		width: 50%;
-		height: 280px;
-		overflow: scroll;
-		float: right;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.topmuieFixed_right text {
-		line-height: 30px;
-		font-size: 10px;
-	}
-
-	.topmuieFixed_righttext {
-		color: #0CAAF0;
-	}
-
-	.clocedtime {
-		width: 100%;
-		height: auto;
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.topmuieFixed_setting {
-		width: 100%;
-		height: 40px;
-		background: #FFFFFF;
-		border-top: 1px #f2f2ff2 solid;
-		font-size: 16px;
-		display: flex;
-		justify-content: space-evenly;
-		line-height: 40px;
-		box-sizing: border-box;
-	}
-
-	.topmuieFixed_setting text {
-		width: 50%;
-		display: inline-block;
-		text-align: center;
-	}
-
-	.topmuieFixed_setting text:first-child {
-		border-right: 1px solid #F2F2F2;
-
-	}
-
-
-
-	.screen {
-		width: 50%;
-		height: 40px;
-		display: inline-block;
-		text-align: center;
-		line-height: 45px;
-		text-align: center;
-		float: left;
-	}
-
-	.screen_allimg {
-		margin-left: 10px;
-		width: 15px;
-		height: auto;
-		transform: rotate(90deg);
-		vertical-align: middle;
-	}
-
-	.screen_allimgs {
-		margin-left: 10px;
-		width: 15px;
-		height: auto;
-		transform: rotate(270deg);
-		vertical-align: middle;
-	}
-
-	.seek {
-		float: right;
-		text-align: center;
-		width: 50%;
-		height: 40px;
-		line-height: 45px;
-		text-align: center;
-		display: inline-block;
-
-		box-sizing: border-box;
-	}
-
-	.seek img {
-		padding-left: 40px;
-		width: 20px;
-		height: 20px;
-		display: inline-block;
-		vertical-align: top;
-		margin-top: 10px;
-		text-align: right;
-	}
-
-	.seek input {
-		height: 40px;
-		width: 60%;
-		float: right;
-		text-align: left;
-	}
-
-	.msg {
-
-		width: 100%;
-		height: auto;
-		border-radius: 5px;
-		background: #fff;
-		padding: 0px 20px;
-		box-sizing: border-box;
-		box-shadow: 1px 1px 10px #F4F4F4;
-		position: relative;
-		margin: 10px 0;
-	}
-
-	.msgtopright {
-		position: absolute;
-		top: 5px;
-		right: 5px;
-		display: inline-block;
-		width: 15px;
-		height: 15px;
-		text-align: center;
-		line-height: 15px;
-		font-size: 10px;
-		color: #FFFFFF;
-		background: #0CAAF0;
-		border-radius: 50%;
-	}
-
-	.msg_header {
-		width: 100%;
-		padding: 15px 0px;
-		box-sizing: border-box;
-		border-bottom: solid #F2F2F2 1px;
-		margin-bottom: 5px;
-
-	}
-
-	.msg_text {
-		width: 100%;
-		padding: 8px 0;
-	}
-
-	.names {
-		color: #1E1E1E;
-		letter-spacing: 4px;
-		margin-right: 10px;
-	}
-
-	.namemain {
-		color: #989898;
-		letter-spacing: 3px;
-
-	}
+	@import url("../../common/common.css");
 </style>
