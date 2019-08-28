@@ -26,13 +26,7 @@
 					</picker>
 				</view>
 			</view>
-			<view class="center_time">
-				<text class="field">推荐来源</text>
-				<text class="dilimter">:</text>
-				<view class="value">
-					<input type="text" :value="recommender" data-key="recommender" @input="inputChange" @blur="blurChange" placeholder="请填写推荐来源" placeholder-style="font-size:24rpx;" />
-				</view>
-			</view>
+			
 			<view class="center_time">
 				<text class="field">桌数</text>
 				<text class="dilimter">:</text>

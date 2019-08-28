@@ -9,23 +9,26 @@
 					</picker>
 				</view>
 			</view>
+			
 			<view class="ordertype">
-				<view class="ordertype_text">平台来源:</view>
+				<text class="ordertype_text">平台来源:</text>
 				<view class="ordertype_value">
-					<input type="text" :value="source_text" data-key="source_text" @input="inputChange" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
+					<picker @change="bindSourceChange" data-key="source_index" :value="source_index" :range="sources" range-key="title">
+						<view class="uni-input">{{sources[source_index]['title']}}</view>
+					</picker>
 				</view>
 			</view>
 
 			<view class="ordertype">
 				<view class="ordertype_text">新人名字:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="realname" data-key="realname" @input="inputChange" placeholder="请填写新人姓名" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="realname" data-key="realname" @input="inputChange" placeholder="请填写新人姓名" />
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">联系电话:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="mobile" data-key="mobile" @input="inputChange" placeholder="联系电话" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="mobile" data-key="mobile" @input="inputChange" placeholder="联系电话" />
 				</view>
 			</view>
 			<view class="ordertype">
@@ -47,26 +50,26 @@
 			<view class="ordertype">
 				<view class="ordertype_text">所选区域:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="zone" data-key="zone" @input="inputChange" placeholder="选择区域" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="zone" data-key="zone" @input="inputChange" placeholder="选择区域" />
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">选择酒店:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="hotel_text" data-key="hotel_text"  @input="inputChange" placeholder="填写酒店" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="hotel_text" data-key="hotel_text"  @input="inputChange" placeholder="填写酒店" />
 				</view>
 			</view>
 
 			<view class="ordertype">
 				<view class="ordertype_text">桌数:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="banquet_size"  data-key="banquet_size"  @input="inputChange" placeholder="请填写桌数" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="banquet_size"  data-key="banquet_size"  @input="inputChange" placeholder="请填写桌数" />
 				</view>
 			</view>
 			<view class="ordertype">
 				<view class="ordertype_text">预算:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="budget" data-key="budget"  @input="inputChange" placeholder="请填写预算" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="budget" data-key="budget"  @input="inputChange" placeholder="请填写预算" />
 				</view>
 			</view>
 			<view class="ordertype">
@@ -82,7 +85,7 @@
 			<view class="ordertype">
 				<view class="ordertype_text">备注:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="remark" data-key="remark" @input="inputChange" placeholder="请填写备注" placeholder-style="font-size:12rpx;"/>
+					<input type="text" :value="remark" data-key="remark" @input="inputChange" placeholder="请填写备注" />
 				</view>
 			</view>
 		</view>
@@ -116,8 +119,11 @@
 				newsType: 0,
 				newsTypeText: '婚宴信息',
 				newsTypes: newsTypes,
+				
 				source_text: '',
+				source_index: 0,
 				sources: sources,
+				
 				wedding_date: today,
 				hotel_text: "",
 				city_index: 0,

@@ -9,108 +9,129 @@
 					</picker>
 				</view>
 			</view>
+			
 			<view class="ordertype">
-				<view class="ordertype_text">客资来源:</view>
+				<text class="ordertype_text">平台来源:</text>
 				<view class="ordertype_value">
-					<input type="text" />
+					<picker @change="bindSourceChange" data-key="source_index" :value="source_index" :range="sources" range-key="title">
+						<view class="picker">{{sources[source_index]['title']}}</view>
+					</picker>
 				</view>
 			</view>
-			<view class="ordertype">
-				<view class="ordertype_text">推荐渠道:</view>
-				<view class="ordertype_value">
-					<input type="text" :value="recommender" placeholder="请输入推荐人" />
-				</view>
-			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">签约日期:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="sign_date" placeholder="选择签约日期" />
+					<picker mode="date" :value="sign_date" data-key="sign_date" start="2015-09-01" end="2119-09-01" @change="bindDateChange">
+						<view class="picker">
+							{{sign_date}}
+						</view>
+					</picker>
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">举办日期:</view>
 				<view class="ordertype_value">
-					<input type="text" :value="wedding_date" placeholder="请选择举办日期" />
+					<picker mode="date" :value="wedding_date" data-key="wedding_date" start="2015-09-01" end="2119-09-01" @change="bindDateChange">
+						<view class="picker">
+							{{wedding_date}}
+						</view>
+					</picker>
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">新人名字:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="realname" placeholder="请输入新人名字" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">联系电话:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="mobile" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">宴会厅:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="banquet_hall" placeholder="请输入宴会厅信息" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">价格:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="entire_price" placeholder="请输入价格" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">折扣:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="discount" placeholder="请输入折扣" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">桌数:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="table_amount" placeholder="请输入桌数" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">桌标:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="table_price" placeholder="请输入桌标" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">酒水费用:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="wine_fee" placeholder="请输入酒水费用" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">服务费:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="service_fee" placeholder="请输入服务费" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">应收客人费用:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="income_customer_fee" placeholder="请输入应收客人费用" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">收婚庆进场费:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="income_wedding_celebration_admission_fee" placeholder="请输入收婚庆进场费" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">收入总额:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="income_fee" placeholder="请输入收入总额" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">付酒店进场费:</view>
 				<view class="ordertype_value">
 					<input type="text" :value="pay_hotel_admission_fee" placeholder="请输入付酒店进场费" />
 				</view>
 			</view>
+			
 			<view class="ordertype">
 				<view class="ordertype_text">应付酒店费用:</view>
 				<view class="ordertype_value">
@@ -201,17 +222,23 @@
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
+	let today = (new Date()).format("yyyy-MM-dd");
 	
 	export default {
 		data() {
 			let news_type = ['婚宴信息', '婚庆信息', '一站式'];
+			let sources = [{'title':'无'}];
 			return {
+				source_text: '',
+				source_index: 0,
+				sources: sources,
+				recommender:"",
+				
 				member_id: 0,
 				news_type: news_type,
 				newsType: 0,
-				sign_date: "",
-				recommender:"",
-				wedding_date:"",
+				sign_date: today,
+				wedding_date: today,
 				realname:"",
 				mobile:"",
 				banquet_hall:"",
@@ -255,7 +282,42 @@
 				});
 			}
 		},
+		created() {
+			this.getBaseData();
+		},
 		methods: {
+			getBaseData() {
+				let _this = this;
+				let url = _this.$apis.customer.getBaseData;
+				let token = this.$getToken();
+				let params = {
+					token: token
+				};
+				uni.request({
+					url: url,
+					method: 'POST',
+					data: params,
+					dataType: 'json',
+					header: {
+						'content-type': 'application/x-www-form-urlencoded',
+					},
+					success: (res) => {
+						let result = res.data;
+						if (result.code == '0') {
+							_this.newsTypes = result.data.news_types;
+							_this.sources = result.data.sources;
+							_this.cities = result.data.cities;
+							_this.city_index = result.data.city_index;
+							_this.areas = result.data.areas;
+							
+						} else {
+							uni.showToast({
+								title: result.msg
+							})
+						}
+					}
+				})
+			},
 			getMember() {
 				let _this = this;
 				let url = _this.$apis.customer.getCustomer;
@@ -283,6 +345,15 @@
 						}
 					}
 				})
+			},
+			bindSourceChange(e) {
+				console.log('value is', e.detail.value);
+				let source_index = e.detail.value;
+				this['source_index'] = source_index;
+			},
+			bindDateChange(e) {
+				const key = e.currentTarget.dataset.key;
+				this[key] = e.detail.value;
 			},
 			//订单类型
 			newsTypeChange(e) {

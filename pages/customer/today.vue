@@ -130,7 +130,7 @@
 
 
 			return {
-				keyword: '',
+				keywords: '',
 				customers: [],
 				pageNav: pageNav,
 				pageNavIndex: 0,
