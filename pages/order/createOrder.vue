@@ -456,6 +456,7 @@
 		width: 65%;
 		padding: 5px 5px;
 		box-sizing: border-box;
+		text-align: right;
 	}
 
 	.ordertype_value input {
