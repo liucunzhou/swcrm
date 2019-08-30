@@ -14,7 +14,7 @@
 				<text class="ordertype_text">平台来源:</text>
 				<view class="ordertype_value">
 					<picker @change="bindSourceChange" data-key="source_index" :value="source_index" :range="sources" range-key="title">
-						<view class="picker">{{sources[source_index]['title']}}</view>
+						<view class="pickergit">{{sources[source_index]['title']}}</view>
 					</picker>
 				</view>
 			</view>
