@@ -36,7 +36,7 @@ Date.prototype.format = function(fmt) {
 
 import dingtalk from '@/dingtalk.open.js'
 let platform = dingtalk.env.platform;
-Vue.prototype.$getUserId = function(token) {
+let getUserId = function(token) {
 	uni.showToast({
 		title:'getUserID'
 	})
@@ -88,6 +88,8 @@ Vue.prototype.$getUserId = function(token) {
 
 	return userid;
 }
+
+Vue.prototype.$getUserId = getUserId(token);
 
 Vue.prototype.$getToken = function() {
 	let token = '';
