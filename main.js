@@ -94,6 +94,9 @@ Vue.prototype.$getToken = function() {
 	try {
 		token = uni.getStorageSync('token');
 		if (token) {
+			uni.showToast({
+				title:token
+			})
 			Vue.$getUserId(token);
 		} else {
 			uni.navigateTo({
