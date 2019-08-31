@@ -64,8 +64,10 @@ let getUserId = function(token) {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
 								success: (res) => {		
+									uni.showToast({
+										title: res.result.user.dingding
+									})
 									try {
-										uni.clearStorageSync();
 									    uni.setStorageSync('token', res.result.token);
 										uni.setStorageSync('user', res.result.user);
 										uni.setStorageSync('userid', res.result.user.dingding);
