@@ -187,7 +187,7 @@
 			// 退出
 			logout() {
 				try{
-					uni.removeStorageSync('token');	
+					uni.clearStorageSync();
 					uni.navigateTo({
 						url: '../public/login'
 					})

@@ -105,6 +105,7 @@
 						let result = res.data;
 						if(result.code=='200') {
 							try {
+								
 							    uni.setStorageSync('token', result.result.token);
 								uni.setStorageSync('user', result.result.user);
 								uni.reLaunch({

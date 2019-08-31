@@ -50,9 +50,6 @@ let getUserId = function(token) {
 						onSuccess: function(info) {
 						
 							let url = hosts.dingding.getUserInfo;
-							uni.showToast({
-								title: url
-							})
 							let params = {
 								token: token,
 								code: info.code
@@ -66,8 +63,9 @@ let getUserId = function(token) {
 								header: {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
-								success: (res) => {									
+								success: (res) => {		
 									try {
+										uni.clearStorageSync();
 									    uni.setStorageSync('token', res.result.token);
 										uni.setStorageSync('user', res.result.user);
 										uni.setStorageSync('userid', res.result.user.dingding);
