@@ -236,7 +236,7 @@
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		padding: 10px 20px;
+		padding: 10px 0px;
 		box-sizing: border-box;
 		border-top: 1px solid #F2F2F2;
 		border-bottom: 1px solid #F2F2F2;
@@ -248,7 +248,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding-left: 35px;
+		
 		color: #a6a6a6;
 	}
 
@@ -267,7 +267,6 @@
 		flex-direction: column;
 		align-items: center;
 		color: #a6a6a6;
-		padding-right: 35px;
 	}
 
 	.tobar_textL text {

@@ -138,7 +138,7 @@
 		box-sizing: border-box;
 		overflow: auto;
 		position: relative;
-		background: #fff;
+		background: #0CAAF0;
 	}
 
 	.topmuie {
@@ -241,6 +241,7 @@
 		border-radius: 5px;
 		background: #fff;
 		padding: 0px 20px;
+		margin-bottom: 15px;
 		box-sizing: border-box;
 		box-shadow: 1px 1px 10px #F4F4F4;
 	}
