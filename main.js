@@ -45,6 +45,10 @@ let getUserId = function(token) {
 		} else {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
+					uni.showToast({
+						title: 'I am in dingding'
+					});
+					
 					dingtalk.runtime.permission.requestAuthCode({
 						corpId: 'ding7f6f146b7c5505bc35c2f4657eb6378f',
 						onSuccess: function(info) {
