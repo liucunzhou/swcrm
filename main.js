@@ -58,20 +58,6 @@ let getUserId = function(token) {
 								code: info.code
 							};
 							
-							uni.showModal({
-								title: 'code',
-								content: info.code,
-								showCancel: false,
-								cancelText: '',
-								confirmText: '',
-								success: res => {},
-								fail: () => {},
-								complete: () => {}
-							});
-							
-							return false;
-							
-							
 							uni.request({
 								url: url,
 								method: 'POST',
@@ -80,18 +66,7 @@ let getUserId = function(token) {
 								header: {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
-								success: (res) => {
-									uni.showModal({
-										title: '提醒',
-										content: res.msg,
-										showCancel: false,
-										cancelText: '',
-										confirmText: '',
-										success: res => {},
-										fail: () => {},
-										complete: () => {}
-									});
-									
+								success: (res) => {									
 									try {
 									    uni.setStorageSync('token', res.result.token);
 										uni.setStorageSync('user', res.result.user);
@@ -105,7 +80,7 @@ let getUserId = function(token) {
 								fail: (res) => {
 									uni.showModal({
 										title: '错误页面',
-										content: '错误内容',
+										content: res.errMsg,
 										showCancel: false,
 										cancelText: '',
 										confirmText: '',
