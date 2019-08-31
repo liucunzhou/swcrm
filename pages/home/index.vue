@@ -70,7 +70,7 @@
 					<navigator url="../customer/today">
 						<!-- <view class="backlognumber">2</view> -->
 						<img class="backlog_msg_img" src="../../commonimg/orders.png"></img>
-						<text>今日跟进-2</text>
+						<text>今日跟进</text>
 						<img class="fanhui" src="../../commonimg/fanhui.png"></img>
 					</navigator>
 				</view>
