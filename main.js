@@ -38,7 +38,7 @@ import dingtalk from '@/dingtalk.open.js'
 let platform = dingtalk.env.platform;
 Vue.prototype.$getUserId = function(token) {
 	uni.showToast({
-		title:token
+		title:'getUserID'
 	})
 	let userid = '';
 	try {
@@ -94,9 +94,6 @@ Vue.prototype.$getToken = function() {
 	try {
 		token = uni.getStorageSync('token');
 		if (token) {
-			uni.showToast({
-				title:token
-			})
 			Vue.$getUserId(token);
 		} else {
 			uni.navigateTo({
