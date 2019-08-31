@@ -33,6 +33,9 @@ const apis = {
 	},
 	region: {
 		getAreaList: `${host}/api/region/getAreaList`
+	},
+	dingding: {
+		getUserInfo: `${host}/api/dingtalk/getUserInfo`
 	}
 };
 
