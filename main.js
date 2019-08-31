@@ -89,14 +89,12 @@ let getUserId = function(token) {
 	return userid;
 }
 
-Vue.prototype.$getUserId = getUserId(token);
-
 Vue.prototype.$getToken = function() {
 	let token = '';
 	try {
 		token = uni.getStorageSync('token');
 		if (token) {
-			Vue.$getUserId(token);
+			getUserId(token);
 		} else {
 			uni.navigateTo({
 				url: '/pages/public/login'
