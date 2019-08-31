@@ -37,9 +37,6 @@ Date.prototype.format = function(fmt) {
 import dingtalk from '@/dingtalk.open.js'
 let platform = dingtalk.env.platform;
 let getUserId = function(token) {
-	uni.showToast({
-		title:'getUserID'
-	})
 	let userid = '';
 	try {
 		userid = uni.getStorageSync('userid');
@@ -52,7 +49,7 @@ let getUserId = function(token) {
 						corpId: 'ding7f6f146b7c5505bc35c2f4657eb6378f',
 						onSuccess: function(info) {
 							uni.showToast({
-								title:info.code
+								title: 'code is ' + info.code
 							})
 							let url = hosts.dingding.getUserInfo;
 							let params = {
