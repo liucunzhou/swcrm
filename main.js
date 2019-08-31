@@ -44,22 +44,20 @@ let getUserId = function(token) {
 
 		} else {
 			if (platform != 'notInDingTalk') {
-				dingtalk.ready(function() {
-					uni.showToast({
-						title: 'I am in dingding'
-					});
-					
+				dingtalk.ready(function() {			
 					dingtalk.runtime.permission.requestAuthCode({
 						corpId: 'ding7f6f146b7c5505bc35c2f4657eb6378f',
 						onSuccess: function(info) {
-							uni.showToast({
-								title: 'code is ' + info.code
-							})
+						
 							let url = hosts.dingding.getUserInfo;
+							uni.showToast({
+								title: url
+							})
 							let params = {
 								token: token,
 								code: info.code
 							};
+							
 							uni.request({
 								url: url,
 								method: 'POST',
@@ -69,6 +67,7 @@ let getUserId = function(token) {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
 								success: (res) => {
+									
 									try {
 									    uni.setStorageSync('token', res.result.token);
 										uni.setStorageSync('user', res.result.user);
