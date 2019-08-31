@@ -58,6 +58,7 @@ let getUserId = function(token) {
 								code: info.code
 							};
 							
+							
 							uni.request({
 								url: url,
 								method: 'POST',
@@ -67,6 +68,16 @@ let getUserId = function(token) {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
 								success: (res) => {
+									uni.showModal({
+										title: '提醒',
+										content: res.msg,
+										showCancel: false,
+										cancelText: '',
+										confirmText: '',
+										success: res => {},
+										fail: () => {},
+										complete: () => {}
+									});
 									
 									try {
 									    uni.setStorageSync('token', res.result.token);
@@ -77,6 +88,18 @@ let getUserId = function(token) {
 									    	title:'绑定钉钉失败'
 									    })
 									}
+								},
+								fail: (res) => {
+									uni.showModal({
+										title: '错误页面',
+										content: '错误内容',
+										showCancel: false,
+										cancelText: '',
+										confirmText: '',
+										success: res => {},
+										fail: () => {},
+										complete: () => {}
+									});
 								}
 							})
 						}
