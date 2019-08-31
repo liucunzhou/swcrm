@@ -58,6 +58,19 @@ let getUserId = function(token) {
 								code: info.code
 							};
 							
+							uni.showModal({
+								title: 'code',
+								content: info.code,
+								showCancel: false,
+								cancelText: '',
+								confirmText: '',
+								success: res => {},
+								fail: () => {},
+								complete: () => {}
+							});
+							
+							return false;
+							
 							
 							uni.request({
 								url: url,
