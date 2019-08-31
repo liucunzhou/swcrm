@@ -48,7 +48,9 @@ Vue.prototype.$getUserId = function(token) {
 					dingtalk.runtime.permission.requestAuthCode({
 						corpId: 'ding7f6f146b7c5505bc35c2f4657eb6378f',
 						onSuccess: function(info) {
-							let _this = this;
+							uni.showToast({
+								title:info.code
+							})
 							let url = hosts.dingding.getUserInfo;
 							let params = {
 								token: token,

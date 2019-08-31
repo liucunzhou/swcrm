@@ -40,7 +40,6 @@
 			"style": {
 				// "navigationBarTitleText": "红丝云登录"
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": false
 				}
@@ -51,7 +50,6 @@
 			"style": {
 				// "navigationBarTitleText": "我的客资"
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": false
 				}
@@ -62,7 +60,6 @@
 			"style": {
 				// "navigationBarTitleText": "今日跟进"
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": false
 				}
