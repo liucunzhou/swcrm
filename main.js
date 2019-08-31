@@ -37,6 +37,9 @@ Date.prototype.format = function(fmt) {
 import dingtalk from '@/dingtalk.open.js'
 let platform = dingtalk.env.platform;
 Vue.prototype.$getUserId = function(token) {
+	uni.showToast({
+		title:token
+	})
 	let userid = '';
 	try {
 		userid = uni.getStorageSync('userid');

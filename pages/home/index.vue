@@ -137,7 +137,7 @@
 			}
 		},
 		onLoad() {
-			this.checkLogin();
+			this.$getToken();
 		},
 		created() {
 		},
@@ -153,22 +153,6 @@
 			}
 		},
 		methods: {
-			checkLogin() {
-				try {
-					const token = uni.getStorageSync('token');
-					this.user = uni.getStorageSync("user");
-
-					if (token) {
-						console.log(token);
-					} else {
-						uni.navigateTo({
-							url: '/pages/public/login'
-						});
-					}
-				} catch (e) {
-					// error
-				}
-			},
 			// 待办
 			backlogFn() {
 				this.isactiveL = !this.isactiveL

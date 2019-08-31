@@ -67,7 +67,9 @@
 
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			
+		},
 		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
