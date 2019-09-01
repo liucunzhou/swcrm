@@ -14,7 +14,12 @@
     "pages/customer/visitCustomer",
     "pages/customer/doVisitCustomer",
     "pages/customer/createCustomer",
-    "pages/customer/findCustomer"
+    "pages/customer/findCustomer",
+    "pages/order/createOrder",
+    "pages/order/editOrder",
+    "pages/order/entire",
+    "pages/order/wedding",
+    "pages/order/banquet"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -32,9 +37,5 @@
   },
   "appname": "oxcrm",
   "compilerVersion": "2.2.2",
-  "usingComponents": {
-    "page-head": "/components/page-head",
-    "page-foot": "/components/page-foot",
-    "u-link": "/components/uLink"
-  }
+  "usingComponents": {}
 }

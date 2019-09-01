@@ -81,7 +81,7 @@ let getUserId = function(token) {
 									uni.showModal({
 										title: '错误页面',
 										content: res.errMsg,
-										showCancel: false,
+										showCancel: true,
 										cancelText: '',
 										confirmText: '',
 										success: res => {},

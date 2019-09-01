@@ -2,12 +2,12 @@
 .pages {
 	width: 100%;
 	height: 100%;
-	padding: 60px 30px 30px 30px;
+	padding: 60px 12px 30px 12px;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 	overflow: auto;
 	position: relative;
-	background: #fff;
+	background: #0CAAF0;
 }
 .topmuie {
 	width: 100%;
@@ -20,6 +20,53 @@
 	left: 0px;
 	border-bottom: 1px solid #F4F4F4;
 	background: #fff;
+}
+.screenbox {
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, .3);
+	position: fixed;
+	top: 70px;
+	left: 0px;
+}
+.screen_mian {
+	width: 100vw;
+	height: auto;
+	background: #fff;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	    -ms-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: left;
+	-webkit-align-items: left;
+	    -ms-flex-align: left;
+	        align-items: left;
+	padding: 0 30px;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
+}
+.screen_text {
+	border-bottom: 1px solid #F2F2F2;
+	width: 100%;
+	height: auto;
+	color: both;
+	overflow: auto;
+}
+.screen_text text:first-child {
+	line-height: 30px;
+	float: left;
+}
+.screen_text text:last-child {
+	line-height: 30px;
+	float: right;
+}
+.screen_texts text {
+	color: #0CAAF0;
 }
 .screen {
 	width: 50%;
@@ -65,6 +112,7 @@
 	border-radius: 5px;
 	background: #fff;
 	padding: 0px 20px;
+	margin-bottom: 15px;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 	-webkit-box-shadow: 1px 1px 10px #F4F4F4;

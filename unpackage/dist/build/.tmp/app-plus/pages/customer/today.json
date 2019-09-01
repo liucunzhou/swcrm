@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "今日跟进",
+  "navigationStyle": "custom",
+  "titleNView": false,
   "usingComponents": {}
 }

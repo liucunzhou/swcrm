@@ -77,7 +77,7 @@
 			</view>
 			<view class="backlog_main">
 				<view class="backlog_msg">
-					<navigator url="../customer/mine?page_title='我的客资'">
+					<navigator url="../customer/mine?page_title=我的客资">
 						<!-- <view class="backlognumber">2</view> -->
 						<img class="backlog_msg_img" src="../../commonimg/relation.png"></img>
 						<text>我的客资</text>
@@ -95,7 +95,6 @@
 					</navigator>
 				</view>
 			</view>
-
 		</view>
 		
 		<!-- 底部弹框 -->
@@ -103,11 +102,11 @@
 			<view class="boxtext">
 				<view class="boxtext_main" @click="createCustomer()">
 					<img src="../../commonimg/newkehu.png"></img>
-					<text> 新增客户</text>
+					<text>新增客户</text>
 				</view>
 				<view class="boxtext_main" @click="find()">
 					<img src="../../commonimg/findimg.png"></img>
-					<text> 查找客户</text>
+					<text>查找客户</text>
 				</view>
 			</view>
 			<view class="bottomclose" @click="isBottom=false">
@@ -140,6 +139,14 @@
 			this.$getToken();
 		},
 		created() {
+			try{
+				let user = uni.getStorageSync("user");
+				if(user) {
+					this.user = user;
+				}
+			}catch(e){
+				//TODO handle the exception
+			}
 		},
 		onShow() {
 			if (platform != 'notInDingTalk') {

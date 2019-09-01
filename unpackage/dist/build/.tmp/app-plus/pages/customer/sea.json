@@ -1,4 +1,5 @@
 {
-  "navigationBarTitleText": "红丝云登录",
+  "navigationStyle": "custom",
+  "titleNView": false,
   "usingComponents": {}
 }

@@ -23,7 +23,7 @@
 	-webkit-align-items: center;
 	    -ms-flex-align: center;
 	        align-items: center;
-	padding: 10px 20px;
+	padding: 10px 0px;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 	border-top: 1px solid #F2F2F2;
@@ -44,7 +44,7 @@
 	-webkit-align-items: center;
 	    -ms-flex-align: center;
 	        align-items: center;
-	padding-left: 35px;
+	
 	color: #a6a6a6;
 }
 .tobar_textR text {
@@ -69,7 +69,6 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 	color: #a6a6a6;
-	padding-right: 35px;
 }
 .tobar_textL text {
 	font-size: 13px;
@@ -211,7 +210,8 @@
 	height: 60px;
 	border-radius: 50%;
 	vertical-align: middle;
-	padding-right: 20px;
+	margin-right: 20px;
+	/* box-sizing: border-box; */
 }
 .column_center .name {
 	width: 100px;
@@ -348,14 +348,16 @@
 	background: #444a64;
 }
 .bottomclose {
+	width: 60px;
+	height: 60px;
 	position: absolute;
 	bottom: 0;
 	left: 50%;
-	margin-left: -15px;
+	margin-left: -30px;
 }
 .bottomclose ._img {
-	width: 30px;
-	height: 30px;
+	width: 60px;
+	height: 60px;
 }
 .boxtext {
 

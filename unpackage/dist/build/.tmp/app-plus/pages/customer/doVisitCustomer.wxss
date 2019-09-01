@@ -1,7 +1,6 @@
 
 .pages{
 	width: 100vw;
-	/* height: 100vh; */
 	background: #f4f4f4;
 }
 .page_box{
@@ -116,7 +115,8 @@
 	width: 50%;
 	display: inline-block;
 	float: left;
-	line-height:55px;
+	line-height:44px;
+	height: 44px;
 }
 .followmsg text{
 	display:inline-block;
@@ -125,8 +125,13 @@
 	float: right;
 	display: inline-block;
 	width: 49%;
-	line-height: 55px;
+	height: 44px;
+	line-height: 44px;
 	text-align: center;
+}
+.followtatus.uni-input {
+	padding: 0;
+	border-left:1px solid #ccc ;
 }
 .followtatus text{
 	-webkit-box-sizing: border-box;

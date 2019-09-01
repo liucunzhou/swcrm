@@ -3,7 +3,7 @@
 	width: 100%;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
-	margin-bottom: 60px;
+	padding-bottom: 80px;
 	background: #FFFFFF;
 }
 .phone_box {
@@ -127,7 +127,7 @@
 	-moz-text-align-last: justify;
 	     text-align-last: justify;
 }
-.center_time text.dilimter{
+.center_time text.dilimter {
 	-webkit-box-flex: 0;
 	-webkit-flex: 0 8rpx;
 	    -ms-flex: 0 8rpx;
@@ -187,6 +187,19 @@
 	        justify-content: space-around;
 	background: #fff;
 }
+.bottommeiu > view{
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	    -ms-flex: 1;
+	        flex: 1;
+	border-right: 1px solid #DEDEDE;
+	text-align: center;
+	padding-top: 5px;
+}
+.bottommeiu > view:last-child{
+	border: none;
+	vertical-align: middle;
+}
 .meiutext {
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -202,7 +215,6 @@
 	    -ms-flex-align: center;
 	        align-items: center;
 	margin-top: 5px;
-	padding-left: 20px;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 	font-size: 12px;
@@ -212,7 +224,6 @@
 	height: 25px;
 }
 .meiuphone {
-	margin-top: 5px;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
@@ -226,7 +237,6 @@
 	-webkit-align-items: center;
 	    -ms-flex-align: center;
 	        align-items: center;
-	padding-right: 23px;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 	font-size: 12px;
@@ -243,7 +253,7 @@
 .laberbox {
 	width: 100vw;
 	height: 100vh;
-	position: absolute;
+	position: fixed;
 	left: 0px;
 	top: 0px;
 	background: rgba(0, 0, 0, .3);
@@ -261,28 +271,31 @@
 	        align-items: center;
 }
 .laberbox_box {
-	width: 300px;
+	width: 200px;
 	height: auto;
 	padding-bottom: 20px;
 	background: #fff;
 	padding: 10px 10px;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
-}
-.box_phone {
-	width: 20px;
-	height: 20px;
-	vertical-align: middle;
+	border-radius: 20px;
+	overflow: scroll;
 }
 .boxtext {
+	color: #0CAAF0;
 	display: -webkit-box;
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	    -ms-flex-pack: justify;
-	        justify-content: space-between;
-	border-bottom: 1px solid #ccc;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	border-bottom: 1px solid #F2F2F2;
+	line-height: 45px;
+	font-size: 15px;
+}
+.boxtext:last-child {
+	border: none;
 }
 
