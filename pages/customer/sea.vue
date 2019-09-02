@@ -36,9 +36,13 @@
 							 :key="index">{{item}}</text>
 						</view>
 						<view class="topmuieFixed_right">
-							<template v-if="searchItemsFields!=''">
+							<template v-if="searchItemsFields!='' && searchNavIndex!==2">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
 								 v-for="(item,index) in searchItemsFields" :key="index">{{item.title}}</text>
+							</template>
+							<template v-if="searchItemsFields!='' && searchNavIndex==2">
+								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchItemsFields"
+								 :key="index">{{item.realname}}</text>
 							</template>
 							<template v-if="searchNavIndex===3||searchNavIndex===4||searchNavIndex===5||searchNavIndex===6">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"

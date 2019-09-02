@@ -40,7 +40,7 @@
 						<view class="topmuieFixed_right">
 							<template v-if="searchItemsFields!=''">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
-								 v-for="(item,index) in searchItemsFields" :key="index">{{item.title}}</text>
+								 v-for="(item,index) in searchItemsFields" :key="index">{{item.realname}}</text>
 							</template>
 							<template v-if="searchNavIndex > 0">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
@@ -220,9 +220,10 @@
 					success: (res) => {
 						let result = res.data;
 						if (result.code == '0') {
-							this.getBaseDatas = result.data;
+							_this.getBaseDatas = result.data;
 
 							// 负责人
+							_this.searchItemsFields = result.data.staffes;
 							_this.staffes = result.data.staffes;
 
 						} else {
@@ -300,7 +301,7 @@
 				}
 
 				let value = 0;
-				if (this.searchNavIndex < 3) {
+				if (this.searchNavIndex == 0) {
 					value = this.searchSelectedItemIndex;
 				} else {
 					let searchIndex = this.searchSelectedItemIndex;

@@ -153,7 +153,6 @@
 					title: params.page_title
 				})
 			}
-			this.getSea(params);
 		},
 		created() {
 			this.getBaseData()
