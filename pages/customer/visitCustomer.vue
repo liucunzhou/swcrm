@@ -17,31 +17,25 @@
 					</picker>
 				</view>
 			</view>
-			<view class="center_time">
-				<text class="field">平台来源</text>
-				<text class="dilimter">:</text>
-				<view class="value">
-					<picker @change="bindSourceChange" data-key="source_index" :value="source_index" :range="sources" range-key="title">
-						<view class="uni-input">{{sources[source_index]['title']}}</view>
-					</picker>
-				</view>
-			</view>
 			
 			<view class="center_time">
 				<text class="field">桌数</text>
 				<text class="dilimter">:</text>
 				<input type="text" :value="banquet_size" data-key="banquet_size" @input="inputChange" @blur="blurChange" placeholder="请输入桌数" />
 			</view>
+			
 			<view class="center_time">
 				<text class="field">预算</text>
 				<text class="dilimter">:</text>
 				<input type="text" :value="budget" data-key="budget" @input="inputChange" @blur="blurChange" placeholder="请输入预算" />
 			</view>
+			
 			<view class="center_time">
 				<text class="field">婚期</text>
 				<text class="dilimter">:</text>
 				<input type="text" :value="wedding_date" data-key="wedding_date" placeholder="例:2019-12-12/2019-12-12" />
 			</view>
+			
 			<view class="center_time">
 				<text class="field">输入酒店</text>
 				<text class="dilimter">:</text>

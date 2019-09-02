@@ -31,23 +31,25 @@
 			<view class="topmuieFixed" v-if="isShowSearchCompontent">
 				<view class="topmuieFixed_main">
 					<view class="topmuieFixed_box">
+						<!-- 搜索导航左侧 -->
 						<view class="searchNavBar">
 							<text @click.stop="searchNav(index)" :class="searchNavIndex===index?'searchNavBartext':''" v-for="(item,index) in searchNavBar"
 							 :key="index">{{item}}</text>
 						</view>
+						
 						<view class="topmuieFixed_right">
 							<template v-if="searchItemsFields!=''">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
 								 v-for="(item,index) in searchItemsFields" :key="index">{{item.title}}</text>
 							</template>
-							<template v-if="searchNavIndex===3||searchNavIndex===4||searchNavIndex===5||searchNavIndex===6">
+							<template v-if="searchNavIndex > 0">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
 								 v-for="(item,index) in searchDateTextItems" :key="index">{{item}}</text>
 							</template>
 						</view>
 					</view>
 
-					<view class="clocedtime" v-if="searchNavIndex > 2 && searchSelectedItemIndex===searchDateTextItems.length - 1">
+					<view class="clocedtime" v-if="searchNavIndex > 0 && searchSelectedItemIndex===searchDateTextItems.length - 1">
 						<picker mode="date" :value="startDate" @change="startDateChange">
 							<view class="uni-input"><text>开始时间:{{startDate}}</text></view>
 						</picker>
@@ -103,19 +105,12 @@
 			];
 
 			let searchNavBar = [
-				"跟进状态",
-				"客户来源",
 				"负责人",
 				"下次跟进时间",
-				"创建时间",
 			];
 
 			let searchDateTextItems = [
-				"不限",
 				"今天",
-				"明天",
-				"本周",
-				"本月",
 				"自定义",
 			];
 
@@ -176,7 +171,7 @@
 		methods: {
 			getCustomerList(params) {
 				let _this = this;
-				let url = _this.$apis.visit.today;
+				let url = _this.$apis.customer.today;
 				params['token'] = this.$getToken();
 				uni.request({
 					url: url,
@@ -227,16 +222,6 @@
 						if (result.code == '0') {
 							this.getBaseDatas = result.data;
 
-							this.searchItemsFields = this.getBaseDatas.statuses;
-
-							// 信息类型
-							_this.newsTypes = result.data.news_types;
-							// 来源
-							_this.sources = result.data.sources;
-
-							// 跟进状态
-							_this.statuses = result.data.statuses;
-
 							// 负责人
 							_this.staffes = result.data.staffes;
 
@@ -275,19 +260,10 @@
 				this.searchSelectedItemIndex = 0;
 
 				switch (index) {
-					case 0: // 跟进状态选择
-						this.searchItemsFields = this.getBaseDatas.statuses;
-						break;
-					case 1: // 客户来源选择
-						this.searchItemsFields = this.getBaseDatas.sources;
-						break;
-					case 2: // 负责人选择
+					case 0: // 负责人选择
 						this.searchItemsFields = this.getBaseDatas.staffes;
 						break;
-					case 3: // 下次跟进时间
-						this.searchItemsFields = '';
-						break;
-					case 4: // 创建时间
+					case 1: // 下次跟进时间
 						this.searchItemsFields = '';
 						break;
 				}
@@ -314,24 +290,12 @@
 				console.log(this.searchNavIndex, this.searchSelectedItemIndex);
 				let field = '';
 				switch (this.searchNavIndex) {
-					case 0: // 跟进状态
-						field = 'status';
-						break;
-
-					case 1: // 客资来源
-						field = 'source';
-						break;
-
-					case 2: // 负责人
+					case 0: // 负责人
 						field = 'staff';
 						break;
 
-					case 3: // 下次跟进时间
+					case 1: // 下次跟进时间
 						field = 'next_visit_time';
-						break;
-
-					case 4: // 创建时间
-						field = 'create_time';
 						break;
 				}
 

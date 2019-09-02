@@ -11,6 +11,7 @@ const apis = {
 	customer: {
 		sea: `${host}/api/customer/sea`,
 		mine: `${host}/api/customer/mine`,
+		today: `${host}/api/customer/today`,
 		apply: `${host}/api/customer/apply`,
 		doApply: `${host}/api/customer/doApply`,
 		getBaseData: `${host}/api/customer/getBaseData`,
@@ -21,8 +22,7 @@ const apis = {
 	visit: {
 		doVisitCustomer: `${host}/api/visit/doVisitCustomer`,
 		visitCustomer: `${host}/api/visit/visitCustomer`,
-		logs:`${host}/api/visit/logs`,
-		today: `${host}/api/visit/today`
+		logs:`${host}/api/visit/logs`
 	},
 	order: {
 		createOrder: `${host}/api/order/createOrder`,

@@ -107,16 +107,11 @@
 				"跟进状态",
 				"客户来源",
 				"负责人",
-				"下次跟进时间",
 				"创建时间",
 			];
 
 			let searchDateTextItems = [
-				"不限",
 				"今天",
-				"明天",
-				"本周",
-				"本月",
 				"自定义",
 			];
 
@@ -159,7 +154,7 @@
 					title: params.page_title
 				})
 			}
-			this.getSea();
+			this.getSea(params);
 		},
 		created() {
 			this.getBaseData()
@@ -176,16 +171,14 @@
 			}
 		},
 		methods: {
-			getSea() {
+			getSea(params) {
 				let _this = this;
 				let url = _this.$apis.customer.sea;
-				let token = _this.$getToken();
+				params['token'] = this.$getToken();
 				uni.request({
 					url: url,
 					method: 'POST',
-					data: {
-						token: token
-					},
+					data: params,
 					dataType: 'json',
 					header: {
 						'content-type': 'application/x-www-form-urlencoded',
@@ -286,10 +279,7 @@
 					case 2: // 负责人选择
 						this.searchItemsFields = this.getBaseDatas.staffes;
 						break;
-					case 3: // 下次跟进时间
-						this.searchItemsFields = '';
-						break;
-					case 4: // 创建时间
+					case 3: // 创建时间
 						this.searchItemsFields = '';
 						break;
 				}
@@ -328,11 +318,7 @@
 						field = 'staff';
 						break;
 
-					case 3: // 下次跟进时间
-						field = 'next_visit_time';
-						break;
-
-					case 4: // 创建时间
+					case 3: // 创建时间
 						field = 'create_time';
 						break;
 				}
