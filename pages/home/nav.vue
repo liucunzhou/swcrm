@@ -8,7 +8,7 @@
 				<img src="../../commonimg/information.png" mode=""></img>
 				<text>客资公海</text>
 			</view>
-			<view class="imgText" @click="goToMine(0,0,'我的客资')">
+			<view class="imgText" @click="goToMine(-1,0,'我的客资')">
 				<img src="../../commonimg/myinformation.png" mode=""></img>
 				<text>我的客资</text>
 			</view>
