@@ -121,9 +121,17 @@
 			doVisitCustomer(e) {
 				let _this = this;
 				let status = this.status;
+				if(status == 0) {
+					uni.showToast({
+						title:'请选择回访状态'
+					});
+					return false;
+				}
+				
 				let cstatus = this.statuses[status].id;
 				let token = this.$getToken();
 				let url = _this.$apis.visit.doVisitCustomer;
+				
 				let params = {
 					token: token,
 					member_id: _this.member_id,
