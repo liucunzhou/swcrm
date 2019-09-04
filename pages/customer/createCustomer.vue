@@ -276,6 +276,7 @@
 				let params = {
 					token: _this.$getToken(),
 					news_type: _this.newsType,
+					source_id:_this.source_id,
 					source_text: _this.source_text,
 					realname: _this.realname,
 					mobile: _this.mobile,
