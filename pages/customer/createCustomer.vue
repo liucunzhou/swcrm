@@ -202,8 +202,7 @@
 			bindSourceChange(e) {
 				console.log('value is', e.detail.value);
 				let source_index = e.detail.value;
-				this['source_index'] = source_index;
-				
+				this.source_index = source_index;
 			},
 			bindCityChange(e) {
 				let _this = this;
@@ -276,7 +275,7 @@
 				let params = {
 					token: _this.$getToken(),
 					news_type: _this.newsType,
-					source_id:_this.source_id,
+					source_id:_this.source_index,
 					source_text: _this.source_text,
 					realname: _this.realname,
 					mobile: _this.mobile,
