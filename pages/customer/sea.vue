@@ -350,7 +350,7 @@
 			},
 			search() {
 				let _this = this;
-				let url = _this.$apis.customer.mine;
+				let url = _this.$apis.customer.sea;
 				let params = {};
 				params['token'] = this.$getToken();
 				if (this.keywords == '') {
