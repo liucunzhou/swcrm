@@ -101,6 +101,10 @@
 				if(cstatus.id != 3 && cstatus.id != 4 && this.nextVisitTime != '' && this.remark != '') {
 					this.submit = false;
 				}
+				
+				if(cstatus.id == 3 && cstatus.id == 4 && this.remark != '') {
+					this.submit = false;
+				}
 			},
 			statusChange(e) {
 				let status = e.detail.value;
