@@ -61,9 +61,10 @@
 			let status = 0;
 			let realname = '';
 			let submit = true;
+			let today = (new Date()).format("yyyy-MM-dd h:m");
 			return {
 				is_into_store:false,
-				next_visit_time:"2019-08-07",
+				next_visit_time: today,
 				current: 0,
 				isLaberbox:false,
 				realname: realname,
