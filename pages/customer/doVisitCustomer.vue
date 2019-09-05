@@ -102,7 +102,7 @@
 					this.submit = false;
 				}
 				
-				if(cstatus.id == 3 && cstatus.id == 4 && this.remark != '') {
+				if(cstatus.id == 3 || cstatus.id == 4 && this.remark != '') {
 					this.submit = false;
 				}
 			},
@@ -114,7 +114,7 @@
 					this.submit = false;
 				}
 				
-				if(cstatus.id == 3 && cstatus.id == 4 && this.remark != '') {
+				if(cstatus.id == 3 || cstatus.id == 4 && this.remark != '') {
 					this.submit = false;
 				}
 			},
