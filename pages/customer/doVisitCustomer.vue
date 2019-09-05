@@ -109,6 +109,10 @@
 				if(cstatus.id != 3 && cstatus.id != 4 && this.nextVisitTime != '' && this.remark != '') {
 					this.submit = false;
 				}
+				
+				if(cstatus.id == 3 && cstatus.id == 4 && this.remark != '') {
+					this.submit = false;
+				}
 			},
 			bindTimeChange(e) {
 				this.next_visit_time = e.detail.value
