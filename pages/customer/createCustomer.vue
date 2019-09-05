@@ -121,7 +121,7 @@
 				newsTypes: newsTypes,
 				
 				source_text: '',
-				source_index: 0,
+				source_index: 1,
 				sources: sources,
 				
 				wedding_date: today,
