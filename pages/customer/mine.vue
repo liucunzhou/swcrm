@@ -176,10 +176,6 @@
 				});
 			}
 		},
-		onPullDownRefresh() {
-			this.params['page'] = this.page;
-			getCurrentPages(this.params);
-		},
 		methods: {
 			// 获取客资列表
 			getCustomerList(params) {
@@ -303,6 +299,7 @@
 			searchNavItemClick(index) {
 				this.searchSelectedItemIndex = index;
 			},
+			
 			//开始时间
 			startDateChange(e) {
 				this.startDate = e.detail.value
@@ -340,7 +337,11 @@
 				
 				let value = 0;
 				if(this.searchNavIndex < 3) {
-					value = this.searchSelectedItemIndex;
+					let index = this.searchSelectedItemIndex;
+					let value = 0;
+					if (this.searchItemsFields[index]['id']!=undefined) {
+						value = this.searchItemsFields[index]['id'];
+					}
 				} else {
 					let searchIndex = this.searchSelectedItemIndex;
 					if(searchIndex == this.searchDateTextItems.length - 1) {

@@ -1,15 +1,15 @@
 {
 	"pages": [
 		{
-			"path": "pages/public/login",
-			"style": {
-				"navigationBarTitleText": "用户登录"
-			}
-		},
-		{
 			"path": "pages/home/index",
 			"style": {
 				"navigationBarTitleText": "红丝云"
+			}
+		},
+		{
+			"path": "pages/public/login",
+			"style": {
+				"navigationBarTitleText": "用户登录"
 			}
 		},
 		{
