@@ -342,12 +342,12 @@
 			},
 			toVisitCustomer(e) {
 				let _this = this;
-				uni.navigateTo({
+				uni.redirectTo({
 					url: 'doVisitCustomer?member_id=' + _this.customer.id + '&realname=' + _this.realname
 				})
 			},
 			createOrder(e){
-				 uni.navigateTo({
+				 uni.redirectTo({
 				 	url: '../order/createOrder?member_id=' + this.customer.id
 				 })
 			},

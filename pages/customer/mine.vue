@@ -211,9 +211,9 @@
 			},
 
 			navToCustomer(memberId) {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: `visitCustomer?member_id=${memberId}`
-				})
+				});
 			},
 
 			getBaseData() {

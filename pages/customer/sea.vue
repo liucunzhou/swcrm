@@ -7,7 +7,6 @@
 			<view class="header_all">
 				<text>客资公海</text>
 			</view>
-
 			<view class="header_search" @click="isShowSearchCompontent=!isShowSearchCompontent">筛选</view>
 		</view>
 

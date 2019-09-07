@@ -121,7 +121,7 @@
 				newsTypes: newsTypes,
 				
 				source_text: '',
-				source_index: 1,
+				source_index: 0,
 				sources: sources,
 				
 				wedding_date: today,
@@ -271,12 +271,11 @@
 					return false;
 				}
 				let city_index = _this.city_index;
-				
+				let source_id = _this.sources[source_index].id;
 				let params = {
 					token: _this.$getToken(),
 					news_type: _this.newsType,
-					source_id:_this.source_index,
-					source_text: _this.source_text,
+					source_id: source_id,
 					realname: _this.realname,
 					mobile: _this.mobile,
 					city_id: _this.cities[city_index]['id'],
