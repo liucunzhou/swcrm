@@ -261,7 +261,7 @@
 				let url = _this.$apis.customer.createCustomer;
 				let source_index = _this.source_index;
 				let mobile = _this.mobile;
-				if(mobile=='' || isNaN(mobile)) {
+				if(mobile=='') {
 					console.log(mobile);
 					uni.showToast({
 						title:"请输入正确的手机号",
