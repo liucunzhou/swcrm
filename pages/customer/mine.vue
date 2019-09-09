@@ -72,6 +72,9 @@
 		
 		<view class="msg" v-for="(customer,index) in customers" v-bind:key="customer.id">
 			<text class="msgtopright">{{index+1}}</text>
+			<view class="statuTag">
+				{{customer.active_status}}
+			</view>
 			<view @click="navToCustomer(customer.member_id)">
 				<view class="msg_header">
 					<view class="header_left">
@@ -92,7 +95,8 @@
 				</view>
 			</view>
 		</view>
-
+		<!-- 下拉标签 -->
+		<uni-load-more :status="dstatu"></uni-load-more>
 	</view>
 </template>
 
@@ -102,6 +106,7 @@
 	let platform = dingtalk.env.platform;
 
 	export default {
+		components: {uniLoadMore},
 		comments:{
 			uniLoadMore
 		},
@@ -129,7 +134,6 @@
 				"date_range",
 			];
 			
-			
 			return {
 				keywords: '',
 				customers: [],
@@ -148,10 +152,14 @@
 				getBaseDatas: {}, //筛选数据
 				page_title: '我的客资',
 				params: {},
-				page: 0
+				page: 1,
+				dstatu: 'more',
+				searchObj:{},
+				token:null
 			}
 		},
 		onLoad(params) {
+			this.token =this.$getToken()
 			this.params = params;
 			if(params.page_title != undefined){
 				this.page_title = params.page_title;
@@ -159,29 +167,46 @@
 					title: params.page_title
 				})
 			}
-			this.getCustomerList(params);
+			this.getCustomerList();
+			
+		},
+		onReachBottom(){
+			console.log('dibu')
+			this.getCustomerList(this)
 		},
 		created() {
 			//请求筛选信息
 			this.getBaseData();
 		},
 		onShow() {
-			if (platform != 'notInDingTalk') {
-				dingtalk.ready(function() {
-					dingtalk.biz.navigation.hideBar({
-						hidden: true,
-						onSuccess: function(result) {},
-						onFail: function(err) {}
-					})
-				});
-			}
+			// if (platform != 'notInDingTalk') {
+			// 	dingtalk.ready(function() {
+			// 		dingtalk.biz.navigation.hideBar({
+			// 			hidden: true,
+			// 			onSuccess: function(result) {},
+			// 			onFail: function(err) {}
+			// 		})
+			// 	});
+			// }
 		},
 		methods: {
 			// 获取客资列表
-			getCustomerList(params) {
+			getCustomerList(res){
+				//设置底部为加载中
+				this.dstatu = 'loading'
+				
 				let _this = this;
 				let url = _this.$apis.customer.mine;
-				params['token'] = this.$getToken();
+				console.log(this.token)
+				let params = {}
+				params['token'] = _this.token;
+				params['page'] = _this.page;
+				if(this.searchObj.key){
+					params[this.searchObj.key] = _this.searchObj.value
+				}
+				if(this.keywords){
+					params['keywords'] = this.keywords;
+				}
 				uni.request({
 					url: url,
 					method: 'POST',
@@ -191,16 +216,28 @@
 						'content-type': 'application/x-www-form-urlencoded',
 					},
 					success: (res) => {
+						console.log(1)
 						let result = res.data;
 						if (result.code == '0') {
 							// _this.customers = result.data;
-							_this.customers = _this.customers.concat(result.data);
+							if(result.data.length>0){
+								_this.customers = _this.customers.concat(result.data);
+								_this.dstatu = 'more'
+							}else{
+								_this.dstatu = 'noMore'
+							}
+							
+							//检查半页数据的情况
+							if(_this.customers.length >= result.count ){
+								_this.dstatu = 'noMore'
+							}
+							
 						} else {
 							uni.showToast({
 								title: result.msg
 							})
 						}
-						
+
 						_this.page = _this.page + 1;
 					}
 				})
@@ -317,44 +354,61 @@
 			makeSure() {
 				console.log(this.searchNavIndex, this.searchSelectedItemIndex);
 				let field = '';
+				let search = {}
 				switch(this.searchNavIndex) {
 					case 0: // 跟进状态
 						field = 'status';
+						
+						search.value = this.searchSelectedItemIndex
 						break;
 					
 					case 1: // 客资来源
 						field = 'source';
+						search.value = this.searchSelectedItemIndex
 						break;
 					
 					case 2: // 负责人
 						field = 'staff';
+						search.value = this.searchSelectedItemIndex
 						break;
 						
 					case 3: // 创建时间
 						field = 'create_time';
+							if(searchIndex == this.searchDateTextItems.length - 1) {
+								value = this.startDate + '~' + this.endDate;
+							} else {
+								value = this.searchDateFieldItems[searchIndex];	
+							}
+						search.value = value
 						break;
 				}
-				
-				let value = 0;
-				if(this.searchNavIndex < 3) {
-					let index = this.searchSelectedItemIndex;
-					let value = 0;
-					if (this.searchItemsFields[index]['id']!=undefined) {
-						value = this.searchItemsFields[index]['id'];
-					}
-				} else {
-					let searchIndex = this.searchSelectedItemIndex;
-					if(searchIndex == this.searchDateTextItems.length - 1) {
-						value = this.startDate + '~' + this.endDate;
-					} else {
-						value = this.searchDateFieldItems[searchIndex];	
-					}
-				}
-				
+				search.key = field
+				// let value = 0;
+				// if(this.searchNavIndex < 3) {
+				// 	let index = this.searchSelectedItemIndex;
+				// 	let value = 0;
+				// 	if (this.searchItemsFields[index]['id']!=undefined) {
+				// 		value = this.searchItemsFields[index]['id'];
+				// 	}
+				// } else {
+				// 	let searchIndex = this.searchSelectedItemIndex;
+				// 	if(searchIndex == this.searchDateTextItems.length - 1) {
+				// 		value = this.startDate + '~' + this.endDate;
+				// 	} else {
+				// 		value = this.searchDateFieldItems[searchIndex];	
+				// 	}
+				// }
+				//将页面清空
+				this.page = 0 
+				this.customers = []
+				this.searchObj = search
+				//关闭筛选框
+				this.isShowSearchCompontent = 0
+				this.getCustomerList().bind(this)
 				// 开始搜索
-				uni.navigateTo({
-					url: 'mine?' + field + '=' + value + '&page_title=' + this.page_title
-				});
+				// uni.navigateTo({
+				// 	url: 'mine?' + field + '=' + value + '&page_title=' + this.page_title
+				// });
 				
 			},
 			inputChange(e){
@@ -362,6 +416,8 @@
 				this[key] = e.detail.value;
 			},
 			search() {
+				this.page =1
+				this.customers = []
 				let _this = this;
 				let url = _this.$apis.customer.mine;
 				let params = {};
@@ -373,29 +429,30 @@
 					return false;
 				}
 				
-				params['keywords'] = this.keywords;
-				uni.request({
-					url: url,
-					method: 'POST',
-					data: params,
-					dataType: 'json',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-					},
-					success: (res) => {
-						let result = res.data;
-						if (result.code == '0') {
-							// _this.customers = result.data;
-							_this.customers = result.data;
-						} else {
-							uni.showToast({
-								title: result.msg
-							})
-						}
-						
-						_this.page = _this.page + 1;
-					}
-				})
+				
+				this.getCustomerList()
+				// uni.request({
+				// 	url: url,
+				// 	method: 'POST',
+				// 	data: params,
+				// 	dataType: 'json',
+				// 	header: {
+				// 		'content-type': 'application/x-www-form-urlencoded',
+				// 	},
+				// 	success: (res) => {
+				// 		let result = res.data;
+				// 		if (result.code == '0') {
+				// 			// _this.customers = result.data;
+				// 			_this.customers = result.data;
+				// 		} else {
+				// 			uni.showToast({
+				// 				title: result.msg
+				// 			})
+				// 		}
+				// 		
+				// 		_this.page = _this.page + 1;
+				// 	}
+				// })
 			}
 		},
 	}
@@ -403,4 +460,15 @@
 
 <style>
 	@import url("../../common/common.css");
+	.statuTag{
+		position:absolute;
+		right:70rpx;
+		top:10rpx;
+		padding: 1rpx 8rpx;
+		font-size:18rpx;
+		list-style: 18rpx;
+		border-radius:10rpx;
+		color:white;
+		background: rgb(20,170,240);
+	}
 </style>
