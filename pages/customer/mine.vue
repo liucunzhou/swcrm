@@ -354,22 +354,29 @@
 			makeSure() {
 				console.log(this.searchNavIndex, this.searchSelectedItemIndex);
 				let field = '';
-				let search = {}
+				let search = {};
+				let index = 0;
 				switch(this.searchNavIndex) {
 					case 0: // 跟进状态
 						field = 'status';
 						
-						search.value = this.searchSelectedItemIndex
+						// search.value = this.searchSelectedItemIndex
+						index = this.searchSelectedItemIndex;
+						search.value = this.searchItemsFields[index]['id'];
 						break;
 					
 					case 1: // 客资来源
 						field = 'source';
-						search.value = this.searchSelectedItemIndex
+						// search.value = this.searchSelectedItemIndex
+						index = this.searchSelectedItemIndex;
+						search.value = this.searchItemsFields[index]['id'];
 						break;
 					
 					case 2: // 负责人
 						field = 'staff';
-						search.value = this.searchSelectedItemIndex
+						// search.value = this.searchSelectedItemIndex
+						index = this.searchSelectedItemIndex;
+						search.value = this.searchItemsFields[index]['id'];
 						break;
 						
 					case 3: // 创建时间
@@ -405,6 +412,7 @@
 				//关闭筛选框
 				this.isShowSearchCompontent = 0
 				this.getCustomerList().bind(this)
+				
 				// 开始搜索
 				// uni.navigateTo({
 				// 	url: 'mine?' + field + '=' + value + '&page_title=' + this.page_title
