@@ -204,9 +204,13 @@
 				if(this.searchObj.key){
 					params[this.searchObj.key] = _this.searchObj.value
 				}
+				
 				if(this.keywords){
 					params['keywords'] = this.keywords;
 				}
+				console.log(_this.params);
+				params = Object.assign(_this.params, params);
+				
 				uni.request({
 					url: url,
 					method: 'POST',
