@@ -7,7 +7,6 @@
 			<view class="header_all">
 				<text>今日跟进</text>
 			</view>
-
 			<view class="header_search" @click="isShowSearchCompontent=!isShowSearchCompontent">筛选</view>
 		</view>
 
@@ -22,7 +21,8 @@
 
 			<view class="topmuie">
 				<view class="seek">
-					<input type="text" placeholder-style="font-size:13px" :value="keywords" data-key="keywords" @input="inputChange" placeholder="请输入手机号进行查询" />
+					<input type="text" placeholder-style="font-size:13px" :value="keywords" data-key="keywords" @input="inputChange"
+					 placeholder="请输入手机号进行查询" />
 					<img src="@/commonimg/findminimg.png" @click="search"></img>
 				</view>
 			</view>
@@ -31,25 +31,18 @@
 			<view class="topmuieFixed" v-if="isShowSearchCompontent">
 				<view class="topmuieFixed_main">
 					<view class="topmuieFixed_box">
-						<!-- 搜索导航左侧 -->
 						<view class="searchNavBar">
-							<text @click.stop="searchNav(index)" :class="searchNavIndex===index?'searchNavBartext':''" v-for="(item,index) in searchNavBar"
-							 :key="index">{{item}}</text>
+							<text @click="searchNav(index)" :class="searchNavIndex===index?'searchNavSelected':''" v-for="(item,index) in searchBar"
+							 :key="index">{{item.title}}</text>
 						</view>
 						
 						<view class="topmuieFixed_right">
-							<template v-if="searchItemsFields!=''">
-								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
-								 v-for="(item,index) in searchItemsFields" :key="index">{{item.realname}}</text>
-							</template>
-							<template v-if="searchNavIndex > 0">
-								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
-								 v-for="(item,index) in searchDateTextItems" :key="index">{{item}}</text>
-							</template>
+							<text @click="searchNavItem(index)" :class="searchBar[searchNavIndex]['index']===index ? 'searchItemSelected':''"
+							 v-for="(item,index) in searchBar[searchNavIndex]['items']" :key="index">{{item.title?item.title:item.realname}}</text>
 						</view>
 					</view>
 
-					<view class="clocedtime" v-if="searchNavIndex > 0 && searchSelectedItemIndex===searchDateTextItems.length - 1">
+					<view class="clocedtime" v-if="isShowDateRange">
 						<picker mode="date" :value="startDate" @change="startDateChange">
 							<view class="uni-input"><text>开始时间:{{startDate}}</text></view>
 						</picker>
@@ -57,6 +50,7 @@
 							<view class="uni-input"><text>结束时间:{{endDate}}</text></view>
 						</picker>
 					</view>
+					-->
 
 					<view class="topmuieFixed_setting">
 						<text @click.stop="emptyFn">清空</text>
@@ -68,6 +62,9 @@
 
 		<view class="msg" v-for="(customer,index) in customers" v-bind:key="customer.id">
 			<text class="msgtopright">{{index+1}}</text>
+			<view class="statuTag">
+				{{customer.active_status}}
+			</view>
 			<view @click="navToCustomer(customer.member_id)">
 				<view class="msg_header">
 					<view class="header_left">
@@ -87,16 +84,24 @@
 					<text class="names">区域：</text> <text class="namemain">{{customer.zone}}</text>
 				</view>
 			</view>
-
 		</view>
+		<!-- 下拉标签 -->
+		<uni-load-more :status="dstatu"></uni-load-more>
 	</view>
 </template>
 
 <script>
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
 
 	export default {
+		components: {
+			uniLoadMore
+		},
+		comments: {
+			uniLoadMore
+		},
 		data() {
 			let pageNav = [
 				"全部客户",
@@ -104,48 +109,78 @@
 				"我的下属客户"
 			];
 
-			let searchNavBar = [
-				"负责人",
-				"下次跟进时间",
+			let searchBar = [{
+					title: '跟进状态',
+					field: 'status',
+					index: 0,
+					match: 'statuses',
+					items: []
+				},
+				{
+					title: '客户来源',
+					field: 'source',
+					index: 0,
+					match: 'sources',
+					items: []
+				},
+				{
+					title: '员工列表',
+					field: 'staff',
+					index: 0,
+					match: 'staffes',
+					items: []
+				},
+				{
+					title: '下次回访时间',
+					field: 'next_visit_time',
+					index: 0,
+					items: [
+						{
+							id: '',
+							title: '不限'
+						},
+						{
+							id: 'today',
+							title: '今天'
+						},
+						{
+							id: 'date_range',
+							title: '自定义'
+						}
+					]
+				}
 			];
-
-			let searchDateTextItems = [
-				"今天",
-				"自定义",
-			];
-
-			let searchDateFieldItems = [
-				"none",
-				"today",
-				"tomorrow",
-				"this_week",
-				"this_month",
-				"date_range",
-			];
-
 
 			return {
+				// 页面加载
+				page_title: '我的客资',
+				params: {},
+				page: 0,
+				dstatu: 'more',
+				
+				// 高级搜索
+				isShowSearchCompontent: false,
+				searchObj: {},				
+				searchBar: searchBar,
+				searchNavIndex: 0,
+				searchSelectedItemIndex: 0,
 				keywords: '',
+				
+				// 客资列表
 				customers: [],
 				pageNav: pageNav,
 				pageNavIndex: 0,
 				isShowPageNav: false,
-				isShowSearchCompontent: false,
-				searchNavBar: searchNavBar,
-				searchDateTextItems: searchDateTextItems,
-				searchDateFieldItems: searchDateFieldItems,
-				searchItemsFields: [],
-				searchNavIndex: 0,
-				searchSelectedItemIndex: 0,
-				startDate: "", //开始时间
-				endDate: "", //结束时间
-				getBaseDatas: {}, //筛选数据
-				page_title: '我的客资',
-				params: {},
-				page: 0
+				
+				// 自定义事件
+				isShowDateRange: false,
+				startDate: "",
+				endDate: "",
+				token: null
 			}
 		},
 		onLoad(params) {
+			this.token = this.$getToken()
 			this.params = params;
 			if (params.page_title != undefined) {
 				this.page_title = params.page_title;
@@ -153,11 +188,14 @@
 					title: params.page_title
 				})
 			}
-
-			this.getCustomerList(params);
-			this.getBaseData()
+			this.getCustomerList();
+		},
+		created() {
+			// 请求筛选信息
+			this.getBaseData();
 		},
 		onShow() {
+			// 钉钉中隐藏页面标题
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -168,17 +206,28 @@
 				});
 			}
 		},
+		// 底部加载更多
+		onReachBottom() {
+			this.getCustomerList(this)
+		},
 		methods: {
-			// 获取input字段的值
-			inputChange(e) {
-				const key = e.currentTarget.dataset.key;
-				this[key] = e.detail.value;
-			},
 			// 获取客资列表
-			getCustomerList(params) {
+			getCustomerList(res) {
+				//设置底部为加载中
+				this.dstatu = 'loading'
 				let _this = this;
 				let url = _this.$apis.customer.today;
-				params['token'] = this.$getToken();
+				console.log(this.token)
+				let params = {}
+				params['page'] = _this.page;
+				if (this.keywords) {
+					params = {};
+					params['keywords'] = this.keywords;
+				} else {
+					params = Object.assign(_this.params, params, _this.searchObj);
+				}
+				params['token'] = _this.token;
+
 				uni.request({
 					url: url,
 					method: 'POST',
@@ -188,24 +237,37 @@
 						'content-type': 'application/x-www-form-urlencoded',
 					},
 					success: (res) => {
+						console.log(1)
 						let result = res.data;
-						console.log(result);
 						if (result.code == '0') {
-							_this.customers = result.data;
+							// _this.customers = result.data;
+							if (result.data.length > 0) {
+								_this.customers = _this.customers.concat(result.data);
+								_this.dstatu = 'more'
+							} else {
+								_this.dstatu = 'noMore'
+							}
+
+							//检查半页数据的情况
+							if (_this.customers.length >= result.count) {
+								_this.dstatu = 'noMore'
+							}
+
 						} else {
 							uni.showToast({
 								title: result.msg
 							})
 						}
+
+						_this.page = _this.page + 1;
 					}
 				})
 			},
-			
-			// 客资回访详情
+
 			navToCustomer(memberId) {
 				uni.navigateTo({
 					url: `../visit/details?member_id=${memberId}`
-				})
+				});
 			},
 
 			getBaseData() {
@@ -226,12 +288,15 @@
 					success: (res) => {
 						let result = res.data;
 						if (result.code == '0') {
-							_this.getBaseDatas = result.data;
-
-							// 负责人
-							_this.searchItemsFields = result.data.staffes;
-							_this.staffes = result.data.staffes;
-
+							// _this.getBaseDatas = result.data;
+							console.log(_this.searchBar);
+							for(let i in _this.searchBar) {
+								let item = _this.searchBar[i];
+								if(item['match'] != undefined) {
+									let match = item['match'];
+									_this.searchBar[i]['items'] =  result.data[match];
+								}
+							}
 						} else {
 							uni.showToast({
 								title: result.msg
@@ -257,6 +322,7 @@
 			showPageNavFn() {
 				this.isShowPageNav = !this.isShowPageNav;
 			},
+			
 			//关闭全部客户弹框
 			closePageNavFn() {
 				this.isShowPageNav = !this.isShowPageNav
@@ -265,68 +331,79 @@
 			//筛选左边点击
 			searchNav(index) {
 				this.searchNavIndex = index;
-				this.searchSelectedItemIndex = 0;
-
-				switch (index) {
-					case 0: // 负责人选择
-						this.searchItemsFields = this.getBaseDatas.staffes;
-						break;
-					case 1: // 下次跟进时间
-						this.searchItemsFields = '';
-						break;
+			},
+			
+			//筛选右边点击
+			searchNavItem(index) {
+				let searchNavIndex = this.searchNavIndex;
+				console.log('searchNavIndex is:',searchNavIndex);
+				this.searchBar[searchNavIndex]['index'] = index;
+				if(this.searchBar[searchNavIndex]['items'][index]['id'] == 'date_range') {
+					this.isShowDateRange = true;
+				} else {
+					this.isShowDateRange = false;
 				}
 			},
-			//筛选右边点击
-			searchNavItemClick(index) {
-				this.searchSelectedItemIndex = index;
-			},
+
 			//开始时间
 			startDateChange(e) {
 				this.startDate = e.detail.value
 			},
+			
 			//结束时间
 			endDateChange(e) {
 				this.endDate = e.detail.value
 			},
+			
 			// 清空
 			emptyFn() {
-				this.searchNavIndex = '';
-				this.searchSelectedItemIndex = '';
+				let _this = this;
+				this.searchBar.forEach(function(item, index) {
+					console.log(this);
+					_this.searchBar[index]['index'] = 0;
+				});
+				_this.isShowDateRange = false;
 			},
+			
 			// 确认搜索
 			makeSure() {
-				console.log(this.searchNavIndex, this.searchSelectedItemIndex);
-				let field = '';
-				switch (this.searchNavIndex) {
-					case 0: // 负责人
-						field = 'staff';
-						break;
-
-					case 1: // 下次跟进时间
-						field = 'next_visit_time';
-						break;
-				}
-
-				let value = 0;
-				if (this.searchNavIndex == 0) {
-					value = this.searchSelectedItemIndex;
-				} else {
-					let searchIndex = this.searchSelectedItemIndex;
-					if (searchIndex == this.searchDateTextItems.length - 1) {
-						value = this.startDate + '~' + this.endDate;
+				let _this = this;
+				let search = {};
+				this.searchBar.forEach(function(item, index){
+					if(item.field == 'create_time') {
+						let field = item.field;
+						let selectedIndex = item.index;
+						let value = item.items[selectedIndex]['id'];
+						if (value == 'date_range') {
+							value = _this.startDate + '~' + _this.endDate;
+						}
+						search[field] = value;
 					} else {
-						value = this.searchDateFieldItems[searchIndex];
+						let field = item.field;
+						let selectedIndex = item.index;
+						let value = item.items[selectedIndex]['id'];
+						search[field] = value;
 					}
-				}
-
-				// 开始搜索
-				uni.navigateTo({
-					url: 'today?' + field + '=' + value + '&page_title=' + this.page_title
+					
 				});
 
+				//将页面清空
+				this.page = 0
+				this.customers = []
+				this.searchObj = search
+				
+				//关闭筛选框
+				this.isShowSearchCompontent = 0;
+				this.getCustomerList();
 			},
-			// 手机号搜索
+			
+			inputChange(e) {
+				const key = e.currentTarget.dataset.key;
+				this[key] = e.detail.value;
+			},
 			search() {
+				this.page = 1
+				this.customers = []
 				let _this = this;
 				let url = _this.$apis.customer.mine;
 				let params = {};
@@ -337,35 +414,24 @@
 					});
 					return false;
 				}
-
-				params['keywords'] = this.keywords;
-				uni.request({
-					url: url,
-					method: 'POST',
-					data: params,
-					dataType: 'json',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-					},
-					success: (res) => {
-						let result = res.data;
-						if (result.code == '0') {
-							// _this.customers = result.data;
-							_this.customers = result.data;
-						} else {
-							uni.showToast({
-								title: result.msg
-							})
-						}
-
-						_this.page = _this.page + 1;
-					}
-				})
+				this.getCustomerList()
 			}
-		}
+		},
 	}
 </script>
 
 <style>
 	@import url("../../common/common.css");
+
+	.statuTag {
+		position: absolute;
+		right: 70rpx;
+		top: 10rpx;
+		padding: 1rpx 8rpx;
+		font-size: 18rpx;
+		list-style: 18rpx;
+		border-radius: 10rpx;
+		color: white;
+		background: rgb(20, 170, 240);
+	}
 </style>

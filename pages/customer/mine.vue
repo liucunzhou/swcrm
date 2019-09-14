@@ -158,7 +158,7 @@
 				// 页面加载
 				page_title: '我的客资',
 				params: {},
-				page: 1,
+				page: 0,
 				dstatu: 'more',
 				
 				// 高级搜索
@@ -222,16 +222,14 @@
 				let url = _this.$apis.customer.mine;
 				console.log(this.token)
 				let params = {}
-				params['token'] = _this.token;
 				params['page'] = _this.page;
-	
 				if (this.keywords) {
 					params = {};
 					params['keywords'] = this.keywords;
 				} else {
 					params = Object.assign(_this.params, params, _this.searchObj);
 				}
-
+				params['token'] = _this.token;
 				uni.request({
 					url: url,
 					method: 'POST',
@@ -241,7 +239,6 @@
 						'content-type': 'application/x-www-form-urlencoded',
 					},
 					success: (res) => {
-						console.log(1)
 						let result = res.data;
 						if (result.code == '0') {
 							// _this.customers = result.data;

@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<view class="msg" v-for="customer in customers" v-bind:key="customer.id">
-			<view @click="navToCustomer(customer.member_id)" :apply_status="customer.apply_status">
+			<view @click="navToCustomer(customer)" :apply_status="customer.apply_status">
 				<view class="msg_header">
 					<view class="header_left">
 						<text class="names">姓名： </text><text class="namemain">{{customer.realname}}</text>
@@ -112,14 +112,24 @@
 				})
 			},
 
-			navToCustomer(memberId) {
-				uni.navigateTo({
-					url: `visitLogs?member_id=${memberId}`
-				})
+			navToCustomer(customer) {
+				let member_id = customer.member_id;
+				let apply_status = customer.apply_status;
+				if (apply_status == 1) {
+					uni.navigateTo({
+						url: `../visit/details?member_id=${member_id}`
+					})
+				} else {
+					uni.navigateTo({
+						url: `../visit/logs?member_id=${member_id}`
+					})
+				}
 			},
+
 			screenFn(index) {
 				this.ScreenIndex = index
 			},
+
 			goToApply(status) {
 				uni.navigateTo({
 					url: `apply?status=${status}`

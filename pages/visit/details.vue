@@ -7,7 +7,7 @@
 			<view class="header_all">
 				<text>回访详情</text>
 			</view>
-			<view class="header_search" @tap="edit">编辑</view>
+			<!-- <view class="header_search" @tap="edit">编辑</view> -->
 		</view>
 		
 		<view class="header_name">
@@ -21,65 +21,46 @@
 			<view class="center_time">
 				<text class="field">信息类型</text>
 				<text class="dilimter">:</text>
-				<view class="value">
-					<picker mode="selector" @change="newsTypeFn" :value="newsType" :range="newsTypes">
-						<view class="uni-input">{{newsTypes[newsType]}}</view>
-					</picker>
-				</view>
+				<input type="text" :value="newsTypes[newsType]" />
 			</view>
 			
 			<view class="center_time">
 				<text class="field">桌数</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="banquet_size" data-key="banquet_size" @input="inputChange" @blur="blurChange" placeholder="请输入桌数" />
+				<input type="text" :value="banquet_size" />
 			</view>
 			
 			<view class="center_time">
 				<text class="field">预算</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="budget" data-key="budget" @input="inputChange" @blur="blurChange" placeholder="请输入预算" />
+				<input type="text" :value="budget"/>
 			</view>
 			
 			<view class="center_time">
 				<text class="field">婚期</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="wedding_date" data-key="wedding_date" placeholder="例:2019-12-12/2019-12-12" />
+				<input type="text" :value="wedding_date"/>
 			</view>
 			
 			<view class="center_time">
 				<text class="field">输入酒店</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="hotel_text" data-key="hotel_text" @input="inputChange" @blur="blurChange" placeholder="请输入酒店" />
+				<input type="text" :value="hotel_text" />
 			</view>
 			<view class="center_time">
 				<text class="field">选择城市</text>
 				<text class="dilimter">:</text>
-				<view class="value">
-					<picker @change="bindCityChange" data-key="city_index" :value="city_index" :range="cities" range-key="shortname">
-						<view class="uni-input">{{cities[city_index]['shortname']}}</view>
-					</picker>
-				</view>
+				<input type="text" :value="cities[city_index]['shortname']" />
 			</view>
 			<view class="center_time">
 				<text class="field">选择区域</text>
 				<text class="dilimter">:</text>
-				<view class="value">
-					<picker @change="bindAreaChange" :value="area_index" :range="areas" range-key="shortname">
-						<view class="uni-input">{{areas[area_index]['shortname']}}</view>
-					</picker>
-				</view>
-			</view>
-			<view class="center_time">
-				<text class="field">修改区域</text>
-				<text class="dilimter">:</text>
-				<view class="value">
-					<input type="text" :value="zone" data-key="zone" @input="inputChange" @blur="blurChange" placeholder="修改区域" placeholder-style="font-size:24rpx;" />
-				</view>
+				<input type="text" :value="areas[area_index]['shortname']"/>
 			</view>
 			<view class="center_time">
 				<text class="field">客户姓名</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="realname" data-key="realname" @input="inputChange" @blur="blurChange" placeholder="输入客户姓名" placeholder-style="font-size:24rpx;" />
+				<input type="text" :value="realname"/>
 			</view>
 			<view class="center_time">
 				<text class="field">联系电话</text>
@@ -87,6 +68,7 @@
 				<text class="value">{{customer.mobile}}</text>
 			</view>
 		</view>
+		
 		<view class="center_box">
 			<view class="center_header">
 				<text class="center_header_left">跟进人员 ({{groupLength}})</text>
@@ -103,7 +85,7 @@
 		</view>
 		<view class="center_box">
 			<view class="center_header">
-				<text class="center_header_left">跟进记录 ({{logs.length}})</text>
+				<text class="center_header_left">跟进记录 ({{logsLength}})</text>
 			</view>
 			<!-- 跟进记录-->
 			<view class="followMsg" v-for="log in logs" v-bind:key="log.id">
@@ -160,6 +142,7 @@
 				logs: {},
 				group: {},
 				groupLength: 0,
+				logsLength: 0,
 				isLaberbox: false,
 				
 				newsType: 0,
@@ -200,7 +183,7 @@
 		methods: {
 			edit(){
 				uni.redirectTo({
-				    url: '/pages/customer/editCustomer?customer='+JSON.stringify(this.customer)  
+				    url: '/pages/customer/edit'  
 				});
 			},
 			getCustomerVisits(member_id) {
@@ -236,12 +219,18 @@
 							_this.logs = response.result.visits.log;
 
 							let groupLength = 0;
-							for (var i in _this.group) {
+							for (let i in _this.group) {
 								groupLength++
 							}
 							_this.groupLength = groupLength;
+							
+							let logsLength = 0;
+							for (let i in _this.logs) {
+								logsLength++
+							}
+							_this.logsLength = logsLength;
+							
 							_this.banquet_sizes = response.result.scales;
-							console.log(_this.banquet_sizes);
 							_this.hotels = response.result.hotels;
 
 						} else {
@@ -358,7 +347,7 @@
 			toVisitCustomer(e) {
 				let _this = this;
 				uni.redirectTo({
-					url: 'doVisitCustomer?member_id=' + _this.customer.id + '&realname=' + _this.realname
+					url: 'dovisit?member_id=' + _this.customer.id + '&realname=' + _this.realname
 				})
 			},
 			createOrder(e){
