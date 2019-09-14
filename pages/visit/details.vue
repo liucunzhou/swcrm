@@ -21,46 +21,46 @@
 			<view class="center_time">
 				<text class="field">信息类型</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="newsTypes[newsType]" />
+				<text class="value">{{newsTypes[newsType]}}</text>
 			</view>
 			
 			<view class="center_time">
 				<text class="field">桌数</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="banquet_size" />
+				<text class="value">{{customer['banquet_size']}}</text>
 			</view>
 			
 			<view class="center_time">
 				<text class="field">预算</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="budget"/>
+				<text class="value">{{customer['budget']}}</text>
 			</view>
 			
 			<view class="center_time">
 				<text class="field">婚期</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="wedding_date"/>
+				<text class="value">{{customer['wedding_date']}}</text>
 			</view>
 			
 			<view class="center_time">
 				<text class="field">输入酒店</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="hotel_text" />
+				<text class="value">{{customer['hotel_text']}}</text>
 			</view>
 			<view class="center_time">
 				<text class="field">选择城市</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="cities[city_index]['shortname']" />
+				<text class="value">{{cities[city_index]['shortname']}}</text>
 			</view>
 			<view class="center_time">
 				<text class="field">选择区域</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="areas[area_index]['shortname']"/>
+				<text class="value">{{areas[area_index]['shortname']}}</text>
 			</view>
 			<view class="center_time">
 				<text class="field">客户姓名</text>
 				<text class="dilimter">:</text>
-				<input type="text" :value="realname"/>
+				<text class="value">{{customer.realname}}</text>
 			</view>
 			<view class="center_time">
 				<text class="field">联系电话</text>
