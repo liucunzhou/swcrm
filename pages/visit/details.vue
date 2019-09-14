@@ -69,30 +69,34 @@
 			</view>
 		</view>
 		
-		<view class="center_box">
-			<view class="center_header">
-				<text class="center_header_left">跟进人员 ({{groupLength}})</text>
-			</view>
-
-			<!-- 跟进记录-->
-			<view class="followMsg" v-for="item in group" v-bind:key="item.id">
-				<view class="follow_date" style="letter-spacing: 2px;">回&nbsp;访&nbsp;者&nbsp;：{{item.user_id}}</view>
-				<view class="follow_date" style="letter-spacing: 2px;">获取时间：{{item.allocate_create_time}}</view>
-				<view class="follow_date" style="letter-spacing: 2px;">下次回访：{{item.next_visit_time}}</view>
-				<view class="follow_date" style="letter-spacing: 2px;">回访次数：{{item.visit_times}}</view>
-			</view>
-
-		</view>
-		<view class="center_box">
-			<view class="center_header">
-				<text class="center_header_left">跟进记录 ({{logsLength}})</text>
-			</view>
-			<!-- 跟进记录-->
-			<view class="followMsg" v-for="log in logs" v-bind:key="log.id">
-				<view class="follow_date">{{log.create_time}}</view>
-				<view class="follow_main"><text>{{log.user_id}}</text></view>
-				<view class="follow_main"><text>{{log.content}}</text></view>
-				<view class="follow_main"><text style="letter-spacing: 2px;">跟进状态：{{log.status}}</text></view>
+		<view class="tab_box">
+			<view class="center_box">
+				<view class="center_header">
+					<text class="center_header_left" :class="{active:!visit_nav_index}" @click="visit_nav_index=0">跟进人员 ({{groupLength}})</text>
+					<text class="center_header_right" :class="{active:visit_nav_index}" @click="visit_nav_index=1">跟进记录 ({{logsLength}})</text>
+				</view>
+				
+				<view class="tab_content">
+					<template v-if="visit_nav_index==0">
+						<!-- 跟进记录-->
+						<view class="followMsg" v-for="item in group" v-bind:key="item.id">
+							<view class="follow_date" style="letter-spacing: 2px;">回&nbsp;访&nbsp;者&nbsp;：{{item.user_id}}</view>
+							<view class="follow_date" style="letter-spacing: 2px;">获取时间：{{item.allocate_create_time}}</view>
+							<view class="follow_date" style="letter-spacing: 2px;">下次回访：{{item.next_visit_time}}</view>
+							<view class="follow_date" style="letter-spacing: 2px;">回访次数：{{item.visit_times}}</view>
+						</view>
+					</template>
+					
+					<!-- 跟进记录-->
+					<template v-if="visit_nav_index==1">
+						<view class="followMsg" v-for="log in logs" v-bind:key="log.id">
+							<view class="follow_date">{{log.create_time}}</view>
+							<view class="follow_main"><text>{{log.user_id}}</text></view>
+							<view class="follow_main"><text>{{log.content}}</text></view>
+							<view class="follow_main"><text style="letter-spacing: 2px;">跟进状态：{{log.status}}</text></view>
+						</view>
+					</template>
+				</view>
 			</view>
 		</view>
 
@@ -161,7 +165,9 @@
 				area_index: 0,
 				areas: areas,
 				zone: '',
-				realname: ''
+				realname: '',
+				
+				visit_nav_index: 0
 			}
 		},
 		onLoad(options) {
@@ -519,26 +525,32 @@
 	.center_header {
 		width: 100%;
 		height: auto;
-		padding: 5px 15px;
-		background: #0caaf0;
 		box-sizing: border-box;
 		border-bottom: 1px solid #ccc;
 		clear: both;
-		color: #fff;
 		overflow: auto;
 		justify-content: space-between;
 	}
-
 	.center_header_left {
+		box-sizing: border-box;
+		padding: 5px 15px;
+		height: #000000;
+		width: 50%;
 		float: left;
 		letter-spacing: 2px;
 	}
-
 	.center_header_right {
+		box-sizing: border-box;
+		padding: 5px 15px;
+		color: #000000;
+		width: 50%;
 		float: right;
 		letter-spacing: 2px;
 	}
-
+	.center_header .active {
+		color: #fff;
+		background: #0caaf0;
+	}
 	.center_time {
 		padding: 0px 15px;
 		display: flex;
