@@ -240,10 +240,8 @@
 								groupLength++
 							}
 							_this.groupLength = groupLength;
-
 							_this.banquet_sizes = response.result.scales;
 							console.log(_this.banquet_sizes);
-							// _this.budgets = response.result.budgets;
 							_this.hotels = response.result.hotels;
 
 						} else {

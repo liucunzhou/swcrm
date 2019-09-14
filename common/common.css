@@ -150,20 +150,22 @@
 	padding-left: 10px;
 }
 
-.searchNavBartext {
+.searchNavSelected {
 	line-height: 30px;
 	background: #FFFFFF;
 	color: #0CAAF0;
 }
 
 .topmuieFixed_right {
+	display: flex;
+	float: right;
 	width: 50%;
 	height: 100%;
-	overflow: scroll;
-	float: right;
-	display: flex;
 	flex-direction: column;
-	align-items: center;
+	align-items: left;
+	overflow: scroll;
+	box-sizing: border-box;
+	padding-left: 12px;
 }
 
 .topmuieFixed_right text {
@@ -171,7 +173,7 @@
 	font-size: 15px;
 }
 
-.searchItemsFields {
+.searchItemSelected {
 	color: #0CAAF0;
 }
 
