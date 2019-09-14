@@ -169,6 +169,12 @@
 			}
 		},
 		methods: {
+			// 获取input字段的值
+			inputChange(e) {
+				const key = e.currentTarget.dataset.key;
+				this[key] = e.detail.value;
+			},
+			// 获取客资列表
 			getCustomerList(params) {
 				let _this = this;
 				let url = _this.$apis.customer.today;
@@ -194,11 +200,11 @@
 					}
 				})
 			},
-
+			
+			// 客资回访详情
 			navToCustomer(memberId) {
-
 				uni.navigateTo({
-					url: `visitCustomer?member_id=${memberId}`
+					url: `../visit/details?member_id=${memberId}`
 				})
 			},
 
@@ -234,6 +240,7 @@
 					}
 				})
 			},
+			
 			//返回上一页
 			goBack() {
 				uni.navigateBack({
@@ -318,10 +325,7 @@
 				});
 
 			},
-			inputChange(e) {
-				const key = e.currentTarget.dataset.key;
-				this[key] = e.detail.value;
-			},
+			// 手机号搜索
 			search() {
 				let _this = this;
 				let url = _this.$apis.customer.mine;

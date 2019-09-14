@@ -1,23 +1,5 @@
 <template>
 	<view class="pages">
-		<view class="tobar">
-			<view class="tobar_textL">
-				<img v-if="isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
-				<img v-if="!isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
-				<text :class="isactiveL?'activetext':'activetext'">待办</text>
-			</view>
-			<view class="circle" @click="isBottom=true">
-				<img v-if="isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
-				<img v-if="!isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
-			</view>
-			<navigator url="nav">
-				<view class="tobar_textR">
-					<img v-if="isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
-					<img v-if="!isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
-					<text :class="isactiveR?'activetext':'activetext'">客资</text>
-				</view>
-			</navigator>
-		</view>
 		<!-- 头部 -->
 		<view class="haers">
 			<view class="haers_img" @click="columnFn">
@@ -26,6 +8,7 @@
 				<text class="pointImg"></text>
 			</view>
 		</view>
+		
 		<!-- 侧栏 -->
 		<view class="columnmian" :style="{transform: 'translateX('+translate+'%)'}">
 			<view class="column">
@@ -63,7 +46,8 @@
 			<!-- 右边侧栏 -->
 			<view @click="isColumnFn" class="columnright" v-if="translate==0"></view>
 		</view>
-		<!-- 主体待办 -->
+		
+		<!--客资的导航-->
 		<view class="backlog">
 			<view class="backlog_main">
 				<view class="backlog_msg">
@@ -113,13 +97,32 @@
 				<img src="../../commonimg/closeimg.png"></img>
 			</view>
 		</view>
+		
+		<!-- 底部导航 -->
+		<view class="tobar">
+			<view class="tobar_textL">
+				<img v-if="isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
+				<img v-if="!isactiveL" @click="backlogFn" src="../../commonimg/activesmall.png"></img>
+				<text :class="isactiveL?'activetext':'activetext'">待办</text>
+			</view>
+			<view class="circle" @click="isBottom=true">
+				<img v-if="isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
+				<img v-if="!isCircle" @click="circlefn" src="../../commonimg/activejahao.png"></img>
+			</view>
+			<navigator url="nav">
+				<view class="tobar_textR">
+					<img v-if="isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
+					<img v-if="!isactiveR" @click="guestFn" src="../../commonimg/activekezi.png"></img>
+					<text :class="isactiveR?'activetext':'activetext'">客资</text>
+				</view>
+			</navigator>
+		</view>
 	</view>
 </template>
 
 <script>
 	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
-	
 	export default {
 		data() {
 			let user = {
@@ -138,16 +141,6 @@
 		onLoad() {
 			this.$getToken();
 		},
-		created() {
-			try{
-				let user = uni.getStorageSync("user");
-				if(user) {
-					this.user = user;
-				}
-			}catch(e){
-				//TODO handle the exception
-			}
-		},
 		onShow() {
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
@@ -157,6 +150,16 @@
 						onFail: function(err) {}
 					})
 				});
+			}
+			
+			try{
+				let user = uni.getStorageSync("user");
+				console.log(user);
+				if(user) {
+					this.user = user;
+				}
+			}catch(e){
+				
 			}
 		},
 		methods: {
@@ -182,13 +185,13 @@
 			},
 			createCustomer() {
 				uni.navigateTo({
-					url: '../customer/createCustomer'
+					url: '../customer/create'
 				});
 			},
 			// 查找客户
 			find() {
 				uni.navigateTo({
-					url: '../customer/findCustomer'
+					url: '../customer/search'
 				});
 			},
 			// 退出
@@ -199,7 +202,6 @@
 						url: '../public/login'
 					})
 				}catch(e){
-					//TODO handle the exception
 					uni.showToast({
 						title:"退出异常，请重试"
 					})

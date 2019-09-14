@@ -8,20 +8,29 @@
 			<view class="welcome">欢迎回来！</view>
 			<view class="input-content">
 				<view class="input-item">
-					<input type="text" :value="nickname" placeholder="请输入手机号码" maxlength="11" data-key="nickname" @input="inputChange" placeholder-style="color: #9e9e9e;" />
+					<input 
+						type="text"
+						autocomplete="off"
+						placeholder="请输入手机号码"
+						placeholder-class="input-empty"
+						maxlength="11"
+						:value="nickname" 
+						data-key="nickname" 
+						@input="inputChange"
+					/>
 				</view>
 				<view class="input-item">
 					<input
 						type="password"
-						value=""
+						autocomplete="off"
 						placeholder="请输入密码"
 						placeholder-class="input-empty"
 						maxlength="20"
 						password
+						value=""
 						data-key="password"
 						@input="inputChange"
 						@confirm="toLogin"
-						placeholder-style="color: #9e9e9e;"
 					/>
 				</view>
 			</view>
@@ -66,7 +75,6 @@ export default {
 		async toLogin() {
 			this.logining = false;
 			const { nickname, password } = this;
-
 			const sendData = {
 				nickname,
 				password
@@ -108,11 +116,10 @@ export default {
 </script>
 <style>
 .container {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
 	background: #ffffff;
 	padding: 100px 50px;
-	box-sizing: border-box;
+	box-sizing:border-box;
 }
 .welcome {
 	font-size: 26px;
@@ -150,6 +157,9 @@ export default {
 	float: right;
 }
 .forget-section text:nth-child(2) text {
+	color: #9e9e9e;
+}
+.placeholder{
 	color: #9e9e9e;
 }
 </style>

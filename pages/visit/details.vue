@@ -1,11 +1,21 @@
 <template>
 	<view class="pages">
+		<view class="header_box">
+			<view class="header_back" @click="goBack()">
+				<img @click="goBack()" src="../../commonimg/fanhui.png"></img>
+			</view>
+			<view class="header_all">
+				<text>回访详情</text>
+			</view>
+			<view class="header_search" @tap="edit">编辑</view>
+		</view>
+		
 		<view class="header_name">
 			<view>客户姓名: {{customer.realname}}</view>
-			<view>渠道: {{customer.source_text}}</view>
+			<view>客资渠道: {{customer.source_text}}</view>
 		</view>
 		<view class="center_box">
-			<view class="center_header">
+			<view class="center_header uni-flex ">
 				<text class="center_header_left">客户信息</text>
 			</view>
 			<view class="center_time">
@@ -134,7 +144,7 @@
 </template>
 
 <script>
-	import dingtalk from '@/dingtalk.open.js'
+	import dingtalk from '@/dingtalk.open.js';
 	let platform = dingtalk.env.platform;
 	
 	export default {
@@ -145,6 +155,7 @@
 			let areas = [{'shortname':'无'}];
 			
 			return {
+				id:null,
 				customer: {},
 				logs: {},
 				group: {},
@@ -171,6 +182,7 @@
 			}
 		},
 		onLoad(options) {
+			this.id = options.member_id
 			this.getCustomerVisits(options.member_id);
 			this.getBaseData();
 		},
@@ -186,6 +198,11 @@
 			}
 		},
 		methods: {
+			edit(){
+				uni.redirectTo({
+				    url: '/pages/customer/editCustomer?customer='+JSON.stringify(this.customer)  
+				});
+			},
 			getCustomerVisits(member_id) {
 				let _this = this;
 				let url = _this.$apis.visit.visitCustomer;
@@ -379,6 +396,12 @@
 						}
 					}
 				})
+			},
+			//返回上一页
+			goBack() {
+				uni.navigateBack({
+					delta: 0
+				});
 			}
 		}
 	}
@@ -388,10 +411,70 @@
 	.pages {
 		width: 100%;
 		box-sizing: border-box;
-		padding-bottom: 80px;
 		background: #FFFFFF;
+		padding: 0 12px 66px;
+	}
+		
+	.header_box {
+		position: fixed;
+		display: flex;
+		left: 0px;
+		top: 0px;
+		width: 100%;
+		height: 42px;
+		padding: 10px 0px 0px 0px;
+		z-index: 10;
+		background: #FFFFFF;
+		color: #00000;
+		box-sizing: border-box;
 	}
 
+	.header_back {
+		flex: 0 38rpx;
+		padding-left: 16rpx;
+	}
+
+	.header_back img {
+		width: 100%;
+		height: auto;
+		vertical-align: middle;
+		transform: rotate(180deg);
+	}
+
+	.header_all {
+		flex: 1;
+		height: 30px;
+		text-align: center;
+	}
+
+	.header_allimg {
+		margin-left: 10px;
+		width: 15px;
+		height: auto;
+		transform: rotate(270deg);
+		vertical-align: middle;
+	}
+
+	.header_allimgs {
+		margin-left: 10px;
+		width: 15px;
+		height: auto;
+		transform: rotate(90deg);
+		vertical-align: middle;
+	}
+
+	.header_search {
+		flex: 0 2rem;
+		padding: 0 16rpx;
+	}
+
+		
+	.center_edit{
+		padding:0 20rpx;
+		border:1px solid white;
+		border-radius: 15rpx;
+	}
+	
 	.phone_box {
 		position: fixed;
 		right: 0;
@@ -431,14 +514,14 @@
 
 	.header_name {
 		width: 100%;
-		padding: 5px 20px;
+		padding: 42px 20px 6px;
 		box-sizing: border-box;
 		border-bottom: 1px solid #CCCCCC;
 		margin-bottom: 20px;
 	}
 
 	.center_box {
-		width: 96%;
+		width: 100%;
 		height: auto;
 		background: #F8F8F8;
 		border-radius: 6px;
@@ -456,6 +539,7 @@
 		clear: both;
 		color: #fff;
 		overflow: auto;
+		justify-content: space-between;
 	}
 
 	.center_header_left {

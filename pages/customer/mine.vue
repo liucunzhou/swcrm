@@ -34,7 +34,7 @@
 				<view class="topmuieFixed_main">
 					<view class="topmuieFixed_box">
 						<view class="searchNavBar">
-							<text @click.stop="searchNav(index)" :class="searchNavIndex===index?'searchNavBartext':''" v-for="(item,index) in searchNavBar"
+							<text @click.stop="searchNav(index)" :class="searchNavIndex===index?'searchNavBartext':''" v-for="(item,index) in searchBar"
 							 :key="index">{{item}}</text>
 						</view>
 						<view class="topmuieFixed_right">
@@ -42,10 +42,12 @@
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchItemsFields"
 								 :key="index">{{item.title}}</text>
 							</template>
+							
 							<template v-if="searchItemsFields!='' && searchNavIndex==2">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchItemsFields"
 								 :key="index">{{item.realname}}</text>
 							</template>
+							
 							<template v-if="searchNavIndex===3||searchNavIndex===4||searchNavIndex===5||searchNavIndex===6">
 								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchDateTextItems"
 								 :key="index">{{item}}</text>
@@ -53,7 +55,7 @@
 						</view>
 					</view>
 
-					<view class="clocedtime" v-if="searchNavIndex > 2 && searchSelectedItemIndex===searchDateTextItems.length - 1">
+					<view class="clocedtime" v-if="searchSelectedItemIndex===searchDateTextItems.length - 1">
 						<picker mode="date" :value="startDate" @change="startDateChange">
 							<view class="uni-input"><text>开始时间:{{startDate}}</text></view>
 						</picker>
@@ -117,44 +119,59 @@
 				"我的下属客户"
 			];
 			
-			let searchNavBar = [
-				"跟进状态",
-				"客户来源",
-				"负责人",
-				"分配时间",
-			];
-			
-			let searchDateTextItems = [
-				"今天",
-				"自定义"
-			];
-			
-			let searchDateFieldItems = [
-				"today",
-				"date_range",
+			let searchBar = [
+				{
+					title: '跟进状态',
+					field: 'status',
+					value: 0,
+					match: 'statues',
+					items: {}
+				},
+				{
+					title: '客户来源',
+					field: 'source',
+					value: 0,
+					match: 'sources',
+					items: {}
+				},
+				{
+					title: '员工列表',
+					field: 'staff',
+					value: 0,
+					match: 'staffes',
+					items: {}
+				},
+				{
+					title: '获取时间',
+					field: 'create_time',
+					value: '',
+					items: {
+						today: '今天',
+						date_range: '自定义'
+					}
+				}
 			];
 			
 			return {
+				page_title: '我的客资',
+				searchNavIndex: 0,
+				searchObj: {},
+				searchBar: searchBar,
 				keywords: '',
+				
 				customers: [],
 				pageNav: pageNav,
 				pageNavIndex: 0,
 				isShowPageNav: false,
 				isShowSearchCompontent: false,
-				searchNavBar: searchNavBar,
-				searchDateTextItems: searchDateTextItems,
-				searchDateFieldItems: searchDateFieldItems,
 				searchItemsFields: [],
-				searchNavIndex: 0,
+				
 				searchSelectedItemIndex: 0,
-				startDate: "", //开始时间
-				endDate: "", //结束时间
-				getBaseDatas: {}, //筛选数据
-				page_title: '我的客资',
+				startDate: "",
+				endDate: "",
 				params: {},
 				page: 1,
 				dstatu: 'more',
-				searchObj:{},
 				token:null
 			}
 		},
@@ -171,7 +188,6 @@
 			
 		},
 		onReachBottom(){
-			console.log('dibu')
 			this.getCustomerList(this)
 		},
 		created() {
@@ -179,22 +195,22 @@
 			this.getBaseData();
 		},
 		onShow() {
-			// if (platform != 'notInDingTalk') {
-			// 	dingtalk.ready(function() {
-			// 		dingtalk.biz.navigation.hideBar({
-			// 			hidden: true,
-			// 			onSuccess: function(result) {},
-			// 			onFail: function(err) {}
-			// 		})
-			// 	});
-			// }
+			if (platform != 'notInDingTalk') {
+				dingtalk.ready(function() {
+					dingtalk.biz.navigation.hideBar({
+						hidden: true,
+						onSuccess: function(result) {},
+						onFail: function(err) {}
+					})
+				});
+			}
 		},
 		methods: {
 			// 获取客资列表
 			getCustomerList(res){
 				//设置底部为加载中
 				this.dstatu = 'loading'
-				
+
 				let _this = this;
 				let url = _this.$apis.customer.mine;
 				console.log(this.token)
@@ -249,7 +265,7 @@
 
 			navToCustomer(memberId) {
 				uni.navigateTo({
-					url: `visitCustomer?member_id=${memberId}`
+					url: `../visit/details?member_id=${memberId}`
 				});
 			},
 
@@ -277,6 +293,7 @@
 
 							// 信息类型
 							_this.newsTypes = result.data.news_types;
+							
 							// 来源
 							_this.sources = result.data.sources;
 
@@ -328,7 +345,6 @@
 						this.searchItemsFields = this.getBaseDatas.sources;
 						break;
 					case 2: // 负责人选择
-						console.log('hhhh’');
 						this.searchItemsFields = this.getBaseDatas.staffes;
 						break;
 					case 3: // 创建时间
@@ -394,21 +410,7 @@
 						break;
 				}
 				search.key = field
-				// let value = 0;
-				// if(this.searchNavIndex < 3) {
-				// 	let index = this.searchSelectedItemIndex;
-				// 	let value = 0;
-				// 	if (this.searchItemsFields[index]['id']!=undefined) {
-				// 		value = this.searchItemsFields[index]['id'];
-				// 	}
-				// } else {
-				// 	let searchIndex = this.searchSelectedItemIndex;
-				// 	if(searchIndex == this.searchDateTextItems.length - 1) {
-				// 		value = this.startDate + '~' + this.endDate;
-				// 	} else {
-				// 		value = this.searchDateFieldItems[searchIndex];	
-				// 	}
-				// }
+				
 				//将页面清空
 				this.page = 0 
 				this.customers = []
@@ -416,12 +418,7 @@
 				//关闭筛选框
 				this.isShowSearchCompontent = 0
 				this.getCustomerList().bind(this)
-				
-				// 开始搜索
-				// uni.navigateTo({
-				// 	url: 'mine?' + field + '=' + value + '&page_title=' + this.page_title
-				// });
-				
+	
 			},
 			inputChange(e){
 				const key = e.currentTarget.dataset.key;
@@ -443,28 +440,6 @@
 				
 				
 				this.getCustomerList()
-				// uni.request({
-				// 	url: url,
-				// 	method: 'POST',
-				// 	data: params,
-				// 	dataType: 'json',
-				// 	header: {
-				// 		'content-type': 'application/x-www-form-urlencoded',
-				// 	},
-				// 	success: (res) => {
-				// 		let result = res.data;
-				// 		if (result.code == '0') {
-				// 			// _this.customers = result.data;
-				// 			_this.customers = result.data;
-				// 		} else {
-				// 			uni.showToast({
-				// 				title: result.msg
-				// 			})
-				// 		}
-				// 		
-				// 		_this.page = _this.page + 1;
-				// 	}
-				// })
 			}
 		},
 	}

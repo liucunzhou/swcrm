@@ -40,6 +40,7 @@ let getUserId = function(token) {
 	let userid = '';
 	try {
 		userid = uni.getStorageSync('userid');
+		console.log();
 		if (userid) {
 
 		} else {

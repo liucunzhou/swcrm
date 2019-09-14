@@ -7,7 +7,6 @@
 			<view class="header_all">
 				<text>查找客资</text>
 			</view>
-
 		</view>
 
 		<view class="page-search">

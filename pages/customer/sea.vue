@@ -201,7 +201,7 @@
 			},
 			navToCustomer(memberId) {
 				uni.navigateTo({
-					url: `visitLogs?member_id=${memberId}`
+					url: `../visit/logs?member_id=${memberId}`
 				})
 			},
 

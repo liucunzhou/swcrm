@@ -39,7 +39,6 @@
 		{
 			"path": "pages/customer/sea",
 			"style": {
-				// "navigationBarTitleText": "红丝云登录"
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
@@ -49,7 +48,6 @@
 		{
 			"path": "pages/customer/mine",
 			"style": {
-				// "navigationBarTitleText": "我的客资"
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
@@ -59,11 +57,28 @@
 		{
 			"path": "pages/customer/today",
 			"style": {
-				// "navigationBarTitleText": "今日跟进"
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
 				}
+			}
+		},
+		{
+			"path": "pages/customer/create",
+			"style": {
+				"navigationBarTitleText": "新增客资"
+			}
+		},
+		{
+			"path": "pages/customer/edit",
+			"style": {
+				"navigationBarTitleText": "修改客资"
+			}
+		},
+		{
+			"path": "pages/customer/search",
+			"style": {
+				"navigationBarTitleText": "查找客资"
 			}
 		},
 		{
@@ -74,43 +89,34 @@
 			}
 		},
 		{
-			"path": "pages/customer/visitLogs",
+			"path": "pages/visit/logs",
 			"style": {
 				"navigationBarTitleText": "回访日志"
 			}
 		},
 		{
-			"path": "pages/customer/visitCustomer",
+			"path": "pages/visit/details",
 			"style": {
-				"navigationBarTitleText": "客资跟进"
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
 			}
 		},
 		{
-			"path": "pages/customer/doVisitCustomer",
+			"path": "pages/visit/dovisit",
 			"style": {
 				"navigationBarTitleText": "回访客资"
 			}
 		},
 		{
-			"path": "pages/customer/createCustomer",
-			"style": {
-				"navigationBarTitleText": "新增客资"
-			}
-		},
-		{
-			"path": "pages/customer/findCustomer",
-			"style": {
-				"navigationBarTitleText": "查找客资"
-			}
-		},
-		{
-			"path": "pages/order/createOrder",
+			"path": "pages/order/create",
 			"style": {
 				"navigationBarTitleText": "创建订单"
 			}
 		},
 		{
-			"path": "pages/order/editOrder",
+			"path": "pages/order/edit",
 			"style": {
 				"navigationBarTitleText": "查看订单"
 			}

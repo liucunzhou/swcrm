@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<view class="msg" v-for="customer in customers" v-bind:key="customer.id">
-			<view @click="navToCustomer(customer.member_id)">
+			<view @click="navToCustomer(customer.member_id)" :apply_status="customer.apply_status">
 				<view class="msg_header">
 					<view class="header_left">
 						<text class="names">姓名： </text><text class="namemain">{{customer.realname}}</text>
@@ -73,7 +73,6 @@
 				params.status = 0;
 				this.status = 0;
 			}
-			console.log(this.status);
 		},
 		onShow() {
 			if (platform != 'notInDingTalk') {
