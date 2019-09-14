@@ -66,13 +66,13 @@
 
 		},
 		onLoad(params) {
-			this.getCustomerList(params);
 			if (params.status != undefined) {
 				this.status = params.status;
 			} else {
 				params.status = 0;
 				this.status = 0;
 			}
+			this.getCustomerList(params);
 		},
 		onShow() {
 			if (platform != 'notInDingTalk') {
