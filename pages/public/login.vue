@@ -117,6 +117,7 @@ export default {
 <style>
 .container {
 	width: 100%;
+	height: 100%;
 	background: #ffffff;
 	padding: 100px 50px;
 	box-sizing:border-box;
