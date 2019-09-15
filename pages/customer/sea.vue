@@ -273,8 +273,9 @@
 												success: (res) => {
 													let response = res.data;
 													if (response.code == '0') {
-														uni.showToast({
-															title:"获取客资成功！"
+														let member_id = response.data;
+														uni.navigateTo({
+															url:`../visit/details?member_id=${member_id}`
 														})
 													} else {
 														uni.showToast({
@@ -290,14 +291,13 @@
 								    }
 								});
 							}
-							
+							_this.page = _this.page + 1;
 						} else {
+							_this.dstatu = 'noMore'
 							uni.showToast({
 								title: result.msg
 							})
 						}
-
-						_this.page = _this.page + 1;
 					}
 				})
 			},
@@ -467,7 +467,6 @@
 		top: 18rpx;
 		padding: 1rpx 8rpx;
 		font-size: 18rpx;
-		list-style: 18rpx;
 		border-radius: 10rpx;
 		color: white;
 		background: rgb(20, 170, 240);
