@@ -89,16 +89,19 @@
 					<text class="names">区域：</text> <text class="namemain">{{customer.zone}}</text>
 				</view>
 			</view>
-
 		</view>
 	</view>
 </template>
 
 <script>
-	import dingtalk from '@/dingtalk.open.js'
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
+	import dingtalk from '@/dingtalk.open.js';
 	let platform = dingtalk.env.platform;
 
 	export default {
+		components: {
+			uniLoadMore
+		},
 		data() {
 			let pageNav = [
 				"全部客户",
@@ -351,15 +354,15 @@
 				let _this = this;
 				let url = _this.$apis.customer.sea;
 				let params = {};
-				params['token'] = this.$getToken();
-				if (this.keywords == '') {
+				params['token'] = _this.$getToken();
+				if (_this.keywords == '') {
 					uni.showToast({
 						title: '请填写要搜索的手机号'
 					});
 					return false;
 				}
 
-				params['keywords'] = this.keywords;
+				params['keywords'] = _this.keywords;
 				uni.request({
 					url: url,
 					method: 'POST',

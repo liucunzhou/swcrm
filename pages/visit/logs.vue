@@ -2,7 +2,7 @@
 	<view class="pages">
 		<view class="header_name">
 			<view>客户姓名: {{customer.realname}}</view>
-			<view>渠道: {{customer.source_text}}</view>
+			<view>客资渠道: {{customer.source_text}}</view>
 		</view>
 		<view class="center_box">
 			<view class="center_header">
@@ -59,7 +59,6 @@
 				<view class="follow_main"><text style="letter-spacing: 2px;">跟进状态：{{log.status}}</text></view>
 			</view>
 		</view>
-
 		<view class="bottommeiu">
 			<view class="meiutext" @click="applyVisit">
 				<img src="../../commonimg/follow.png"></img>
@@ -117,7 +116,6 @@
 					},
 					success: (res) => {
 						let response = res.data;
-						console.log('结果是:', response.result.customer);
 						if (response.code == '200') {
 							_this.customer = response.result.customer;
 							_this.group = response.result.visits.count;
@@ -137,32 +135,45 @@
 			},
 			applyVisit() {
 				let _this = this;
-				let url = _this.$apis.customer.doApply;
-				let params = {
-					ids: _this.member_id,
-					token: this.$getToken()
-				};
-				uni.request({
-					url: url,
-					method: 'POST',
-					data: params,
-					dataType: 'json',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-					},
-					success: (res) => {
-						let response = res.data;
-						if (response.code == '200') {
-							uni.navigateTo({
-								url:'../customer/apply'
-							})
-						} else {
-							uni.showToast({
-								title: result.msg
-							})
-						}
-					}
-				})
+				
+				uni.showModal({
+				    title: '客资申请提示',
+				    content: '确认申请回访本条客资么？',
+				    success: function (res) {
+				        if (res.confirm) { // 确认申请
+							let url = _this.$apis.customer.doApply;
+							let params = {
+								ids: _this.member_id,
+								token: _this.$getToken()
+							};
+							
+							uni.request({
+								url: url,
+								method: 'POST',
+								data: params,
+								dataType: 'json',
+								header: {
+									'content-type': 'application/x-www-form-urlencoded',
+								},
+								success: (res) => {
+									let response = res.data;
+									if (response.code == '200') {
+										uni.navigateTo({
+											url:'../customer/apply'
+										})
+									} else {
+										uni.showToast({
+											title: result.msg
+										})
+									}
+								}
+							});
+							
+				        } else if (res.cancel) {
+				            return false;
+				        }
+				    }
+				});
 			}
 		}
 	}

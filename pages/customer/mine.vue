@@ -99,9 +99,6 @@
 	let platform = dingtalk.env.platform;
 
 	export default {
-		components: {
-			uniLoadMore
-		},
 		comments: {
 			uniLoadMore
 		},

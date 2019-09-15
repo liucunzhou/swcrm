@@ -120,8 +120,8 @@
 						url: `../visit/details?member_id=${member_id}`
 					})
 				} else {
-					uni.navigateTo({
-						url: `../visit/logs?member_id=${member_id}`
+					uni.showToast({
+						title:'客资申请审核中'
 					})
 				}
 			},
