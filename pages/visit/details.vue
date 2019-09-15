@@ -72,8 +72,8 @@
 		<view class="tab_box">
 			<view class="center_box">
 				<view class="center_header">
-					<text class="center_header_left" :class="{active:visit_nav_index}" @click="visit_nav_index=0">跟进记录 ({{logsLength}})</text>
-					<text class="center_header_right" :class="{active:!visit_nav_index}" @click="visit_nav_index=1">跟进人员 ({{groupLength}})</text>
+					<text class="center_header_left" :class="{active:!visit_nav_index}" @click="visit_nav_index=0">跟进记录 ({{logsLength}})</text>
+					<text class="center_header_right" :class="{active:visit_nav_index}" @click="visit_nav_index=1">跟进人员 ({{groupLength}})</text>
 				</view>
 				
 				<view class="tab_content">
