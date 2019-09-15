@@ -69,8 +69,8 @@
 			if (params.status != undefined) {
 				this.status = params.status;
 			} else {
-				params.status = 0;
-				this.status = 0;
+				params.status = 1;
+				this.status = 1;
 			}
 			this.getCustomerList(params);
 		},
