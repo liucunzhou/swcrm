@@ -154,7 +154,7 @@
 						let response = res.data;
 						if (response.code == '200') {
 							uni.navigateTo({
-								url:'apply'
+								url:'../customer/apply'
 							})
 						} else {
 							uni.showToast({
