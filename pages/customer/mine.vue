@@ -99,7 +99,7 @@
 	let platform = dingtalk.env.platform;
 
 	export default {
-		comments: {
+		components: {
 			uniLoadMore
 		},
 		data() {

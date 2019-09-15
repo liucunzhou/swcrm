@@ -14,6 +14,7 @@ const apis = {
 		today: `${host}/api/customer/today`,
 		apply: `${host}/api/customer/apply`,
 		doApply: `${host}/api/customer/doApply`,
+		searchAllocate: `${host}/api/customer/searchAllocate`,
 		getBaseData: `${host}/api/customer/getBaseData`,
 		createCustomer: `${host}/api/customer/createCustomer`,
 		editCustomer: `${host}/api/customer/editCustomer`,

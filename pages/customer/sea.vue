@@ -21,7 +21,8 @@
 
 			<view class="topmuie">
 				<view class="seek">
-					<input type="text" placeholder-style="font-size:13px" :value="keywords" data-key="keywords" @input="inputChange" placeholder="请输入手机号进行查询" />
+					<input type="text" placeholder-style="font-size:13px" :value="keywords" data-key="keywords" @input="inputChange"
+					 placeholder="请输入手机号进行查询" />
 					<img src="@/commonimg/findminimg.png" @click="search"></img>
 				</view>
 			</view>
@@ -31,26 +32,17 @@
 				<view class="topmuieFixed_main">
 					<view class="topmuieFixed_box">
 						<view class="searchNavBar">
-							<text @click.stop="searchNav(index)" :class="searchNavIndex===index?'searchNavBartext':''" v-for="(item,index) in searchNavBar"
-							 :key="index">{{item}}</text>
+							<text @click="searchNav(index)" :class="searchNavIndex===index?'searchNavSelected':''" v-for="(item,index) in searchBar"
+							 :key="index">{{item.title}}</text>
 						</view>
+						
 						<view class="topmuieFixed_right">
-							<template v-if="searchItemsFields!='' && searchNavIndex!==2">
-								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
-								 v-for="(item,index) in searchItemsFields" :key="index">{{item.title}}</text>
-							</template>
-							<template v-if="searchItemsFields!='' && searchNavIndex==2">
-								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''" v-for="(item,index) in searchItemsFields"
-								 :key="index">{{item.realname}}</text>
-							</template>
-							<template v-if="searchNavIndex===3||searchNavIndex===4||searchNavIndex===5||searchNavIndex===6">
-								<text @click.stop="searchNavItemClick(index)" :class="searchSelectedItemIndex===index?'searchItemsFields':''"
-								 v-for="(item,index) in searchDateTextItems" :key="index">{{item}}</text>
-							</template>
+							<text @click="searchNavItem(index)" :class="searchBar[searchNavIndex]['index']===index ? 'searchItemSelected':''"
+							 v-for="(item,index) in searchBar[searchNavIndex]['items']" :key="index">{{item.title?item.title:item.realname}}</text>
 						</view>
 					</view>
 
-					<view class="clocedtime" v-if="searchNavIndex > 2 && searchSelectedItemIndex===searchDateTextItems.length - 1">
+					<view class="clocedtime" v-if="isShowDateRange">
 						<picker mode="date" :value="startDate" @change="startDateChange">
 							<view class="uni-input"><text>开始时间:{{startDate}}</text></view>
 						</picker>
@@ -58,6 +50,7 @@
 							<view class="uni-input"><text>结束时间:{{endDate}}</text></view>
 						</picker>
 					</view>
+					-->
 
 					<view class="topmuieFixed_setting">
 						<text @click.stop="emptyFn">清空</text>
@@ -67,9 +60,11 @@
 			</view>
 		</view>
 
-
 		<view class="msg" v-for="(customer,index) in customers" v-bind:key="customer.id">
 			<text class="msgtopright">{{index+1}}</text>
+			<view class="statuTag">
+				{{customer.active_status}}
+			</view>
 			<view @click="navToCustomer(customer.id)">
 				<view class="msg_header">
 					<view class="header_left">
@@ -90,12 +85,14 @@
 				</view>
 			</view>
 		</view>
+		<!-- 下拉标签 -->
+		<uni-load-more :status="dstatu"></uni-load-more>
 	</view>
 </template>
 
 <script>
-	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
-	import dingtalk from '@/dingtalk.open.js';
+	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+	import dingtalk from '@/dingtalk.open.js'
 	let platform = dingtalk.env.platform;
 
 	export default {
@@ -109,50 +106,78 @@
 				"我的下属客户"
 			];
 
-			let searchNavBar = [
-				"跟进状态",
-				"客户来源",
-				"负责人",
-				"创建时间",
+			let searchBar = [{
+					title: '跟进状态',
+					field: 'status',
+					index: 0,
+					match: 'statuses',
+					items: []
+				},
+				{
+					title: '客户来源',
+					field: 'source',
+					index: 0,
+					match: 'sources',
+					items: []
+				},
+				{
+					title: '员工列表',
+					field: 'staff',
+					index: 0,
+					match: 'staffes',
+					items: []
+				},
+				{
+					title: '获取时间',
+					field: 'create_time',
+					index: 0,
+					items: [
+						{
+							id: '',
+							title: '不限'
+						},
+						{
+							id: 'today',
+							title: '今天'
+						},
+						{
+							id: 'date_range',
+							title: '自定义'
+						}
+					]
+				}
 			];
-
-			let searchDateTextItems = [
-				"今天",
-				"自定义",
-			];
-
-			let searchDateFieldItems = [
-				"none",
-				"today",
-				"tomorrow",
-				"this_week",
-				"this_month",
-				"date_range",
-			];
-
 
 			return {
+				// 页面加载
+				page_title: '我的客资',
+				params: {},
+				page: 0,
+				dstatu: 'more',
+				
+				// 高级搜索
+				isShowSearchCompontent: false,
+				searchObj: {},				
+				searchBar: searchBar,
+				searchNavIndex: 0,
+				searchSelectedItemIndex: 0,
 				keywords: '',
+				
+				// 客资列表
 				customers: [],
 				pageNav: pageNav,
 				pageNavIndex: 0,
 				isShowPageNav: false,
-				isShowSearchCompontent: false,
-				searchNavBar: searchNavBar,
-				searchDateTextItems: searchDateTextItems,
-				searchDateFieldItems: searchDateFieldItems,
-				searchItemsFields: [],
-				searchNavIndex: 0,
-				searchSelectedItemIndex: 0,
-				startDate: "", //开始时间
-				endDate: "", //结束时间
-				getBaseDatas: {}, //筛选数据
-				page_title: '我的客资',
-				params: {},
-				page: 0
+				
+				// 自定义事件
+				isShowDateRange: false,
+				startDate: "",
+				endDate: "",
+				token: null
 			}
 		},
 		onLoad(params) {
+			this.token = this.$getToken()
 			this.params = params;
 			if (params.page_title != undefined) {
 				this.page_title = params.page_title;
@@ -160,12 +185,14 @@
 					title: params.page_title
 				})
 			}
-			this.getSea(params);
+			this.getCustomerList();
 		},
 		created() {
-			this.getBaseData()
+			// 请求筛选信息
+			this.getBaseData();
 		},
 		onShow() {
+			// 钉钉中隐藏页面标题
 			if (platform != 'notInDingTalk') {
 				dingtalk.ready(function() {
 					dingtalk.biz.navigation.hideBar({
@@ -176,11 +203,29 @@
 				});
 			}
 		},
+		// 底部加载更多
+		onReachBottom() {
+			this.getCustomerList(this)
+		},
 		methods: {
-			getSea(params) {
+			// 获取客资列表
+			getCustomerList(res) {
+				//设置底部为加载中
+				this.dstatu = 'loading'
 				let _this = this;
 				let url = _this.$apis.customer.sea;
-				params['token'] = this.$getToken();
+				console.log(this.token)
+				let params = {};
+				let entire_mobile_search = false;
+				params['page'] = _this.page;
+				if (this.keywords) {
+					params = {};
+					params['keywords'] = this.keywords;
+					if(this.keywords.length == 11) entire_mobile_search = true;
+				} else {
+					params = Object.assign(_this.params, params, _this.searchObj);
+				}
+				params['token'] = _this.token;
 				uni.request({
 					url: url,
 					method: 'POST',
@@ -191,21 +236,76 @@
 					},
 					success: (res) => {
 						let result = res.data;
-						console.log(result);
 						if (result.code == '0') {
-							_this.customers = result.data;
+							if (result.data.length > 0) {
+								_this.customers = _this.customers.concat(result.data);
+								_this.dstatu = 'more'
+							} else {
+								_this.dstatu = 'noMore'
+							}
+							
+							//检查半页数据的情况
+							if (_this.customers.length >= result.count) {
+								_this.dstatu = 'noMore'
+							}
+
+							//完整号码搜索，提示用户是否获取本条客资
+							if(entire_mobile_search) {
+								uni.showModal({
+								    title: '获取客资提示',
+								    content: '确认获取本条客资么？',
+								    success: function (res) {
+										
+								        if (res.confirm) {
+											let url = _this.$apis.customer.searchAllocate;
+											let params = {
+												mobile: _this.keywords,
+												token: _this.$getToken()
+											};
+											uni.request({
+												url: url,
+												method: 'POST',
+												data: params,
+												dataType: 'json',
+												header: {
+													'content-type': 'application/x-www-form-urlencoded',
+												},
+												success: (res) => {
+													let response = res.data;
+													if (response.code == '0') {
+														uni.showToast({
+															title:"获取客资成功！"
+														})
+													} else {
+														uni.showToast({
+															title: response.msg
+														})
+													}
+												}
+											});
+											
+								        } else if (res.cancel) {
+								            return false;
+								        }
+								    }
+								});
+							}
+							
 						} else {
 							uni.showToast({
 								title: result.msg
 							})
 						}
+
+						_this.page = _this.page + 1;
 					}
 				})
 			},
+
 			navToCustomer(memberId) {
 				uni.navigateTo({
 					url: `../visit/logs?member_id=${memberId}`
-				})
+				});
 			},
 
 			getBaseData() {
@@ -226,21 +326,15 @@
 					success: (res) => {
 						let result = res.data;
 						if (result.code == '0') {
-							this.getBaseDatas = result.data;
-
-							this.searchItemsFields = this.getBaseDatas.statuses;
-
-							// 信息类型
-							_this.newsTypes = result.data.news_types;
-							// 来源
-							_this.sources = result.data.sources;
-
-							// 跟进状态
-							_this.statuses = result.data.statuses;
-
-							// 负责人
-							_this.staffes = result.data.staffes;
-
+							// _this.getBaseDatas = result.data;
+							console.log(_this.searchBar);
+							for(let i in _this.searchBar) {
+								let item = _this.searchBar[i];
+								if(item['match'] != undefined) {
+									let match = item['match'];
+									_this.searchBar[i]['items'] =  result.data[match];
+								}
+							}
 						} else {
 							uni.showToast({
 								title: result.msg
@@ -249,6 +343,7 @@
 					}
 				})
 			},
+			
 			//返回上一页
 			goBack() {
 				uni.navigateBack({
@@ -265,6 +360,7 @@
 			showPageNavFn() {
 				this.isShowPageNav = !this.isShowPageNav;
 			},
+			
 			//关闭全部客户弹框
 			closePageNavFn() {
 				this.isShowPageNav = !this.isShowPageNav
@@ -273,123 +369,107 @@
 			//筛选左边点击
 			searchNav(index) {
 				this.searchNavIndex = index;
-				this.searchSelectedItemIndex = 0;
-
-				switch (index) {
-					case 0: // 跟进状态选择
-						this.searchItemsFields = this.getBaseDatas.statuses;
-						break;
-					case 1: // 客户来源选择
-						this.searchItemsFields = this.getBaseDatas.sources;
-						break;
-					case 2: // 负责人选择
-						this.searchItemsFields = this.getBaseDatas.staffes;
-						break;
-					case 3: // 创建时间
-						this.searchItemsFields = '';
-						break;
+			},
+			
+			//筛选右边点击
+			searchNavItem(index) {
+				let searchNavIndex = this.searchNavIndex;
+				console.log('searchNavIndex is:',searchNavIndex);
+				this.searchBar[searchNavIndex]['index'] = index;
+				if(this.searchBar[searchNavIndex]['items'][index]['id'] == 'date_range') {
+					this.isShowDateRange = true;
+				} else {
+					this.isShowDateRange = false;
 				}
 			},
-			//筛选右边点击
-			searchNavItemClick(index) {
-				this.searchSelectedItemIndex = index;
-			},
+
 			//开始时间
 			startDateChange(e) {
 				this.startDate = e.detail.value
 			},
+			
 			//结束时间
 			endDateChange(e) {
 				this.endDate = e.detail.value
 			},
+			
 			// 清空
 			emptyFn() {
-				this.searchNavIndex = '';
-				this.searchSelectedItemIndex = '';
+				let _this = this;
+				this.searchBar.forEach(function(item, index) {
+					console.log(this);
+					_this.searchBar[index]['index'] = 0;
+				});
+				_this.isShowDateRange = false;
 			},
+			
 			// 确认搜索
 			makeSure() {
-				console.log(this.searchNavIndex, this.searchSelectedItemIndex);
-				let field = '';
-				switch (this.searchNavIndex) {
-					case 0: // 跟进状态
-						field = 'status';
-						break;
-
-					case 1: // 客资来源
-						field = 'source';
-						break;
-
-					case 2: // 负责人
-						field = 'staff';
-						break;
-
-					case 3: // 创建时间
-						field = 'create_time';
-						break;
-				}
-
-				let value = 0;
-				if (this.searchNavIndex < 3) {
-					value = this.searchSelectedItemIndex;
-				} else {
-					let searchIndex = this.searchSelectedItemIndex;
-					if (searchIndex == this.searchDateTextItems.length - 1) {
-						value = this.startDate + '~' + this.endDate;
+				let _this = this;
+				let search = {};
+				this.searchBar.forEach(function(item, index){
+					if(item.field == 'create_time') {
+						let field = item.field;
+						let selectedIndex = item.index;
+						let value = item.items[selectedIndex]['id'];
+						if (value == 'date_range') {
+							value = _this.startDate + '~' + _this.endDate;
+						}
+						search[field] = value;
 					} else {
-						value = this.searchDateFieldItems[searchIndex];
+						let field = item.field;
+						let selectedIndex = item.index;
+						let value = item.items[selectedIndex]['id'];
+						search[field] = value;
 					}
-				}
-
-				// 开始搜索
-				uni.navigateTo({
-					url: 'sea?' + field + '=' + value + '&page_title=' + this.page_title
+					
 				});
+
+				//将页面清空
+				this.page = 0
+				this.customers = []
+				this.searchObj = search
+				
+				//关闭筛选框
+				this.isShowSearchCompontent = 0;
+				this.getCustomerList();
 			},
+			
 			inputChange(e) {
 				const key = e.currentTarget.dataset.key;
 				this[key] = e.detail.value;
 			},
 			search() {
+				this.page = 1
+				this.customers = []
 				let _this = this;
 				let url = _this.$apis.customer.sea;
 				let params = {};
-				params['token'] = _this.$getToken();
-				if (_this.keywords == '') {
+				params['token'] = this.$getToken();
+				if (this.keywords == '') {
 					uni.showToast({
 						title: '请填写要搜索的手机号'
 					});
 					return false;
 				}
-
-				params['keywords'] = _this.keywords;
-				uni.request({
-					url: url,
-					method: 'POST',
-					data: params,
-					dataType: 'json',
-					header: {
-						'content-type': 'application/x-www-form-urlencoded',
-					},
-					success: (res) => {
-						let result = res.data;
-						if (result.code == '0') {
-							// _this.customers = result.data;
-							_this.customers = result.data;
-						} else {
-							uni.showToast({
-								title: result.msg
-							})
-						}
-
-						_this.page = _this.page + 1;
-					}
-				})
-			},
+				this.getCustomerList()
+			}
 		},
 	}
 </script>
 
 <style>
 	@import url("../../common/common.css");
+
+	.statuTag {
+		position: absolute;
+		right: 70rpx;
+		top: 18rpx;
+		padding: 1rpx 8rpx;
+		font-size: 18rpx;
+		list-style: 18rpx;
+		border-radius: 10rpx;
+		color: white;
+		background: rgb(20, 170, 240);
+	}
 </style>

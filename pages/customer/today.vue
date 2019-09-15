@@ -99,9 +99,6 @@
 		components: {
 			uniLoadMore
 		},
-		comments: {
-			uniLoadMore
-		},
 		data() {
 			let pageNav = [
 				"全部客户",
