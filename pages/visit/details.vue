@@ -72,6 +72,11 @@
 				<text class="dilimter">:</text>
 				<text class="value">{{customer.mobile1}}</text>
 			</view>
+			<view class="center_time">
+				<text class="field">备注</text>
+				<text class="dilimter">:</text>
+				<text class="value">{{customer.remark}}</text>
+			</view>
 		</view>
 		
 		<view class="tab_box">

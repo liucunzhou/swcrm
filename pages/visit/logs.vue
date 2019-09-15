@@ -32,6 +32,14 @@
 				<text>联系电话： </text>
 				<text> {{customer.mobile}}</text>
 			</view>
+			<view class="center_time">
+				<text>其它电话： </text>
+				<text> {{customer.mobile1}}</text>
+			</view>
+			<view class="center_time">
+				<text>客资备注： </text>
+				<text> {{customer.remark}}</text>
+			</view>
 		</view>
 		<view class="center_box">
 			<view class="center_header">
