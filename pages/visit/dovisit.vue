@@ -160,9 +160,14 @@
 					success: (res) => {
 						let response = res.data;
 						if (response.code == '200') {
+							uni.navigateBack({
+								delta:1
+							})
+							/**
 							uni.navigateTo({
 								url: '../customer/mine?page_title=我的客资'
 							})
+							**/
 						} else {
 							uni.showToast({
 								title: result.msg
