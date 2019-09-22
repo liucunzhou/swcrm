@@ -74,6 +74,13 @@ let getUserId = function(token) {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
 								success: (res) => {
+									uni.showModal({
+									    title: '用户数据',
+									    content: JSON.stringify(res),
+									    success: function (res) {
+									      
+									    }
+									});
 									try {
 										uni.setStorageSync('token', res.data.result.token);
 										uni.setStorageSync('user', res.data.result.user);
@@ -115,12 +122,11 @@ Vue.prototype.$getToken = function() {
 				},
 				success: (res) => {
 					let _config = res.data.result;
-					uni.showToast({
-						title: _config.signature
-					})
-	
 					try{
 						let user = uni.getStorageSync('user');
+						uni.showToast({
+							title: '开始钉钉'
+						})
 						if (platform != 'notInDingTalk') {
 							dingtalk.config({
 							    agentId: _config.agentId,
