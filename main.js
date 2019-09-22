@@ -181,6 +181,9 @@ Vue.prototype.$getToken = function() {
 						}
 					}catch(e){
 						//TODO handle the exception
+						uni.showToast({
+							title: '获取本地缓存失败'
+						})
 					}
 				},
 				fail: (res) => {
