@@ -25,23 +25,23 @@ Date.prototype.format = function(fmt) {
 	};
 	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
 	for (var k in o)
-		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[
+			k]).substr(("" + o[k]).length)));
 	return fmt;
 }
 
-function errDingEvnMsg(msg)
-{
+function errDingEvnMsg(msg) {
 	uni.showModal({
-	    title: '提示',
-	    content: msg,
+		title: '提示',
+		content: msg,
 		showCancel: false,
-	    success: function (res) {
-	        if (res.confirm) {
-	            errDingEvnMsg();
-	        } else if (res.cancel) {
-	            errDingEvnMsg();
-	        }
-	    }
+		success: function(res) {
+			if (res.confirm) {
+				errDingEvnMsg();
+			} else if (res.cancel) {
+				errDingEvnMsg();
+			}
+		}
 	});
 }
 
@@ -86,9 +86,9 @@ let getUserId = function(token) {
 									try {
 										uni.setStorageSync('token', res.data.result.token);
 										uni.setStorageSync('user', res.data.result.user);
-										uni.setStorageSync('userid', res.data.result.user.dingding);									
+										uni.setStorageSync('userid', res.data.result.user.dingding);
 									} catch (e) {
-										
+
 									}
 								},
 								fail: (res) => {
@@ -104,7 +104,7 @@ let getUserId = function(token) {
 			}
 		}
 	} catch (e) {}
-	
+
 	return userid;
 }
 
@@ -117,67 +117,59 @@ Vue.prototype.$getToken = function() {
 			uni.request({
 				url: hosts.dingding.getDingSign,
 				method: 'POST',
-				data: {token:token},
+				data: {
+					token: token
+				},
 				dataType: 'json',
 				header: {
 					'content-type': 'application/x-www-form-urlencoded',
 				},
 				success: (res) => {
 					let _config = res.data.result;
-					try{
+					try {
 						let user = uni.getStorageSync('user');
 						if (platform != 'notInDingTalk') {
 							dingtalk.config({
-							    agentId: _config.agentId,
-							    corpId: _config.corpId,
-							    timeStamp: _config.timeStamp,
-							    nonceStr: _config.nonceStr,
-							    signature: _config.signature,
+								agentId: _config.agentId,
+								corpId: _config.corpId,
+								timeStamp: _config.timeStamp,
+								nonceStr: _config.nonceStr,
+								signature: _config.signature,
 								type: 0,
-							    jsApiList: [
+								jsApiList: [
 									'runtime.info',
-							        'device.base.getUUID',
+									'device.base.getUUID',
 								]
 							});
-							
+
 							dingtalk.userid = 0;
 							dingtalk.ready(function() {
 								dingtalk.device.base.getUUID({
-									onSuccess : function(data) {								
+									onSuccess: function(data) {
 										if (user.uuid == '') {
-											uni.showModal({
-											    title: '请求错误提示',
-											    content: hosts.user.bindUUid + "\n" + data.uuid + "\n" + token,
-											    success: function (res) {
-											      
-											    }
-											});
+
 											// 绑定uuid
 											let uuid = data.uuid;
 											uni.request({
 												url: hosts.user.bindUUid,
 												method: 'POST',
-												data: {token:token, uuid:uuid},
+												data: {
+													token: token,
+													uuid: uuid
+												},
 												dataType: 'json',
 												header: {
 													'content-type': 'application/x-www-form-urlencoded',
 												},
 												success: (res) => {
-													uni.showModal({
-													    title: '提示',
-													    content: JSON.stringify(err),
-													    success: function (res) {
-													      
-													    }
-													});
 												},
 												fail(err) {
 													uni.showModal({
-													    title: '请求错误提示',
-													    content: JSON.stringify(err),
-													    success: function (res) {
-													      
-													    }
+														title: '请求错误提示',
+														content: JSON.stringify(err),
+														success: function(res) {
+
+														}
 													});
 												}
 											});
@@ -187,32 +179,32 @@ Vue.prototype.$getToken = function() {
 											errDingEvnMsg(msg);
 										}
 									},
-									onFail : function(err) {
+									onFail: function(err) {
 										uni.showModal({
-										    title: '提示',
-										    content: JSON.stringify(err),
-										    success: function (res) {
-										      
-										    }
+											title: '提示',
+											content: JSON.stringify(err),
+											success: function(res) {
+
+											}
 										});
 									}
 								});
 							});
-							
+
 							dingtalk.error(function(err) {
-							    uni.showModal({
-							        title: '提示',
-							        content: JSON.stringify(err),
-							        success: function (res) {
-							          
-							        }
-							    });
+								uni.showModal({
+									title: '提示',
+									content: JSON.stringify(err),
+									success: function(res) {
+
+									}
+								});
 							});
 						} else {
 							let msg = '请在钉钉上使用';
 							errDingEvnMsg($msg);
 						}
-					}catch(e){
+					} catch (e) {
 						//TODO handle the exception
 						uni.showToast({
 							title: '获取本地缓存失败'
@@ -220,17 +212,17 @@ Vue.prototype.$getToken = function() {
 					}
 				},
 				fail: (res) => {
-			
+
 				}
 			})
-				
+
 		} else {
 			uni.navigateTo({
 				url: '/pages/public/login'
 			});
 		}
 	} catch (e) {
-		
+
 	}
 
 	return token;
