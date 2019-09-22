@@ -105,57 +105,81 @@ Vue.prototype.$getToken = function() {
 		token = uni.getStorageSync('token');
 		if (token) {
 			getUserId(token);
-			try{
-				let user = uni.getStorageSync('user');
-				if (platform != 'notInDingTalk') {
-					dingtalk.ready(function() {
-						dingtalk.device.base.getUUID({
-							onSuccess : function(data) {
-								uni.showToast({
-									title:data.uuid
-								})
-								if (user.uuid == '') {
-									// 绑定uuid
-									let token = res.result.token;
-									let uuid = data.uuid;
-									url = hosts.user.bindUUid;
-									uni.request({
-										url: url,
-										method: 'POST',
-										data: {token:token, uuid:uuid},
-										dataType: 'json',
-										header: {
-											'content-type': 'application/x-www-form-urlencoded',
-										},
-										success: (res) => {
-											
-										},
-									});
-								} else if (user.uuid != data.uuid) {
-									// 提示
-									let msg = '更换手机请与管理员联系';
-									errDingEvnMsg(msg);
-								}
-							},
-							onFail : function(err) {
-								uni.showModal({
-								    title: '提示',
-								    content: JSON.stringify(err) ,
-									showCancel: false,
-								    success: function (res) {
-								      
-								    }
-								});
-							}
-						});
+			uni.request({
+				url: hosts.dingding.getDingSign,
+				method: 'POST',
+				data: {token:token},
+				dataType: 'json',
+				header: {
+					'content-type': 'application/x-www-form-urlencoded',
+				},
+				success: (res) => {
+					let _config = res.result;
+					dingtalk.config({
+					    agentId: _config.agentId,
+					    corpId: _config.corpId,
+					    timeStamp: _config.timeStamp,
+					    nonceStr: _config.nonceStr,
+					    signature: _config.signature,
+					    jsApiList: [
+					        'device.base.getUUID',
+						]
 					});
-				} else {
-					let msg = '请在钉钉上使用';
-					errDingEvnMsg($msg);
+					try{
+						let user = uni.getStorageSync('user');
+						if (platform != 'notInDingTalk') {
+							dingtalk.ready(function() {
+								dingtalk.device.base.getUUID({
+									onSuccess : function(data) {
+										uni.showToast({
+											title:data.uuid
+										})
+										if (user.uuid == '') {
+											// 绑定uuid
+											let token = res.result.token;
+											let uuid = data.uuid;
+											url = hosts.user.bindUUid;
+											uni.request({
+												url: url,
+												method: 'POST',
+												data: {token:token, uuid:uuid},
+												dataType: 'json',
+												header: {
+													'content-type': 'application/x-www-form-urlencoded',
+												},
+												success: (res) => {
+													
+												},
+											});
+										} else if (user.uuid != data.uuid) {
+											// 提示
+											let msg = '更换手机请与管理员联系';
+											errDingEvnMsg(msg);
+										}
+									},
+									onFail : function(err) {
+										uni.showModal({
+										    title: '提示',
+										    content: JSON.stringify(err) ,
+										    success: function (res) {
+										      
+										    }
+										});
+									}
+								});
+							});
+						} else {
+							let msg = '请在钉钉上使用';
+							errDingEvnMsg($msg);
+						}
+					}catch(e){
+						//TODO handle the exception
+					}
+				},
+				fail: (res) => {
+			
 				}
-			}catch(e){
-				//TODO handle the exception
-			}
+			})
 				
 		} else {
 			uni.navigateTo({
