@@ -6,7 +6,8 @@ const apis = {
 	},
 	user: {
 		repassword: `${host}/api/user/repassword`,
-		editUser: `${host}/api/user/editUser`
+		editUser: `${host}/api/user/editUser`,
+		bindUUid: `${host}/api/user/bindUUid`
 	},
 	customer: {
 		sea: `${host}/api/customer/sea`,

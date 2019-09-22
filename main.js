@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import App from './App'
 
-// import pageSearch from './components/page-search'
 import store from './store'
 import hosts from './hosts.js'
 
@@ -13,10 +12,7 @@ Vue.prototype.$backgroundAudioData = {
 	formatedPlayTime: '00:00:00'
 }
 
-console.log('This is main');
-
 Vue.prototype.$apis = hosts;
-// Vue.component('page-search', pageSearch)
 Date.prototype.format = function(fmt) {
 	var o = {
 		"M+": this.getMonth() + 1,
@@ -29,9 +25,24 @@ Date.prototype.format = function(fmt) {
 	};
 	if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
 	for (var k in o)
-		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[
-			k]).substr(("" + o[k]).length)));
+		if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
 	return fmt;
+}
+
+function errDingEvnMsg(msg)
+{
+	uni.showModal({
+	    title: '提示',
+	    content: msg,
+		showCancel: false,
+	    success: function (res) {
+	        if (res.confirm) {
+	            errDingEvnMsg();
+	        } else if (res.cancel) {
+	            errDingEvnMsg();
+	        }
+	    }
+	});
 }
 
 import dingtalk from '@/dingtalk.open.js'
@@ -45,17 +56,16 @@ let getUserId = function(token) {
 
 		} else {
 			if (platform != 'notInDingTalk') {
-				dingtalk.ready(function() {			
+				dingtalk.ready(function() {
 					dingtalk.runtime.permission.requestAuthCode({
 						corpId: 'ding7f6f146b7c5505bc35c2f4657eb6378f',
 						onSuccess: function(info) {
-						
 							let url = hosts.dingding.getUserInfo;
 							let params = {
 								token: token,
 								code: info.code
 							};
-							
+
 							uni.request({
 								url: url,
 								method: 'POST',
@@ -64,40 +74,63 @@ let getUserId = function(token) {
 								header: {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
-								success: (res) => {		
+								success: (res) => {
 									uni.showToast({
 										title: res.result.user.dingding
 									})
 									try {
-									    uni.setStorageSync('token', res.result.token);
+										uni.setStorageSync('token', res.result.token);
 										uni.setStorageSync('user', res.result.user);
 										uni.setStorageSync('userid', res.result.user.dingding);
+										
+										let user = res.result.user;
+										dingtalk.device.base.getUUID({
+											onSuccess : function(data) {
+												if (user.uuid == '') {
+													// 绑定uuid
+													let token = res.result.token;
+													let uuid = data.uuid;
+													url = hosts.user.bindUUid;
+													
+													uni.request({
+														url: url,
+														method: 'POST',
+														data: {token:token, uuid:uuid},
+														dataType: 'json',
+														header: {
+															'content-type': 'application/x-www-form-urlencoded',
+														},
+														success: (res) => {
+															
+														},
+													});
+												} else if (user.uuid != data.uuid) {
+													// 提示
+													let msg = '更换手机请与管理员联系';
+													errDingEvnMsg(msg);
+												}
+											},
+											onFail : function(err) {}
+										});											
+									
 									} catch (e) {
-									    uni.showToast({
-									    	title:'绑定钉钉失败'
-									    })
+										
 									}
 								},
 								fail: (res) => {
-									uni.showModal({
-										title: '错误页面',
-										content: res.errMsg,
-										showCancel: true,
-										cancelText: '',
-										confirmText: '',
-										success: res => {},
-										fail: () => {},
-										complete: () => {}
-									});
+
 								}
 							})
 						}
 					});
 				});
+			} else {
+				let msg = '请在钉钉上使用';
+				errDingEvnMsg($msg);
 			}
 		}
 	} catch (e) {}
-
+	
 	return userid;
 }
 

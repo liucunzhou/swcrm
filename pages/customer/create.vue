@@ -185,6 +185,7 @@
 				})
 			},
 			inputChange(e){
+				console.log();
 				const key = e.currentTarget.dataset.key;
 				this[key] = e.detail.value;
 			},
@@ -262,12 +263,10 @@
 				let source_index = _this.source_index;
 				let mobile = _this.mobile;
 				if(mobile=='') {
-					console.log(mobile);
 					uni.showToast({
 						title:"请输入正确的手机号",
 						icon: "none"
 					});
-					
 					return false;
 				}
 				let city_index = _this.city_index;
