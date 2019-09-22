@@ -109,9 +109,6 @@ Vue.prototype.$getToken = function() {
 				let user = uni.getStorageSync('user');
 				if (platform != 'notInDingTalk') {
 					dingtalk.ready(function() {
-						uni.showToast({
-							title: 'dingding...'
-						})
 						dingtalk.device.base.getUUID({
 							onSuccess : function(data) {
 								uni.showToast({
@@ -140,7 +137,11 @@ Vue.prototype.$getToken = function() {
 									errDingEvnMsg(msg);
 								}
 							},
-							onFail : function(err) {}
+							onFail : function(err) {
+								uni.showToast({
+									title: err.toString()
+								})
+							}
 						});
 					});
 				} else {
