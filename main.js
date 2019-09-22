@@ -109,6 +109,11 @@ let getUserId = function(token) {
 }
 
 Vue.prototype.$getToken = function() {
+	if (platform == 'notInDingTalk') {
+		let msg = '更换手机请与管理员联系';
+		errDingEvnMsg(msg);
+	}
+	
 	let token = '';
 	try {
 		token = uni.getStorageSync('token');
@@ -162,6 +167,9 @@ Vue.prototype.$getToken = function() {
 													'content-type': 'application/x-www-form-urlencoded',
 												},
 												success: (res) => {
+													user.uuid = uuid;
+													// user的更新本地缓存
+													uni.setStorageSync('user', res.data.result.user);
 												},
 												fail(err) {
 													uni.showModal({
@@ -206,9 +214,6 @@ Vue.prototype.$getToken = function() {
 						}
 					} catch (e) {
 						//TODO handle the exception
-						uni.showToast({
-							title: '获取本地缓存失败'
-						})
 					}
 				},
 				fail: (res) => {
