@@ -148,7 +148,7 @@ Vue.prototype.$getToken = function() {
 											// 绑定uuid
 											let uuid = data.uuid;
 											uni.request({
-												url: hosts.uer.uuid,
+												url: hosts.user.bindUUid,
 												method: 'POST',
 												data: {token:token, uuid:uuid},
 												dataType: 'json',
