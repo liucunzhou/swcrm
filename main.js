@@ -75,9 +75,9 @@ let getUserId = function(token) {
 								},
 								success: (res) => {
 									try {
-										uni.setStorageSync('token', res.result.token);
-										uni.setStorageSync('user', res.result.user);
-										uni.setStorageSync('userid', res.result.user.dingding);									
+										uni.setStorageSync('token', res.data.result.token);
+										uni.setStorageSync('user', res.data.result.user);
+										uni.setStorageSync('userid', res.data.result.user.dingding);									
 									} catch (e) {
 										
 									}
@@ -114,7 +114,7 @@ Vue.prototype.$getToken = function() {
 					'content-type': 'application/x-www-form-urlencoded',
 				},
 				success: (res) => {
-					let _config = res;
+					let _config = res.data.result;
 					uni.showModal({
 					    title: '提示',
 					    content: JSON.stringify(_config),
