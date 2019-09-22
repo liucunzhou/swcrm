@@ -51,7 +51,6 @@ let getUserId = function(token) {
 	let userid = '';
 	try {
 		userid = uni.getStorageSync('userid');
-		console.log();
 		if (userid) {
 
 		} else {
@@ -75,44 +74,10 @@ let getUserId = function(token) {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
 								success: (res) => {
-									uni.showToast({
-										title: res.result.user.dingding
-									})
 									try {
 										uni.setStorageSync('token', res.result.token);
 										uni.setStorageSync('user', res.result.user);
-										uni.setStorageSync('userid', res.result.user.dingding);
-										
-										let user = res.result.user;
-										dingtalk.device.base.getUUID({
-											onSuccess : function(data) {
-												if (user.uuid == '') {
-													// 绑定uuid
-													let token = res.result.token;
-													let uuid = data.uuid;
-													url = hosts.user.bindUUid;
-													
-													uni.request({
-														url: url,
-														method: 'POST',
-														data: {token:token, uuid:uuid},
-														dataType: 'json',
-														header: {
-															'content-type': 'application/x-www-form-urlencoded',
-														},
-														success: (res) => {
-															
-														},
-													});
-												} else if (user.uuid != data.uuid) {
-													// 提示
-													let msg = '更换手机请与管理员联系';
-													errDingEvnMsg(msg);
-												}
-											},
-											onFail : function(err) {}
-										});											
-									
+										uni.setStorageSync('userid', res.result.user.dingding);									
 									} catch (e) {
 										
 									}
@@ -140,12 +105,54 @@ Vue.prototype.$getToken = function() {
 		token = uni.getStorageSync('token');
 		if (token) {
 			getUserId(token);
+			try{
+				let user = uni.getStorageSync('user');
+				if (platform != 'notInDingTalk') {
+					dingtalk.ready(function() {
+						dingtalk.device.base.getUUID({
+							onSuccess : function(data) {
+								if (user.uuid == '') {
+									// 绑定uuid
+									let token = res.result.token;
+									let uuid = data.uuid;
+									url = hosts.user.bindUUid;
+									uni.request({
+										url: url,
+										method: 'POST',
+										data: {token:token, uuid:uuid},
+										dataType: 'json',
+										header: {
+											'content-type': 'application/x-www-form-urlencoded',
+										},
+										success: (res) => {
+											
+										},
+									});
+								} else if (user.uuid != data.uuid) {
+									// 提示
+									let msg = '更换手机请与管理员联系';
+									errDingEvnMsg(msg);
+								}
+							},
+							onFail : function(err) {}
+						});
+					});
+				} else {
+					let msg = '请在钉钉上使用';
+					errDingEvnMsg($msg);
+				}
+			}catch(e){
+				//TODO handle the exception
+			}
+				
 		} else {
 			uni.navigateTo({
 				url: '/pages/public/login'
 			});
 		}
-	} catch (e) {}
+	} catch (e) {
+		
+	}
 
 	return token;
 }
