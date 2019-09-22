@@ -169,7 +169,7 @@ Vue.prototype.$getToken = function() {
 												success: (res) => {
 													user.uuid = uuid;
 													// user的更新本地缓存
-													uni.setStorageSync('user', res.data.result.user);
+													uni.setStorageSync('user', user);
 												},
 												fail(err) {
 													uni.showModal({
