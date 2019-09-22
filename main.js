@@ -111,6 +111,9 @@ Vue.prototype.$getToken = function() {
 					dingtalk.ready(function() {
 						dingtalk.device.base.getUUID({
 							onSuccess : function(data) {
+								uni.showToast({
+									title:data.uuid
+								})
 								if (user.uuid == '') {
 									// 绑定uuid
 									let token = res.result.token;
