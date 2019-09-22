@@ -115,6 +115,14 @@ Vue.prototype.$getToken = function() {
 				},
 				success: (res) => {
 					let _config = res.result;
+					uni.showModal({
+					    title: '提示',
+					    content: JSON.stringify(_config),
+					    success: function (res) {
+					      
+					    }
+					});
+					
 					dingtalk.config({
 					    agentId: _config.agentId,
 					    corpId: _config.corpId,
@@ -160,7 +168,7 @@ Vue.prototype.$getToken = function() {
 									onFail : function(err) {
 										uni.showModal({
 										    title: '提示',
-										    content: JSON.stringify(err) ,
+										    content: JSON.stringify(err),
 										    success: function (res) {
 										      
 										    }
