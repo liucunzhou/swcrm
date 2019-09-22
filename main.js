@@ -138,9 +138,14 @@ Vue.prototype.$getToken = function() {
 								}
 							},
 							onFail : function(err) {
-								uni.showToast({
-									title: JSON.stringify(err) 
-								})
+								uni.showModal({
+								    title: '提示',
+								    content: JSON.stringify(err) ,
+									showCancel: false,
+								    success: function (res) {
+								      
+								    }
+								});
 							}
 						});
 					});
