@@ -164,6 +164,15 @@ Vue.prototype.$getToken = function() {
 													    }
 													});
 												},
+												fail(err) {
+													uni.showModal({
+													    title: '请求错误提示',
+													    content: JSON.stringify(err),
+													    success: function (res) {
+													      
+													    }
+													});
+												}
 											});
 										} else if (user.uuid != data.uuid) {
 											// 提示
