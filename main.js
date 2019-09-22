@@ -114,7 +114,7 @@ Vue.prototype.$getToken = function() {
 					'content-type': 'application/x-www-form-urlencoded',
 				},
 				success: (res) => {
-					let _config = res.result;
+					let _config = res;
 					uni.showModal({
 					    title: '提示',
 					    content: JSON.stringify(_config),
