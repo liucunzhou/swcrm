@@ -126,9 +126,6 @@ Vue.prototype.$getToken = function() {
 					let _config = res.data.result;
 					try{
 						let user = uni.getStorageSync('user');
-						uni.showToast({
-							title: '开始钉钉'
-						})
 						if (platform != 'notInDingTalk') {
 							dingtalk.config({
 							    agentId: _config.agentId,
@@ -145,21 +142,8 @@ Vue.prototype.$getToken = function() {
 							
 							dingtalk.userid = 0;
 							dingtalk.ready(function() {
-								
-								uni.showToast({
-									title: '获取UUID'
-								});
-								
 								dingtalk.device.base.getUUID({
-									onSuccess : function(data) {
-										uni.showModal({
-										    title: '提示',
-										    content: JSON.stringify(data) + JSON.stringify(user),
-										    success: function (res) {
-										      
-										    }
-										});
-										
+									onSuccess : function(data) {								
 										if (user.uuid == '') {
 											// 绑定uuid
 											let token = res.result.token;
@@ -174,7 +158,13 @@ Vue.prototype.$getToken = function() {
 													'content-type': 'application/x-www-form-urlencoded',
 												},
 												success: (res) => {
-													
+													uni.showModal({
+													    title: '提示',
+													    content: JSON.stringify(err),
+													    success: function (res) {
+													      
+													    }
+													});
 												},
 											});
 										} else if (user.uuid != data.uuid) {
