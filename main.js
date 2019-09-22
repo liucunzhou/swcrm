@@ -115,7 +115,9 @@ Vue.prototype.$getToken = function() {
 				},
 				success: (res) => {
 					let _config = res.data.result;
-					
+					uni.showToast({
+						title: _config.signature
+					})
 					dingtalk.config({
 					    agentId: _config.agentId,
 					    corpId: _config.corpId,
