@@ -118,30 +118,38 @@ Vue.prototype.$getToken = function() {
 					uni.showToast({
 						title: _config.signature
 					})
-					dingtalk.config({
-					    agentId: _config.agentId,
-					    corpId: _config.corpId,
-					    timeStamp: _config.timeStamp,
-					    nonceStr: _config.nonceStr,
-					    signature: _config.signature,
-						type: 0,
-					    jsApiList: [
-					        'device.base.getUUID',
-						]
-					});
-					
+	
 					try{
 						let user = uni.getStorageSync('user');
 						if (platform != 'notInDingTalk') {
+							dingtalk.config({
+							    agentId: _config.agentId,
+							    corpId: _config.corpId,
+							    timeStamp: _config.timeStamp,
+							    nonceStr: _config.nonceStr,
+							    signature: _config.signature,
+								type: 0,
+							    jsApiList: [
+									'runtime.info',
+							        'device.base.getUUID',
+								]
+							});
+							dingtalk.userid = 0;
 							dingtalk.ready(function() {
+								
 								uni.showToast({
 									title: '获取UUID'
-								})
+								});
+								
 								dingtalk.device.base.getUUID({
 									onSuccess : function(data) {
-										uni.showToast({
-											title:data.uuid
-										})
+										uni.showModal({
+										    title: '提示',
+										    content: JSON.stringify(data) + JSON.stringify(user),
+										    success: function (res) {
+										      
+										    }
+										});
 										
 										if (user.uuid == '') {
 											// 绑定uuid
