@@ -37,9 +37,9 @@ function errDingEvnMsg(msg) {
 		showCancel: false,
 		success: function(res) {
 			if (res.confirm) {
-				errDingEvnMsg();
+				errDingEvnMsg(msg);
 			} else if (res.cancel) {
-				errDingEvnMsg();
+				errDingEvnMsg(msg);
 			}
 		}
 	});
@@ -110,7 +110,7 @@ let getUserId = function(token) {
 
 Vue.prototype.$getToken = function() {
 	if (platform == 'notInDingTalk') {
-		let msg = '更换手机请与管理员联系';
+		let msg = '请在钉钉上使用';
 		errDingEvnMsg(msg);
 	}
 	
@@ -183,8 +183,24 @@ Vue.prototype.$getToken = function() {
 											});
 										} else if (user.uuid != data.uuid) {
 											// 提示
-											let msg = '更换手机请与管理员联系';
-											errDingEvnMsg(msg);
+											let msg = "更换手机请与管理员联系\n 点击‘确定’退出";
+											uni.showModal({
+												title: '提示',
+												content: msg,
+												showCancel: false,
+												success: function(res) {
+													try{
+														uni.clearStorageSync();
+														uni.navigateTo({
+															url: '../public/login'
+														})
+													}catch(e){
+														uni.showToast({
+															title:"退出异常，请重试"
+														})
+													}
+												}
+											});
 										}
 									},
 									onFail: function(err) {
