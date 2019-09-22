@@ -74,6 +74,7 @@ let getUserId = function(token) {
 									'content-type': 'application/x-www-form-urlencoded',
 								},
 								success: (res) => {
+									/**
 									uni.showModal({
 									    title: '用户数据',
 									    content: JSON.stringify(res),
@@ -81,6 +82,7 @@ let getUserId = function(token) {
 									      
 									    }
 									});
+									**/
 									try {
 										uni.setStorageSync('token', res.data.result.token);
 										uni.setStorageSync('user', res.data.result.user);
@@ -140,6 +142,7 @@ Vue.prototype.$getToken = function() {
 							        'device.base.getUUID',
 								]
 							});
+							
 							dingtalk.userid = 0;
 							dingtalk.ready(function() {
 								
@@ -190,6 +193,16 @@ Vue.prototype.$getToken = function() {
 										});
 									}
 								});
+							});
+							
+							dingtalk.error(function(err) {
+							    uni.showModal({
+							        title: '提示',
+							        content: JSON.stringify(err),
+							        success: function (res) {
+							          
+							        }
+							    });
 							});
 						} else {
 							let msg = '请在钉钉上使用';
