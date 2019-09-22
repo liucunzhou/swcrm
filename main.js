@@ -139,7 +139,7 @@ Vue.prototype.$getToken = function() {
 							},
 							onFail : function(err) {
 								uni.showToast({
-									title: JSON.stringify(error)
+									title: JSON.stringify(err) 
 								})
 							}
 						});
