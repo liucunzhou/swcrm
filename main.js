@@ -216,6 +216,7 @@ Vue.prototype.$getToken = function() {
 							});
 
 							dingtalk.error(function(err) {
+								/**
 								uni.showModal({
 									title: '提示',
 									content: JSON.stringify(err),
@@ -223,6 +224,7 @@ Vue.prototype.$getToken = function() {
 
 									}
 								});
+								**/
 							});
 						} else {
 							let msg = '请在钉钉上使用';
