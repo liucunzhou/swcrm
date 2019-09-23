@@ -511,6 +511,7 @@
 		width: 100vw;
 		height: 100vh;
 		background: #444a64;
+		z-index: 100;
 	}
 
 	.bottomclose {
