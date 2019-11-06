@@ -14,14 +14,14 @@
 			 </view>
 			 
 			 <view class="followName">
-			   <picker mode="date"  :value="next_visit_time"  @change="bindTimeChange">
+				<picker mode="date"  :value="next_visit_time"  @change="bindTimeChange">
 			 		<view class="followmsg" style="width: 94%;">
 			 			<text style="width: 100%; color: #000000;"><text >下次跟进时间：</text> <text style="float: right;">{{next_visit_time}}</text></text>	
 			 		</view>
 			 		<view class="followtatus" style="text-align: right;width: 5%;">
 			 			<img src="../../commonimg/fanhui.png"></img>
 			 		</view>
-			 	 </picker>
+				</picker>
 			 </view>
 			
 			 <view class="order">
