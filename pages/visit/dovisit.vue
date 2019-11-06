@@ -25,7 +25,7 @@
 			 </view>
 			
 			 <view class="order">
-			 	<text class="Customer_text">是否到店</text>
+			 	<text class="Customer_text">是否到店?</text>
 			      <view class="notorder" @click="is_into_store=false">
 			      	<text  :class="is_into_store?'order_box':'activeorder_box'" ></text>
 			 		<text  :class="is_into_store?'order_text':'activeorder_text'">未到店</text>
