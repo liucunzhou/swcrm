@@ -31,6 +31,7 @@ Date.prototype.format = function(fmt) {
 }
 
 function errDingEvnMsg(msg) {
+	return false;
 	uni.showModal({
 		title: '提示',
 		content: msg,
@@ -108,146 +109,15 @@ let getUserId = function(token) {
 	return userid;
 }
 
-Vue.prototype.$getToken = function() {
-	if (platform == 'notInDingTalk') {
-		let msg = '请在钉钉上使用';
-		errDingEvnMsg(msg);
-	}
-	
+Vue.prototype.$getToken = function() {	
 	let token = '';
 	try {
 		token = uni.getStorageSync('token');
-		if (token) {
-			getUserId(token);
-			uni.request({
-				url: hosts.dingding.getDingSign,
-				method: 'POST',
-				data: {
-					token: token
-				},
-				dataType: 'json',
-				header: {
-					'content-type': 'application/x-www-form-urlencoded',
-				},
-				success: (res) => {
-					let _config = res.data.result;
-					try {
-						let user = uni.getStorageSync('user');
-						if (platform != 'notInDingTalk') {
-							dingtalk.config({
-								agentId: _config.agentId,
-								corpId: _config.corpId,
-								timeStamp: _config.timeStamp,
-								nonceStr: _config.nonceStr,
-								signature: _config.signature,
-								type: 0,
-								jsApiList: [
-									'runtime.info',
-									'device.base.getUUID',
-								]
-							});
-
-							dingtalk.userid = 0;
-							dingtalk.ready(function() {
-								dingtalk.device.base.getUUID({
-									onSuccess: function(data) {
-										if (user.uuid == '') {
-
-											// 绑定uuid
-											let uuid = data.uuid;
-											uni.request({
-												url: hosts.user.bindUUid,
-												method: 'POST',
-												data: {
-													token: token,
-													uuid: uuid
-												},
-												dataType: 'json',
-												header: {
-													'content-type': 'application/x-www-form-urlencoded',
-												},
-												success: (res) => {
-													user.uuid = uuid;
-													// user的更新本地缓存
-													uni.setStorageSync('user', user);
-												},
-												fail(err) {
-													uni.showModal({
-														title: '请求错误提示',
-														content: JSON.stringify(err),
-														success: function(res) {
-
-														}
-													});
-												}
-											});
-										} else if (user.uuid != data.uuid) {
-											// 提示
-											let msg = "更换手机请与管理员联系\n 点击‘确定’退出";
-											uni.showModal({
-												title: '提示',
-												content: msg,
-												showCancel: false,
-												success: function(res) {
-													try{
-														uni.clearStorageSync();
-														uni.navigateTo({
-															url: '../public/login'
-														})
-													}catch(e){
-														uni.showToast({
-															title:"退出异常，请重试"
-														})
-													}
-												}
-											});
-										}
-									},
-									onFail: function(err) {
-										uni.showModal({
-											title: '提示',
-											content: JSON.stringify(err),
-											success: function(res) {
-
-											}
-										});
-									}
-								});
-							});
-
-							dingtalk.error(function(err) {
-								/**
-								uni.showModal({
-									title: '提示',
-									content: JSON.stringify(err),
-									success: function(res) {
-
-									}
-								});
-								**/
-							});
-						} else {
-							let msg = '请在钉钉上使用';
-							errDingEvnMsg($msg);
-						}
-					} catch (e) {
-						//TODO handle the exception
-					}
-				},
-				fail: (res) => {
-
-				}
-			})
-
-		} else {
-			uni.navigateTo({
-				url: '/pages/public/login'
-			});
-		}
 	} catch (e) {
-
+		uni.navigateTo({
+			url: '/pages/public/login'
+		});
 	}
-
 	return token;
 }
 
