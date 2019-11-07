@@ -1,10 +1,37 @@
-<!DOCTYPE html><html lang=zh-CN><head><meta charset=utf-8><meta http-equiv=Pragma content=no-cache><meta http-equiv=Cache-Control content=no-cache><meta http-equiv=expires content=0><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><title>CRM</title><script>var UA = window.navigator.userAgent.toLowerCase();
+<!DOCTYPE html>
+<html lang=zh-CN>
+	<head>
+		<meta charset=utf-8>
+		<meta http-equiv=Pragma content=no-cache>
+		<meta http-equiv=Cache-Control content=no-cache>
+		<meta http-equiv=expires content=0>
+		<meta http-equiv=X-UA-Compatible content="IE=edge">
+		<meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1">
+		<title>CRM</title>
+		<script>
+			var UA = window.navigator.userAgent.toLowerCase();
 			var isAndroid = UA.indexOf('android') > 0;
 			var isIOS = /iphone|ipad|ipod|ios/.test(UA);
 			if (!(isAndroid || isIOS)) {
 				// 正式发布的时候使用，开发期间不启用。
 				// window.location.href = '/h5/pcguide.html';
-			}</script><script>console.log(Math.random());
+			}
+		</script>
+		<script>
+			console.log(Math.random());
 			document.addEventListener('DOMContentLoaded', function() {
 				document.documentElement.style.fontSize = document.documentElement.clientWidth / 20 + 'px'
-			})</script><link rel=stylesheet href=/static/index.css></head><body><noscript><strong>Please enable JavaScript to continue.</strong></noscript><div id=app></div><script>/*BAIDU_STAT*/</script><script src=/static/js/chunk-vendors.571b792a.js></script><script src=/static/js/index.33379743.js></script></body></html>
+			})
+		</script>
+		<link rel=stylesheet href=/static/index.css>		
+	</head>
+	<body>
+		<noscript><strong>Please enable JavaScript to continue.</strong></noscript>
+		<div id=app></div>
+		<script>
+			/*BAIDU_STAT*/
+		</script>
+		<script src=/static/js/chunk-vendors.571b792a.js?102> </script>
+		<script src=/static/js/index.33379743.js?></script>
+	</body>
+ </html>
