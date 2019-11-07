@@ -59,10 +59,12 @@
 				{id: 6, title: "意向客户", is_valid: 1},
 			];
 			
+			/**
 			uni.showModal({
 				title:'提示',
 				content: JSON.stringify(statuses),
 			});
+			**/
 			
 			let status = 0;
 			let realname = '';
@@ -118,10 +120,12 @@
 				this.status = status;
 				let cstatus = this.statuses[status];
 				
+				/**
 				uni.showModal({
 					title:'提示',
 					content: JSON.stringify(status),
 				});
+				**/
 				
 				
 				if(cstatus.id != 3 && cstatus.id != 4 && this.nextVisitTime != '' && this.remark != '') {
