@@ -113,6 +113,11 @@ Vue.prototype.$getToken = function() {
 	let token = '';
 	try {
 		token = uni.getStorageSync('token');
+		if(!token) {
+			uni.navigateTo({
+				url: '/pages/public/login'
+			});
+		}
 	} catch (e) {
 		uni.navigateTo({
 			url: '/pages/public/login'
