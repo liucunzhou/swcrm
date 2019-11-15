@@ -110,7 +110,7 @@
         "sdkConfigs" : {
             "maps" : {}
         },
-        "domain" : "h5.yusivip.com",
+        "domain" : "h5.hongsiyzg.com",
         "title" : "CRM",
         "devServer" : {
             "port" : 80,

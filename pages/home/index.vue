@@ -30,8 +30,15 @@
 						</navigator>
 					</view>
 					<view class="downmsg">
-						<navigator url="../ucenter/setting">
+						<view @click="bindDingding">
 							<img class="downmsgicon" src="../../commonimg/setting.png"></img>
+							<text>绑定钉钉</text>
+							<img class="downfanhui" src="../../commonimg/fanhui.png"></img>
+						</view>
+					</view>
+					<view class="downmsg">
+						<navigator url="../ucenter/setting">
+							<img class="downmsgicon" src="../../commonimg/jiahao.png"></img>
 							<text>设置</text>
 							<img class="downfanhui" src="../../commonimg/fanhui.png"></img>
 						</navigator>
@@ -163,6 +170,44 @@
 			}
 		},
 		methods: {
+			bindDingding() {
+				let _ = this;
+				if (platform != 'notInDingTalk') {
+					dingtalk.ready(function() {
+						dingtalk.runtime.permission.requestAuthCode({
+							corpId: 'ding7f6f146b7c5505bc35c2f4657eb6378f',
+							onSuccess: function(info) {
+								let url = _.$apis.dingding.getUserInfo;
+								let token = _.$getToken();
+								let params = {
+									token: token,
+									code: info.code
+								};
+				
+								uni.request({
+									url: url,
+									method: 'POST',
+									data: params,
+									dataType: 'json',
+									header: {
+										'content-type': 'application/x-www-form-urlencoded',
+									},
+									success: (res) => {
+
+									},
+									fail: (res) => {
+				
+									}
+								})
+							}
+						});
+					});
+				} else {
+					uni.showToast({
+						title:'请在钉钉上绑定'
+					})
+				}
+			},
 			// 待办
 			backlogFn() {
 				this.isactiveL = !this.isactiveL
