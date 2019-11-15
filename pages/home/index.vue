@@ -193,7 +193,15 @@
 										'content-type': 'application/x-www-form-urlencoded',
 									},
 									success: (res) => {
-
+										if(res.data.code == '200') {
+											uni.showToast({
+												title:'绑定成功'
+											})
+										} else {
+											uni.showToast({
+												title:'已绑定'
+											})
+										}
 									},
 									fail: (res) => {
 				
