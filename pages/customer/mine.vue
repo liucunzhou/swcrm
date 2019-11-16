@@ -53,7 +53,6 @@
 							<view class="uni-input"><text>结束时间:{{endDate}}</text></view>
 						</picker>
 					</view>
-					-->
 
 					<view class="topmuieFixed_setting">
 						<text @click.stop="emptyFn">清空</text>
@@ -151,6 +150,8 @@
 				}
 			];
 
+			let startDate = (new Date()).format("yyyy-MM-dd");
+			let endDate = (new Date()).format("yyyy-MM-dd");
 			return {
 				// 页面加载
 				page_title: '我的客资',
@@ -174,8 +175,8 @@
 				
 				// 自定义事件
 				isShowDateRange: false,
-				startDate: "",
-				endDate: "",
+				startDate: startDate,
+				endDate: endDate,
 				token: null
 			}
 		},
