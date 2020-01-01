@@ -82,8 +82,7 @@
 		<view class="tab_box">
 			<view class="center_box">
 				<view class="center_header">
-					<text class="center_header_left" :class="{active:!visit_nav_index}" @click="visit_nav_index=0">跟进记录 ({{logsLength}})</text>
-					<text class="center_header_right" :class="{active:visit_nav_index}" @click="visit_nav_index=1">跟进人员 ({{groupLength}})</text>
+					<text class="center_header_left">跟进记录</text>
 				</view>
 				
 				<view class="tab_content">
@@ -94,16 +93,6 @@
 							<view class="follow_main"><text>{{log.user_id}}</text></view>
 							<view class="follow_main"><text>{{log.content}}</text></view>
 							<view class="follow_main"><text style="letter-spacing: 2px;">跟进状态：{{log.status}}</text></view>
-						</view>
-					</template>
-					
-					<template v-if="visit_nav_index==1">
-						<!-- 跟进人-->
-						<view class="followMsg" v-for="item in group" v-bind:key="item.id">
-							<view class="follow_date" style="letter-spacing: 2px;">回&nbsp;访&nbsp;者&nbsp;：{{item.user_id}}</view>
-							<view class="follow_date" style="letter-spacing: 2px;">获取时间：{{item.allocate_create_time}}</view>
-							<view class="follow_date" style="letter-spacing: 2px;">下次回访：{{item.next_visit_time}}</view>
-							<view class="follow_date" style="letter-spacing: 2px;">回访次数：{{item.visit_times}}</view>
 						</view>
 					</template>
 				</view>

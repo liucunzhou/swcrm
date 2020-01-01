@@ -4,10 +4,6 @@
 			<text style="color: #0CAAF0;font-size: 8px;margin-right: 5px;">▶ </text> 客资管理
 		</view>
 		<view class="box_flex">
-			<view class="imgText" @click="goToSea()">
-				<img src="../../commonimg/information.png" mode=""></img>
-				<text>客资公海</text>
-			</view>
 			<view class="imgText" @click="goToMine(-1,0,'我的客资')">
 				<img src="../../commonimg/myinformation.png" mode=""></img>
 				<text>我的客资</text>
