@@ -12,7 +12,6 @@
 		
 		<view class="header_name">
 			<view>客户姓名: {{customer.realname}}</view>
-			<view>客资渠道: {{customer.source_text}}</view>
 		</view>
 		<view class="center_box">
 			<view class="center_header uni-flex ">
